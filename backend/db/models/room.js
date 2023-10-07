@@ -10,7 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Room.belongsTo(
+        models.Community,
+        { as: 'Rooms', foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+      );
+      Room.hasMany(
+        models.RoomMessage,
+        { as: 'Messages', foreignKey: 'room_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+      );
     }
   }
   Room.init({

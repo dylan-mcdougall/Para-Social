@@ -10,7 +10,19 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Community.belongsTo(
+        models.User,
+        { as: 'Creator', foreignKey: 'creator_id' }
+      );
+      Community.belongsToMany(
+        models.User,
+        { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'id' }
+      );
+      Community.hasMany(models.Membership);
+      Community.hasMany(
+        models.Room,
+        { foreignKey: 'community_id', otherKey: 'id' }
+      )
     }
   }
   Community.init({
