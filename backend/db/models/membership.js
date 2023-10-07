@@ -29,9 +29,12 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    role: {
+    status: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
+      validate: {
+        isIn: [['pending', 'member', 'creator', 'moderator']]
+      }
     }
   }, {
     sequelize,

@@ -34,9 +34,9 @@ module.exports = {
         },
         allowNull: false
       },
-      role: {
+      status: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
       createdAt: {
         allowNull: false,
