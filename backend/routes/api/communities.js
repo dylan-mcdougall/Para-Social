@@ -6,6 +6,42 @@ const { User, Community, Room, Membership } = require('../../db/models');
 
 const router = express.Router();
 
+// Route for user to request to join 
+router.post('/:id/members', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    
+    const { user_id } = req.body;
+    if (!user_id) {
+        return res.status(400).json({
+            "errors": "Please include the user id in the request body."
+        });
+    }
+    const membership = await Membership.findOne({
+        where: {
+            user_id,
+            community_id: req.params.id,
+            status: 'pending'
+        }
+    });
+    if (membership) {
+        return res.status(400).json({
+            "errors": "User is already a member or has requested to join this group."
+        });
+    }
+
+    const payload = await Membership.create({
+        user_id, community_id: req.params.id
+    });
+    if (payload) {
+        return res.json(payload)
+    } else return res.status(500).json({
+        "errors": "Could not create membership for this user."
+    })
+})
+
 router.delete('/:id', requireAuth, async (req, res) => {
     const community = await Community.findByPk(req.params.id);
     if (!community) return res.status(404).json({
