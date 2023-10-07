@@ -7,14 +7,24 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('Communities', {
+    await queryInterface.createTable('RoomMessages', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      creator_id: {
+      room_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Rooms'
+          },
+          key: 'id'
+        },
+        allowNull: false
+      },
+      user_id: {
         type: Sequelize.INTEGER,
         references: {
           model: {
@@ -24,47 +34,32 @@ module.exports = {
         },
         allowNull: false
       },
-      name: {
-        type: Sequelize.STRING(80),
-        allowNull: false,
-        unique: true
-      },
-      description: {
-        type: Sequelize.STRING(256),
-        allowNull: true
-      },
-      private: {
-        type: Sequelize.BOOLEAN,
+      content_type: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      price: {
-        type: Sequelize.DECIMAL(10, 2),
-        allowNull: true
-      },
-      image_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'Images'
-          },
-          key: 'id'
-        },
+      content_message: {
+        type: Sequelize.STRING(300),
         allowNull: true,
+      },
+      content_src: {
+        type: Sequelize.TEXT,
+        allowNull: true
       },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
-        defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
+        defaultValue: Sequelize.literal('CURRENT_TIMESTAMP')
       },
       updatedAt: {
         allowNull: false,
         type: Sequelize.DATE,
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
-    }, options);
+    });
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Communities";
+    options.tableName = "RoomMessages";
     return queryInterface.dropTable(options);
   }
 };

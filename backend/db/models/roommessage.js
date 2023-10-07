@@ -3,7 +3,7 @@
 const { Model, Validator } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
-  class Community extends Model {
+  class RoomMessage extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -13,43 +13,36 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  Community.init({
-    creator_id: {
+  RoomMessage.init({
+    room_id: {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    name: {
+    user_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    content_type: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
       validate: {
-        len: [1, 80]
+        isIn: [['text', 'src']]
       }
     },
-    description: {
+    content_message: {
       type: DataTypes.STRING,
       allowNull: true,
       validate: {
-        len: [1, 256]
+        len: [1, 300]
       }
     },
-    private: {
-      type: DataTypes.BOOLEAN,
-      allowNull: false
-    },
-    price: {
-      type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
-  },
-    image_id: {
-      type: DataTypes.INTEGER
+    content_src: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,
-    modelName: 'Community',
+    modelName: 'RoomMessage',
   });
-  return Community;
+  return RoomMessage;
 };
