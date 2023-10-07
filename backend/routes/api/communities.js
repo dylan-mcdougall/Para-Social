@@ -7,7 +7,6 @@ const { User, Community, Room, Membership } = require('../../db/models');
 const router = express.Router();
 
 router.delete('/:id', requireAuth, async (req, res) => {
-    // Authentication
     const community = await Community.findByPk(req.params.id);
     if (!community) return res.status(404).json({
         "errors": "No community associated with this id exists."
@@ -18,7 +17,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
         });
     }
 
-    await Community.destroy({ where: { id: req.params.id } });
+    await community.destroy();
     return res.json({
         "message": "Community successfully deleted."
     })

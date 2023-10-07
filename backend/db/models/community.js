@@ -18,10 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         models.User,
         { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'user_id' }
       );
-      Community.hasMany(models.Membership, { foreignKey: "community_id", onDelete: 'CASCADE', hooks: true });
+      Community.hasMany(models.Membership, { foreignKey: "community_id", onDelete: 'CASCADE' });
       Community.hasMany(
         models.Room,
-        { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
       )
     }
   }
