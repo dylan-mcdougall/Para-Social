@@ -16,13 +16,10 @@ module.exports = (sequelize, DataTypes) => {
       );
       User.belongsToMany(
         models.Community,
-        { as: 'User Communities', through: models.Membership, foreignKey: 'user_id', otherKey: 'id' }
+        { through: models.Membership, foreignKey: 'user_id', otherKey: 'community_id' }
       );
-      User.hasMany(models.Membership);
-      User.hasMany(
-        models.RoomMessage,
-        { foreignKey: 'user_id', otherKey: 'id' }
-      );
+      User.hasMany(models.Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
+      User.hasMany(models.RoomMessage, { foreignKey: 'user_id', otherKey: 'id' });
     }
   }
   User.init({

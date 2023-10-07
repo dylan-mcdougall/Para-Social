@@ -16,12 +16,12 @@ module.exports = (sequelize, DataTypes) => {
       );
       Community.belongsToMany(
         models.User,
-        { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'id' }
+        { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'user_id' }
       );
-      Community.hasMany(models.Membership);
+      Community.hasMany(models.Membership, { foreignKey: "community_id", onDelete: 'CASCADE', hooks: true });
       Community.hasMany(
         models.Room,
-        { foreignKey: 'community_id', otherKey: 'id' }
+        { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
       )
     }
   }
@@ -59,6 +59,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Community',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    }
   });
   return Community;
 };
