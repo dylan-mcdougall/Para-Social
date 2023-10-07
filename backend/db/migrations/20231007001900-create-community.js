@@ -41,16 +41,6 @@ module.exports = {
         type: Sequelize.DECIMAL(10, 2),
         allowNull: true
       },
-      image_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: {
-            tableName: 'Images'
-          },
-          key: 'id'
-        },
-        allowNull: true,
-      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       User.belongsToMany(
         models.Community,
-        { as: 'Communities', through: models.Membership, foreignKey: 'user_id', otherKey: 'id' }
+        { as: 'User Communities', through: models.Membership, foreignKey: 'user_id', otherKey: 'id' }
       );
       User.hasMany(models.Membership);
       User.hasMany(

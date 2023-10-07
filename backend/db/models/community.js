@@ -55,10 +55,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isNumeric: true
       }
-  },
-    image_id: {
-      type: DataTypes.INTEGER
-    }
+  }
   }, {
     sequelize,
     modelName: 'Community',
