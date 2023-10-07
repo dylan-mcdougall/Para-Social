@@ -9,6 +9,7 @@ Feature List:
   * Livestream with an entire room as your audience
   * Secret other thing you can maybe do if I'm cracked and can finish it in time
 
-Initial db schema prior to refining and optimizing
+Current db schema
 
-![image](https://github.com/dylan-mcdougall/aa-capstone/assets/107007986/8f320285-84bb-4bd2-828f-5102a3c21057)
+![Screenshot 2023-10-07 105711](https://github.com/dylan-mcdougall/aa-capstone/assets/107007986/b6da5343-1ba9-4de0-a574-289e8876d4b6)
+
