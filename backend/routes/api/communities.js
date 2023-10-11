@@ -90,6 +90,98 @@ router.post('/:id/members/:userId', requireAuth, async (req, res) => {
     })
 })
 
+router.post('/:id/rooms/new', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    if (community.creator_id !== req.user.id) {
+        return res.status(401).json({
+            "errors": "Forbidden"
+        });
+    }
+    const { name } = req.body;
+    if (!name) return res.status(400).json({
+        "errors": "Please include a valid room name in the request body"
+    });
+
+    const payload = await Room.create({ community_id: req.params.id, name });
+    return res.json(payload);
+})
+
+router.delete('/:id/rooms/:roomId', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    if (community.creator_id !== req.user.id) {
+        return res.status(401).json({
+            "errors": "Forbidden."
+        });
+    }
+    const targetRoom = await Room.findByPk(req.params.roomId);
+    if (!targetRoom) return res.status(404).json({
+        "errors": "Room associated with this id does not exist."
+    })
+    if (targetRoom.community_id !== parseInt(req.params.id)) {
+        return res.status(400).json({
+            "errors": "Room associated with this id does not belong to the specified community."
+        })
+    }
+
+    await targetRoom.destroy();
+    return res.json({
+        "message": "Room successfully deleted."
+    })
+})
+
+router.patch('/:id/rooms/:roomId', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    if (community.creator_id !== req.user.id) {
+        return res.status(401).json({
+            "errors": "Forbidden."
+        });
+    }
+    const targetRoom = await Room.findByPk(req.params.roomId);
+    if (!targetRoom) return res.status(404).json({
+        "errors": "Room associated with this id does not exist."
+    })
+    if (targetRoom.community_id !== parseInt(req.params.id)) {
+        return res.status(400).json({
+            "errors": "Room associated with this id does not belong to the specified community."
+        })
+    }
+    const { name } = req.body;
+    if (!name) return res.status(400).json({
+        "errors": "Please include a valid room name in the request body."
+    });
+
+    await targetRoom.update({ name: name });
+    return res.json(targetRoom);
+})
+
+router.get('/:id/rooms', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+
+    const targetRooms = await Room.findAll({
+        where: {
+            community_id: req.params.id
+        }
+    });
+
+    if (!targetRooms) return res.status(404).json({
+        "errors": "Designated Community currently has no rooms."
+    })
+
+    return res.json(targetRooms);
+})
+
 router.delete('/:id', requireAuth, async (req, res) => {
     const community = await Community.findByPk(req.params.id);
     if (!community) return res.status(404).json({
@@ -119,10 +211,7 @@ router.get('/:id', requireAuth, async (req, res) => {
     return res.json(community);
 })
 
-router.post(
-    '/',
-    requireAuth,
-    async (req, res) => {
+router.post('/', requireAuth, async (req, res) => {
         const { name, description, private, price } = req.body;
         const creator_id = req.user.id;
         const community = await Community.create({ creator_id, name, description, private, price });
