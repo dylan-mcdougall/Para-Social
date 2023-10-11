@@ -201,12 +201,12 @@ router.delete('/:id', requireAuth, async (req, res) => {
 
 router.get('/:id', requireAuth, async (req, res) => {
     const community = await Community.findOne({
+        where: { id: req.params.id },
         include: [
             { model: User, as: 'Members' },
             { model: User, as: "Creator" },
             { model: Room, as: 'Rooms' }
         ],
-        where: { id: req.params.id },
     });
     return res.json(community);
 })
