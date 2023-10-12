@@ -1,8 +1,28 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Room, RoomMessage } = require('../../db/models');
+const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const dotenv = require('dotenv');
+const multer = require('multer');
+
+dotenv.config();
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey,
+    },
+    region: bucketRegion
+})
 
 const router = express.Router();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
