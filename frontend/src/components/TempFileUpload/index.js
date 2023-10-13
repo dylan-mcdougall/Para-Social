@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { csrfFetch, getCsrfToken } from '../../store/csrf';
+import { csrfFetch } from '../../store/csrf';
 
 function TempFileUpload() {
 
@@ -10,7 +10,6 @@ function TempFileUpload() {
         const formData = new FormData();
         formData.append('image', file, file.name);
         formData.append('content_type', 'src');
-        formData.append('content_src', 'tempurl');
         const res = await csrfFetch('/api/rooms/1/messages', {
             method: 'POST',
             body: formData
