@@ -1,7 +1,5 @@
 'use strict';
 
-const { Community } = require('../models');
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,7 +7,8 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await Community.bulkCreate([
+    options.tableName = "Communities";
+    return queryInterface.bulkInsert(options, [
       {
         creator_id: 1,
         name: 'Demo Community',
