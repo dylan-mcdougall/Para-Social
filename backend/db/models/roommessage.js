@@ -46,6 +46,10 @@ module.exports = (sequelize, DataTypes) => {
     content_src: {
       type: DataTypes.TEXT,
       allowNull: true
+    },
+    content_src_name: {
+      type: DataTypes.TEXT,
+      allowNull: true
     }
   }, {
     sequelize,

@@ -1,7 +1,9 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Room, RoomMessage } = require('../../db/models');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const randomImageName = require('./helper');
 const dotenv = require('dotenv');
 
 dotenv.config();
@@ -36,6 +38,15 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     if (parseInt(targetMessage.user_id) !== req.user.id) return res.status(401).json({
         "errors": "Only the author of a message can delete it."
     });
+
+    if (targetMessage.content_type === 'src') {
+        const params = {
+            Bucket: bucketName,
+            Key: targetMessage.content_src_name
+        }
+        const command = new DeleteObjectCommand(params);
+        await s3.send(command);
+    }
 
     await targetMessage.destroy();
     return res.json({
@@ -77,11 +88,12 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
 
     const { content_type, content_message, content_src } = req.body;
 
+    let imageName;
     if (content_type === "src") {
-
+        imageName = randomImageName();
         const params = {
             Bucket: bucketName,
-            Key: req.file.originalname,
+            Key: imageName,
             Body: req.file.buffer,
             ContentType: req.file.mimetype
         }
@@ -96,7 +108,8 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
         user_id: req.user.id,
         content_type,
         content_message: content_message ? content_message : null,
-        content_src: content_src ? content_src : null
+        content_src: content_src ? content_src : null,
+        content_src_name: imageName ? imageName : null
     });
     if (!payload) return res.status(500).json({
         "errors": "There was an issue creating your message, please try again."
@@ -117,6 +130,18 @@ router.get('/:id', requireAuth, async (req, res) => {
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
+    for (const message of room.Messages) {
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key: message.content_src_name ? message.content_src_name : null
+        }
+        if (!getObjectParams.Key) {
+            continue
+        }
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
+        message.content_src = url;
+    }
 
     return res.json(room);
 })
