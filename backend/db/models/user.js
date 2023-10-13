@@ -12,13 +12,13 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       User.hasMany(
         models.Community,
-        { foreignKey: 'creator_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'creator_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
       User.belongsToMany(
         models.Community,
         { through: models.Membership, foreignKey: 'user_id', otherKey: 'community_id' }
       );
-      User.hasMany(models.Membership, { foreignKey: 'user_id', onDelete: 'CASCADE', hooks: true });
+      User.hasMany(models.Membership, { foreignKey: 'user_id', onDelete: 'CASCADE' });
       User.hasMany(models.RoomMessage, { foreignKey: 'user_id', otherKey: 'id' });
     }
   }
