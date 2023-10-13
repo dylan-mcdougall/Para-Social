@@ -41,8 +41,8 @@ module.exports = {
     }, options);
 
     await queryInterface.addIndex(options, {
-      unique: true,
-      fields: ['name', 'community_id']
+      fields: ['name', 'community_id'],
+      unique: true
     });
   },
   async down(queryInterface, Sequelize) {
