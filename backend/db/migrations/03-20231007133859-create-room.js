@@ -4,6 +4,7 @@ let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA; 
 }
+options.tableName = 'Rooms';
 
 module.exports = {
   async up(queryInterface, Sequelize) {
@@ -39,10 +40,10 @@ module.exports = {
       }
     }, options);
 
-    await queryInterface.addIndex('Rooms', {
+    await queryInterface.addIndex(options, {
       unique: true,
       fields: ['name', 'community_id']
-    }, options);
+    });
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Rooms';
