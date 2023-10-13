@@ -1,7 +1,5 @@
 'use strict';
 
-const { RoomMessage } = require('../models');
-
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,7 +7,8 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up (queryInterface, Sequelize) {
-    await RoomMessage.bulkCreate([
+    options.tableName = "RoomMessages"
+    return queryInterface.bulkInsert(options, [
       {
         room_id: 1,
         user_id: 1,
