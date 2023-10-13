@@ -47,7 +47,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "Rooms";
+    options.tableName = 'Rooms';
     return queryInterface.dropTable(options);
   }
 };

@@ -60,7 +60,7 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = "RoomMessages";
+    options.tableName = 'RoomMessages';
     return queryInterface.dropTable(options);
   }
 };
