@@ -42,7 +42,7 @@ module.exports = {
     await queryInterface.addIndex('Rooms', {
       unique: true,
       fields: ['name', 'community_id']
-    });
+    }, options);
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Rooms';
