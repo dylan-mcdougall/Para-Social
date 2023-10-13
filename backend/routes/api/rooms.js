@@ -3,7 +3,6 @@ const { requireAuth } = require('../../utils/auth');
 const { Room, RoomMessage } = require('../../db/models');
 const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
 const dotenv = require('dotenv');
-const multer = require('multer');
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
@@ -21,8 +20,6 @@ const s3 = new S3Client({
 
 const router = express.Router();
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
@@ -73,14 +70,26 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
 
 router.post('/:id/messages', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
+
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
 
     const { content_type, content_message, content_src } = req.body;
-    if (!content_type && (!content_src || !content_message)) return res.status(400).json({
-        "errors": "Please ensure the content type and message and/or src are included properly in the request body"
-    });
+
+    if (content_type === "src") {
+
+        const params = {
+            Bucket: bucketName,
+            Key: req.file.originalname,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype
+        }
+
+        const command = new PutObjectCommand(params)
+
+        await s3.send(command);
+    }
 
     const payload = await RoomMessage.create({
         room_id: req.params.id,

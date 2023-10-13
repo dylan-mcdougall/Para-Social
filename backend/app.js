@@ -5,6 +5,7 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -14,6 +15,28 @@ const { ValidationError } = require('sequelize');
 const routes = require('./routes');
 
 const app = express();
+
+app.use((req, res, next) => {
+    console.log('Request Headers:', req.headers);
+    next();
+});
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.use((req, res, next) => {
+    console.log('Before Multer - req.body:', req.body);
+    console.log('Before Multer - req.file:', req.file);
+    next();
+});
+
+app.use(upload.single('image'));
+
+app.use((req, res, next) => {
+    console.log('After Multer - req.body:', req.body);
+    console.log('After Multer - req.file:', req.file);
+    next();
+});
 
 app.use(morgan('dev'));
 app.use(cookieParser());
