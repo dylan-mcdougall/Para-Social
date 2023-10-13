@@ -32,11 +32,12 @@ module.exports = {
           },
           key: 'id'
         },
+        onDelete: 'CASCADE',
         allowNull: false
       },
-      role: {
+      status: {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
       createdAt: {
         allowNull: false,

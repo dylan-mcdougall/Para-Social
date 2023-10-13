@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Room.belongsTo(
         models.Community,
-        { as: 'Rooms', foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+        { as: 'Rooms', foreignKey: 'community_id', otherKey: 'id' }
       );
       Room.hasMany(
         models.RoomMessage,
@@ -35,6 +35,11 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Room',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    },
     indexes: [{
       unique: true,
       fields: ['name', 'community_id']

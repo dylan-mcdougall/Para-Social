@@ -12,11 +12,11 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       Membership.belongsTo(
         models.User,
-        { foreignKey: 'user_id', otherKey: 'id', onDelete: 'CASCADE', hooks: true }
+        { foreignKey: 'user_id', otherKey: 'id', onDelete: 'CASCADE' }
         );
       Membership.belongsTo(
         models.Community,
-        { foreignKey: 'community_id', otherKey: 'id', onDelete:'CASCADE', hooks: true }
+        { foreignKey: 'community_id', otherKey: 'id', onDelete:'CASCADE' }
         );
     }
   }
@@ -29,13 +29,21 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
-    role: {
+    status: {
       type: DataTypes.STRING,
-      allowNull: true
+      allowNull: false,
+      validate: {
+        isIn: [['pending', 'member', 'creator', 'moderator']]
+      }
     }
   }, {
     sequelize,
     modelName: 'Membership',
+    defaultScope: {
+      attributes: {
+        exclude: ['createdAt', 'updatedAt']
+      }
+    }
   });
   return Membership;
 };

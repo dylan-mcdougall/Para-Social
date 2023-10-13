@@ -12,31 +12,40 @@ module.exports = {
     await Membership.bulkCreate([
       {
         user_id: 1,
-        community_id: 1
+        community_id: 1,
+        status: 'creator'
       }, {
         user_id: 2,
-        community_id: 1
+        community_id: 1,
+        status: 'member'
       }, {
         user_id: 3,
-        community_id: 1
+        community_id: 1,
+        status: 'member'
       }, {
         user_id: 1,
-        community_id: 2
+        community_id: 2,
+        status: 'member'
       }, {
         user_id: 2,
-        community_id: 2
+        community_id: 2,
+        status: 'creator'
       }, {
         user_id: 3,
-        community_id: 2
+        community_id: 2,
+        status: 'member'
       }, {
         user_id: 1,
-        community_id: 3
+        community_id: 3,
+        status: 'pending'
       }, {
         user_id: 2,
-        community_id: 3
+        community_id: 3,
+        status: 'pending'
       }, {
         user_id: 3,
-        community_id: 3
+        community_id: 3,
+        status: 'creator'
       }
     ], { validate: true });
   },
