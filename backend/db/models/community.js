@@ -1,7 +1,7 @@
 'use strict';
-const {
-  Model
-} = require('sequelize');
+
+const { Model, Validator } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Community extends Model {
     /**
@@ -10,19 +10,52 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      // define association here
+      Community.belongsTo(
+        models.User,
+        { as: 'Creator', foreignKey: 'creator_id' }
+      );
+      Community.belongsToMany(
+        models.User,
+        { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'id' }
+      );
+      Community.hasMany(models.Membership);
+      Community.hasMany(
+        models.Room,
+        { foreignKey: 'community_id', otherKey: 'id' }
+      )
     }
   }
   Community.init({
     creator_id: {
-      type: DataTypes.INTEGER
-      
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
-    name: DataTypes.STRING,
-    description: DataTypes.STRING,
-    private: DataTypes.BOOLEAN,
-    free: DataTypes.BOOLEAN,
-    image_id: DataTypes.INTEGER
+    name: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      unique: true,
+      validate: {
+        len: [1, 80]
+      }
+    },
+    description: {
+      type: DataTypes.STRING,
+      allowNull: true,
+      validate: {
+        len: [1, 256]
+      }
+    },
+    private: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false
+    },
+    price: {
+      type: DataTypes.DECIMAL(10, 2),
+      allowNull: false,
+      validate: {
+        isNumeric: true
+      }
+  }
   }, {
     sequelize,
     modelName: 'Community',
