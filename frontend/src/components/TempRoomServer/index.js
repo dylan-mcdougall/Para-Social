@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 
+const port = process.env.REACT_APP_WS_URL || 'ws://localhost:8000';
+
 function TempRoomServer() {
     const sessionUser = useSelector(state => state.session.user);
     const [username, setUsername] = useState(sessionUser.username);
@@ -10,7 +12,7 @@ function TempRoomServer() {
     useEffect(() => {
         if (!username) return;
 
-        const ws = new WebSocket('ws://localhost:8000');
+        const ws = new WebSocket(port);
         webSocket.current = ws;
 
         ws.onopen = (e) => {
