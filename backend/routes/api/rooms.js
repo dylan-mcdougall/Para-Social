@@ -22,7 +22,6 @@ const s3 = new S3Client({
 
 const router = express.Router();
 
-
 router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
     if (!room) return res.status(404).json({

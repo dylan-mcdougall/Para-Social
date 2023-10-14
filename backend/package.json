@@ -33,7 +33,8 @@
     "pg": "^8.11.3",
     "sequelize": "^6.33.0",
     "sequelize-cli": "^6.6.1",
-    "validator": "^13.11.0"
+    "validator": "^13.11.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "dotenv-cli": "^7.3.0",
