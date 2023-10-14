@@ -7,6 +7,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import TempFileUpload from "./components/TempFileUpload";
 import TempRoomServer from "./components/TempRoomServer";
+import LandingPage from "./components/LandingPage";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path='/chatpage'>
             <TempRoomServer />
+          </Route>
+          <Route exact path='/'>
+            <LandingPage />
           </Route>
         </Switch>
       )}
