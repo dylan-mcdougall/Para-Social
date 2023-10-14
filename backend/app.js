@@ -5,6 +5,9 @@ const cors = require('cors');
 const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
+const multer = require('multer');
+const { createServer } =  require('https');
+const { WebSocketServer } = require('ws');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -14,6 +17,11 @@ const { ValidationError } = require('sequelize');
 const routes = require('./routes');
 
 const app = express();
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+app.use(upload.single('image'));
 
 app.use(morgan('dev'));
 app.use(cookieParser());
@@ -77,4 +85,22 @@ app.use((err, _req, res, _next) => {
     });
 });
 
-module.exports = app;
+const server = require('http').createServer(app);
+
+const wss = new WebSocketServer({ server })
+
+wss.on('connection', function connection(ws) {
+    ws.on('error', console.error);
+
+    ws.on('message', function message(data) {
+        console.log('received: %s', data);
+    });
+
+    ws.on('close', function close() {
+        console.log('connection closed')
+    })
+
+    ws.send('something');
+});
+
+module.exports = server;

@@ -1,15 +1,17 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Room, RoomMessage } = require('../../db/models');
-const { S3Client, PutObjectCommand } = require('@aws-sdk/client-s3');
+const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
+const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const randomImageName = require('./helper');
 const dotenv = require('dotenv');
-const multer = require('multer');
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
 const bucketRegion = process.env.BUCKET_REGION;
 const accessKey = process.env.ACCESS_KEY;
 const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
 
 const s3 = new S3Client({
     credentials: {
@@ -20,9 +22,6 @@ const s3 = new S3Client({
 })
 
 const router = express.Router();
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
 
 router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
@@ -39,6 +38,15 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     if (parseInt(targetMessage.user_id) !== req.user.id) return res.status(401).json({
         "errors": "Only the author of a message can delete it."
     });
+
+    if (targetMessage.content_type === 'src') {
+        const params = {
+            Bucket: bucketName,
+            Key: targetMessage.content_src_name
+        }
+        const command = new DeleteObjectCommand(params);
+        await s3.send(command);
+    }
 
     await targetMessage.destroy();
     return res.json({
@@ -73,21 +81,35 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
 
 router.post('/:id/messages', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
+
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
 
     const { content_type, content_message, content_src } = req.body;
-    if (!content_type && (!content_src || !content_message)) return res.status(400).json({
-        "errors": "Please ensure the content type and message and/or src are included properly in the request body"
-    });
+
+    let imageName;
+    if (content_type === "src") {
+        imageName = randomImageName();
+        const params = {
+            Bucket: bucketName,
+            Key: imageName,
+            Body: req.file.buffer,
+            ContentType: req.file.mimetype
+        }
+
+        const command = new PutObjectCommand(params)
+
+        await s3.send(command);
+    }
 
     const payload = await RoomMessage.create({
         room_id: req.params.id,
         user_id: req.user.id,
         content_type,
         content_message: content_message ? content_message : null,
-        content_src: content_src ? content_src : null
+        content_src: content_src ? content_src : null,
+        content_src_name: imageName ? imageName : null
     });
     if (!payload) return res.status(500).json({
         "errors": "There was an issue creating your message, please try again."
@@ -108,6 +130,18 @@ router.get('/:id', requireAuth, async (req, res) => {
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
+    for (const message of room.Messages) {
+        const getObjectParams = {
+            Bucket: bucketName,
+            Key: message.content_src_name ? message.content_src_name : null
+        }
+        if (!getObjectParams.Key) {
+            continue
+        }
+        const command = new GetObjectCommand(getObjectParams);
+        const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
+        message.content_src = url;
+    }
 
     return res.json(room);
 })
