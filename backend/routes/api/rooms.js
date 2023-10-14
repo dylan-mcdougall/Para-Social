@@ -79,6 +79,34 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
     return res.json(targetMessage);
 })
 
+router.post('/:id/image', requireAuth, async (req, res) => {
+    const room = await Room.findByPk(req.params.id);
+
+    if (!room) return res.status(404).json({
+        "errors": "No room associated with this id exists."
+    });
+
+    const imageName = randomImageName();
+    const params = {
+        Bucket: bucketName,
+        Key: imageName,
+        Body: req.file.buffer,
+        ContentType: req.file.mimetype
+    }
+
+    const command = new PutObjectCommand(params)
+
+    try {
+        await s3.send(command);
+        
+        return res.json({
+            content_src_name: imageName
+        });
+    } catch (error) {
+        console.error('There was an issue uploading this image, ', error)
+    }
+})
+
 router.post('/:id/messages', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
 
@@ -86,22 +114,7 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
 
-    const { content_type, content_message, content_src } = req.body;
-
-    let imageName;
-    if (content_type === "src") {
-        imageName = randomImageName();
-        const params = {
-            Bucket: bucketName,
-            Key: imageName,
-            Body: req.file.buffer,
-            ContentType: req.file.mimetype
-        }
-
-        const command = new PutObjectCommand(params)
-
-        await s3.send(command);
-    }
+    const { content_type, content_message, content_src, content_src_name } = req.body;
 
     const payload = await RoomMessage.create({
         room_id: req.params.id,
@@ -109,7 +122,7 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
         content_type,
         content_message: content_message ? content_message : null,
         content_src: content_src ? content_src : null,
-        content_src_name: imageName ? imageName : null
+        content_src_name: content_src_name ? content_src_name : null
     });
     if (!payload) return res.status(500).json({
         "errors": "There was an issue creating your message, please try again."
