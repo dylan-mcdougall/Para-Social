@@ -6,6 +6,7 @@ import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import TempFileUpload from "./components/TempFileUpload";
+import TempRoomServer from "./components/TempRoomServer";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,6 +28,9 @@ function App() {
           </Route>
           <Route path='/fakepage'>
             <TempFileUpload />
+          </Route>
+          <Route path='/chatpage'>
+            <TempRoomServer />
           </Route>
         </Switch>
       )}
