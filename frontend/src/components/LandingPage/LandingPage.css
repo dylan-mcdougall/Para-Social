@@ -1,0 +1,14 @@
+.landing-page-wrapper {
+    display: flex;
+    flex-direction: row;
+}
+
+.landing-page-left {
+    display: flex;
+    flex-direction: column;
+}
+
+.landing-page-right {
+    display: flex;
+    flex-direction: column;
+}

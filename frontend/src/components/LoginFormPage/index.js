@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import './LoginForm.css';
 
-function LoginFormPage() {
+function LoginFormPage({ login, setLogin }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
@@ -23,6 +23,9 @@ function LoginFormPage() {
       }
     );
   };
+  if (!login) {
+    return null
+  }
 
   return (
     <>
@@ -49,6 +52,7 @@ function LoginFormPage() {
         {errors.credential && <p>{errors.credential}</p>}
         <button type="submit">Log In</button>
       </form>
+      <button onClick={() => setLogin(false)}>Sign Up</button>
     </>
   );
 }
