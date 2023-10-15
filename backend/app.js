@@ -6,7 +6,6 @@ const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
-const { createServer } =  require('https');
 const { WebSocketServer } = require('ws');
 
 const { environment } = require('./config');
