@@ -23,10 +23,10 @@ function LandingPage() {
         landingRight = <SignupFormPage login={login} setLogin={setLogin} />
     }
 
-    if (sessionUser) {
-        history.push('/home');
-        return null
-    }
+    // if (sessionUser) {
+    //     history.push('/home');
+    //     return null
+    // }
     
     return (
         <div className='landing-page-wrapper'>
