@@ -5,6 +5,7 @@ import './CommunityPage.css'
 import { loadCommunity } from '../../store/community';
 import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
+import CommunityMembersBar from '../CommunityMembersBar';
 
 function CommunityPage({ isLoaded, sessionUser }) {
     const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function CommunityPage({ isLoaded, sessionUser }) {
                         <div>
                             <CommunityRoomsScroll isLoaded={isLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
                             <RoomDisplay isLoaded={isLoaded} />
+                            <CommunityMembersBar isLoaded={isLoaded} />
                         </div>
                     )}
                 </div>
