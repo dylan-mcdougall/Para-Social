@@ -4,6 +4,7 @@ import { useHistory } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
+import CommunityPage from '../CommunityPage';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function HomePage() {
     useEffect(() => {
         async function fetchData() {
             try {
-                await dispatch(sessionActions.userData())
+                dispatch(sessionActions.userData())
                 setIsLoaded(true)
             } catch (error) {
                 console.log('Error fetching data:', error);
@@ -36,7 +37,10 @@ function HomePage() {
     return (
         <div className='home-page-wrapper'>
             {isLoaded ? (
-                <CommunityScrollBar isLoaded={isLoaded} />
+                <>
+                <CommunityScrollBar sessionUser={sessionUser} isLoaded={isLoaded} />
+                <CommunityPage sessionUser={sessionUser} isLoaded={isLoaded} />
+                </>
             ) : (
                 <div>
                     <h1>Loading...</h1>

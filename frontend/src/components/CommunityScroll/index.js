@@ -3,21 +3,25 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './CommunityScroll.css'
 
-function CommunityScrollBar({ isLoaded }) {
+function CommunityScrollBar({ isLoaded, sessionUser }) {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
-
+    const [dataLoaded, setDataLoaded] = useState(false);
+    console.log('Community Scrollbar ', sessionUser);
 
     
     return (
         <div className='community-bar-wrapper'>
+            <ul className='community-bar-ul'>
             {isLoaded && (
-                <div>
-                    <p>
-                        some data
-                    </p>
-                </div>
+                sessionUser?.Communities?.map((community) => {
+                    return (
+                    <li className='community-item' key={community.id}>
+                        {community.name}
+                    </li>
+                    )
+                })
             )}
+            </ul>
         </div>
     )
 }
