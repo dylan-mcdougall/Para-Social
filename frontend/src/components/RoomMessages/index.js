@@ -3,44 +3,45 @@ import { useDispatch, useSelector } from 'react-redux';
 import './RoomMessages.css';
 import { loadRoom } from '../../store/rooms';
 
-function RoomMessages({ isLoaded, clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
-    const room = useSelector(state => state.room.room);
     const sessionUser = useSelector(state => state.session.user);
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
-        console.log('room object: ', room);
-        console.log('roomMessages: ', roomMessages)
-    }, [roomMessages]);
-
-    useEffect(() => {
-        if (clearMessages) {
-            setRoomMessages([]);
-            setClearMessages(false)
-        }
-    }, [displayRoom, clearMessages]);
-
-    useEffect(() => {
         dispatch(loadRoom(displayRoom));
         setDataLoaded(true)
-    }, [roomMessages]);
-
-    const combinedMessages = room?.Messages ? [...room.Messages, ...roomMessages] : roomMessages;
+        if (clearMessages) {
+            setRoomMessages([]);
+            setClearMessages(false);
+        }
+        if (!room?.Messages?.length) {
+            return;
+        }
+        roomMessages = roomMessages.filter(msg => !msg.tempId);
+    }, [displayRoom, clearMessages, setRoomMessages]);
 
     return (
         <>
-            {isLoaded && (
+            {dataLoaded && (
                 <div className='room-messages-wrapper'>
                     <ul className='room-messages-ul'>
                         <div>
-                            {combinedMessages.map((message, index) => {
-                                return (
-                                    <li className='message-item' key={message.id || index}>
-                                        {message?.content_message || message.data.content_message}
+                            {room?.Messages?.length ? (
+                                room.Messages.map((message) => (
+                                    <li className='message-item' key={message.id}>
+                                        {message?.content_message}
+                                        {message?.createdAt}
                                     </li>
-                                )
-                            })}
+                                ))
+                            ) : (
+                                roomMessages.map((message, index) => (
+                                    <li className='message-item' key={message.id || index}>
+                                        {message?.content_message || message?.data?.content_message}
+                                        {message?.createdAt || message?.data?.created}
+                                    </li>
+                                ))
+                            )}
                         </div>
                     </ul>
                 </div>

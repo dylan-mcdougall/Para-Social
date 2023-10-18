@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import RoomMessages from '../RoomMessages';
 import './RoomDisplay.css';
 import RoomMessageInput from '../RoomMessageInput';
+import { v4 as uuidv4 } from 'uuid';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
@@ -23,9 +24,8 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
         }
 
         ws.onmessage = (e) => {
-            console.log(e);
-            console.log('data test: ', e.data);
             const parsedData = JSON.parse(e.data);
+            parsedData.tempId = uuidv4();
             return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
         }
 
@@ -41,7 +41,7 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
         return function() {
             return webSocket.current = null;
         }
-    }, [displayRoom]);
+    }, [displayRoom, setRoomMessages, setClearMessages]);
     
     return (
         <div className='room-display-wrapper'>
@@ -49,7 +49,7 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
                 <>
                 {room?.name}
                 <div>
-                    <RoomMessages clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} isLoaded={isLoaded} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
+                    <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} isLoaded={isLoaded} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
                     <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} isLoaded={isLoaded} webSocket={webSocket} />
                 </div>
                 </>
