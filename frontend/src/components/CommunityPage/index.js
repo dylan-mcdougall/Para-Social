@@ -49,7 +49,7 @@ function CommunityPage({ isLoaded, sessionUser }) {
                     {dataLoaded && (
                         <div>
                             <CommunityRoomsScroll isLoaded={isLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
-                            <RoomDisplay isLoaded={isLoaded} />
+                            <RoomDisplay displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
                             <CommunityMembersBar isLoaded={isLoaded} />
                         </div>
                     )}

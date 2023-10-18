@@ -36,10 +36,6 @@ function TempRoomServer() {
         }
     }, [username]);
 
-    const updateUsername = (username) => {
-        setUsername(username);
-    }
-
     const handleSendMessage = (e) => {
         e.preventDefault();
         const newMessage = {

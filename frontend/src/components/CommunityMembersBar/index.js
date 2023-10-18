@@ -12,7 +12,7 @@ function CommunityMembersBar({ isLoaded }) {
             {isLoaded && (
                 community?.Members?.map((member) => {
                     return (
-                        <li className='member-item'>
+                        <li className='member-item' key={member.id}>
                             {member.username}
                         </li>
                     )
