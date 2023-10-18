@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
 
-function SignupFormPage() {
+function SignupFormPage({ login, setLogin }) {
   const dispatch = useDispatch();
   const sessionUser = useSelector((state) => state.session.user);
   const [email, setEmail] = useState("");
@@ -14,7 +14,7 @@ function SignupFormPage() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
 
-  if (sessionUser) return <Redirect to="/" />;
+  if (sessionUser) return <Redirect to="/home" />;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -39,6 +39,9 @@ function SignupFormPage() {
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };
+  if (login) {
+    return null
+  }
 
   return (
     <>
@@ -106,6 +109,7 @@ function SignupFormPage() {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
+      <button onClick={() => setLogin(true)}>Login</button>
     </>
   );
 }

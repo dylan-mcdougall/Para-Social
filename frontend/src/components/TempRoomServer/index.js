@@ -8,7 +8,7 @@ function TempRoomServer() {
     const [username, setUsername] = useState(sessionUser.username);
     const [message, setMessage] = useState('');
     const webSocket = useRef(null);
-    console.log(username);
+    
     useEffect(() => {
         if (!username) return;
 
@@ -35,10 +35,6 @@ function TempRoomServer() {
             if (webSocket.current !== null) webSocket.current.close();
         }
     }, [username]);
-
-    const updateUsername = (username) => {
-        setUsername(username);
-    }
 
     const handleSendMessage = (e) => {
         e.preventDefault();

@@ -6,8 +6,8 @@ const csurf = require('csurf');
 const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
-const { createServer } =  require('https');
 const { WebSocketServer } = require('ws');
+const { RoomMessage } = require('./db/models');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -89,18 +89,43 @@ const server = require('http').createServer(app);
 
 const wss = new WebSocketServer({ server })
 
+const messageQueue = [];
+
+async function processQueue() {
+    console.log(messageQueue);
+    while (messageQueue.length) {
+        const message = messageQueue.shift();
+        const { room_id, user_id, content_type, content_message, content_src, content_src_name } = message;
+        const payload = await RoomMessage.create({
+            room_id,
+            user_id,
+            content_type,
+            content_message,
+            content_src,
+            content_src_name
+        });
+        console.log('message created successfully', payload);
+    }
+    return console.log('Processing completed.');
+}
+
 wss.on('connection', function connection(ws) {
     ws.on('error', console.error);
 
     ws.on('message', function message(data) {
+        if (data instanceof Buffer) {
+            data = data.toString('utf8');
+        }
+        const parsedData = JSON.parse(data);
+        messageQueue.push(parsedData.data);
         console.log('received: %s', data);
+        ws.send(data);
+        processQueue();
     });
 
     ws.on('close', function close() {
         console.log('connection closed')
     })
-
-    ws.send('something');
 });
 
 module.exports = server;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -31,8 +31,10 @@ function Navigation({ isLoaded }){
     );
   }
 
+  const navClassName = "nav-wrapper" + (sessionUser ? " " : " hidden");
+
   return (
-    <ul>
+    <ul className={navClassName}>
       <li>
         <NavLink exact to="/">Home</NavLink>
       </li>

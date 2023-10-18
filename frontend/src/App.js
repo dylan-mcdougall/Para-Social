@@ -8,6 +8,7 @@ import Navigation from "./components/Navigation";
 import TempFileUpload from "./components/TempFileUpload";
 import TempRoomServer from "./components/TempRoomServer";
 import LandingPage from "./components/LandingPage";
+import HomePage from './components/HomePage';
 
 function App() {
   const dispatch = useDispatch();
@@ -32,6 +33,9 @@ function App() {
           </Route>
           <Route path='/chatpage'>
             <TempRoomServer />
+          </Route>
+          <Route path='/home'>
+            <HomePage />
           </Route>
           <Route exact path='/'>
             <LandingPage />

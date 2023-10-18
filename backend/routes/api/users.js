@@ -4,6 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
+const { Community } = require('../../db/models');
 
 const validateSignup = [
     check('email')
@@ -26,6 +27,24 @@ const validateSignup = [
   ];
 
 const router = express.Router();
+
+router.get('/current', requireAuth, async (req, res) => {
+  const user = req.user;
+  const detailedUser = await User.findOne({
+    where: {
+      id: user.id
+    },
+    include: [
+      { model: Community }
+    ]
+  });
+
+  if (!detailedUser) return res.status(404).json({
+    "errors": "An error has occurred, no data for this user exists."
+  });
+
+  return res.json(detailedUser);
+});
 
 router.post(
     '/',
