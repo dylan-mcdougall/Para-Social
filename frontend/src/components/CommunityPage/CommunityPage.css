@@ -1,0 +1,9 @@
+.community-page-wrapper {
+    display: flex;
+    height: 100%;
+}
+
+.community-page-content {
+    display: flex;
+    height: 100%;
+}

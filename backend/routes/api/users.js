@@ -28,8 +28,13 @@ const validateSignup = [
 
 const router = express.Router();
 
-router.get('/current', requireAuth, async (req, res) => {
+router.get('/current', async (req, res) => {
   const user = req.user;
+  if (!user) {
+    return res.status(401).json({
+      "errors": "No user logged in."
+    })
+  }
   const detailedUser = await User.findOne({
     where: {
       id: user.id

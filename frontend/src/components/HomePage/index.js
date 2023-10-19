@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
@@ -9,8 +9,8 @@ import CommunityPage from '../CommunityPage';
 function HomePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const history = useHistory();
     const [isLoaded, setIsLoaded] = useState(false);
+    const [displayCommunity, setDisplayCommunity] = useState(null);
 
     useEffect(() => {
         async function fetchData() {
@@ -18,28 +18,29 @@ function HomePage() {
                 dispatch(sessionActions.userData())
                 setIsLoaded(true)
             } catch (error) {
-                console.log('Error fetching data:', error);
+                console.log(error);
             }
         }   
         fetchData();
+    }, [dispatch]);
 
-        return () => {
-            setIsLoaded(false)
+    useEffect(() => {
+        if (sessionUser?.Communities?.length > 0) {
+            setDisplayCommunity(sessionUser.Communities[0].id);
         }
-    }, [dispatch])
+    }, [sessionUser, dispatch]);
 
-    // if (!sessionUser) {
-    //     history.push('/')
-    //     return
-    // }
+    if (!sessionUser) {
+        return <Redirect to='/' />
+    }
 
 
     return (
         <div className='home-page-wrapper'>
             {isLoaded ? (
                 <>
-                <CommunityScrollBar sessionUser={sessionUser} isLoaded={isLoaded} />
-                <CommunityPage sessionUser={sessionUser} isLoaded={isLoaded} />
+                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} sessionUser={sessionUser} isLoaded={isLoaded} />
+                <CommunityPage displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} sessionUser={sessionUser} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>

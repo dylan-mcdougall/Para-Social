@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './CommunityScroll.css'
 
-function CommunityScrollBar({ isLoaded, sessionUser }) {
+function CommunityScrollBar({ isLoaded, sessionUser, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const [dataLoaded, setDataLoaded] = useState(false);
-    console.log('Community Scrollbar ', sessionUser);
+    console.log('Community Scrollbar sessionUser ', sessionUser);
 
     
     return (
@@ -15,7 +15,7 @@ function CommunityScrollBar({ isLoaded, sessionUser }) {
             {isLoaded && (
                 sessionUser?.Communities?.map((community) => {
                     return (
-                    <li className='community-item' key={community.id}>
+                    <li className='community-item' onClick={() => setDisplayCommunity(community.id)} key={community.id}>
                         {community.name}
                     </li>
                     )

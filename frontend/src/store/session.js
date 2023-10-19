@@ -48,7 +48,6 @@ export const userData = () => async (dispatch) => {
     return data;
   } else {
     console.log(response.errors);
-    return response;
   }
 }
 

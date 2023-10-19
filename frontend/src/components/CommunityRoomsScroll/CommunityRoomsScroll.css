@@ -1,0 +1,11 @@
+.community-rooms-scroll-wrapper {
+    margin: 1rem;
+    max-width: 20%;
+    border: 1px solid black;
+}
+
+.room-item {
+    text-decoration: none;
+    list-style: none;
+    margin: 1rem;
+}

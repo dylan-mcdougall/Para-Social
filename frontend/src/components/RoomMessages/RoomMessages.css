@@ -1,0 +1,20 @@
+.room-messages-wrapper {
+    margin: 1rem;
+    border: 1px solid black;
+    height: 60vh;
+}
+
+.room-messages-ul {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    overflow-wrap: normal;
+    height: 60vh;
+    max-width: 50vw;
+}
+
+.message-item {
+    text-decoration: none;
+    list-style: none;
+    margin: 1rem;
+}

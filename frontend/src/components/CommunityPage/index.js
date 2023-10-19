@@ -7,17 +7,16 @@ import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
 import CommunityMembersBar from '../CommunityMembersBar';
 
-function CommunityPage({ isLoaded, sessionUser }) {
+function CommunityPage({ isLoaded, sessionUser, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const community = useSelector(state => state.community.community);
-    const communityId = sessionUser?.Communities?.[0]?.id;
     const [dataLoaded, setDataLoaded] = useState(false);
     const [displayRoom, setDisplayRoom] = useState(null);
 
     useEffect(() => {
         async function fetchCommunityData() {
             try {
-                await dispatch(loadCommunity(communityId))
+                await dispatch(loadCommunity(displayCommunity))
                 setDataLoaded(true);
             } catch (error) {
                 console.log('Error fetching community data: ', error);
@@ -34,7 +33,7 @@ function CommunityPage({ isLoaded, sessionUser }) {
         return () => {
             setDataLoaded(false)
         }
-    }, [dispatch, communityId]);
+    }, [dispatch, displayCommunity]);
 
     useEffect(() => {
         if (community?.Rooms?.length > 0) {
@@ -47,7 +46,7 @@ function CommunityPage({ isLoaded, sessionUser }) {
             {isLoaded && (
                 <div>
                     {dataLoaded && (
-                        <div>
+                        <div className='community-page-content'>
                             <CommunityRoomsScroll isLoaded={isLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
                             <RoomDisplay displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
                             <CommunityMembersBar isLoaded={isLoaded} />

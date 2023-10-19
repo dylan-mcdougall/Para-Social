@@ -19,7 +19,7 @@ function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, display
             return;
         }
         roomMessages = roomMessages.filter(msg => !msg.tempId);
-    }, [displayRoom, clearMessages, setRoomMessages]);
+    }, [displayRoom, clearMessages, roomMessages]);
 
     return (
         <>
@@ -31,14 +31,12 @@ function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, display
                                 room.Messages.map((message) => (
                                     <li className='message-item' key={message.id}>
                                         {message?.content_message}
-                                        {message?.createdAt}
                                     </li>
                                 ))
                             ) : (
                                 roomMessages.map((message, index) => (
                                     <li className='message-item' key={message.id || index}>
                                         {message?.content_message || message?.data?.content_message}
-                                        {message?.createdAt || message?.data?.created}
                                     </li>
                                 ))
                             )}
