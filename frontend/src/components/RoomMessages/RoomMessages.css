@@ -9,12 +9,17 @@
     flex-direction: column;
     overflow-y: scroll;
     overflow-wrap: normal;
-    height: 60vh;
-    max-width: 50vw;
+    /* height: 60vh;
+    max-width: 50vw; */
 }
 
 .message-item {
     text-decoration: none;
     list-style: none;
     margin: 1rem;
+}
+
+.testing-ws {
+    color: rgba(12, 232, 12, 0.4);
+    background-color: green;
 }

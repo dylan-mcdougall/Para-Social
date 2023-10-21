@@ -35,8 +35,10 @@ function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, display
                                 ))
                             ) : (
                                 roomMessages.map((message, index) => (
-                                    <li className='message-item' key={message.id || index}>
-                                        {message?.content_message || message?.data?.content_message}
+                                    <li className='message-item ws' key={message.id || index}>
+                                        <p className='testing-ws'>
+                                            {message?.content_message || message?.data?.content_message}
+                                            </p>
                                     </li>
                                 ))
                             )}

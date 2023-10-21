@@ -39,6 +39,13 @@ function SignupFormPage({ login, setLogin }) {
       confirmPassword: "Confirm Password field must be the same as the Password field"
     });
   };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.demoUser());
+    return null
+  }
+
   if (login) {
     return null
   }
@@ -109,6 +116,7 @@ function SignupFormPage({ login, setLogin }) {
         {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
       </form>
+      <a className="demo-user" onClick={handleClick}>Demo Login</a>
       <button onClick={() => setLogin(true)}>Login</button>
     </>
   );
