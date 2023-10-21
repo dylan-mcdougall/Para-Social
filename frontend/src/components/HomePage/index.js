@@ -9,8 +9,11 @@ import CommunityPage from '../CommunityPage';
 function HomePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const community = useSelector(state => state.community.community);
     const [isLoaded, setIsLoaded] = useState(false);
     const [displayCommunity, setDisplayCommunity] = useState(null);
+
+    console.log('Home Page community check: ', community);
 
     useEffect(() => {
         async function fetchData() {
@@ -22,13 +25,15 @@ function HomePage() {
             }
         }   
         fetchData();
-    }, [dispatch]);
+    }, [dispatch, community]);
 
     useEffect(() => {
+        if (community) return setDisplayCommunity(community.id);
         if (sessionUser?.Communities?.length > 0) {
             setDisplayCommunity(sessionUser.Communities[0].id);
         }
-    }, [sessionUser, dispatch]);
+
+    }, [sessionUser, community]);
 
     if (!sessionUser) {
         return <Redirect to='/' />
@@ -39,8 +44,8 @@ function HomePage() {
         <div className='home-page-wrapper'>
             {isLoaded ? (
                 <>
-                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} sessionUser={sessionUser} isLoaded={isLoaded} />
-                <CommunityPage displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} sessionUser={sessionUser} isLoaded={isLoaded} />
+                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityPage displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>

@@ -8,6 +8,8 @@ import App from './App';
 import { store } from './store';
 import * as sessionActions from "./store/session";
 
+import { ModalProvider, Modal } from './context/Modal';
+
 
 if (process.env.NODE_ENV !== 'production') {
   restoreCSRF();
@@ -19,11 +21,14 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root() {
   return (
-    <ReduxProvider store={store}>
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </ReduxProvider>
+    <ModalProvider>
+      <ReduxProvider store={store}>
+        <BrowserRouter>
+          <App />
+          <Modal />
+        </BrowserRouter>
+      </ReduxProvider>
+    </ModalProvider>
   );
 }
 

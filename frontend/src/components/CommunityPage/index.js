@@ -7,9 +7,11 @@ import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
 import CommunityMembersBar from '../CommunityMembersBar';
 
-function CommunityPage({ isLoaded, sessionUser, displayCommunity, setDisplayCommunity }) {
+function CommunityPage({ isLoaded, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
+    const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
+    const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [displayRoom, setDisplayRoom] = useState(null);
 
@@ -38,8 +40,10 @@ function CommunityPage({ isLoaded, sessionUser, displayCommunity, setDisplayComm
     useEffect(() => {
         if (community?.Rooms?.length > 0) {
             setDisplayRoom(community.Rooms[0].id);
+        } else {
+            setDisplayRoom(null);
         }
-    }, [community]);
+    }, [community, room]);
 
     return (
         <div className='community-page-wrapper'>

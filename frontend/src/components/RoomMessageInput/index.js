@@ -37,6 +37,8 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
         setClearMessages(true);
     }
 
+    if (!room) return null;
+
     return (
         <>
             <form onSubmit={e => handleSendMessage(e)}>

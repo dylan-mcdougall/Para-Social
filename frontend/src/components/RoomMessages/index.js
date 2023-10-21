@@ -9,6 +9,7 @@ function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, display
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
+        if (displayRoom === null) return
         dispatch(loadRoom(displayRoom));
         setDataLoaded(true)
         if (clearMessages) {

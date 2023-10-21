@@ -21,6 +21,21 @@ export const loadRoom = (id) => async (dispatch) => {
     }
 }
 
+export const newRoom = (room) => async (dispatch) => {
+    const { communityId, name } = room
+    const response = await csrfFetch(`/api/communities/${communityId}/rooms/new`, {
+        method: 'POST',
+        body: JSON.stringify({name})
+    });
+    if (response.ok) {
+        const data = await response.json()
+        dispatch(setRoom(data));
+        return data;
+    } else {
+        console.log('Errors while creating room: ', response)
+    }
+}
+
 const initialState = { room: null };
 
 const roomReducer = (state = initialState, action) => {

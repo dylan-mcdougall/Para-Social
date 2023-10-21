@@ -215,6 +215,15 @@ router.post('/', requireAuth, async (req, res) => {
         const { name, description, private, price } = req.body;
         const creator_id = req.user.id;
         const community = await Community.create({ creator_id, name, description, private, price });
+        if (!community) {
+            return res.status(500).json({
+                "errors": "An error occurred when creating your community, try again."
+            });
+        }
+        const membership = await Membership.create({ user_id: creator_id, community_id: community.id, status: 'creator' });
+        if (!membership) return res.status(500).json({
+            "errors": "An error occurred when assigning a membership between you and the created community, please contact an admin."
+        });
 
         return res.json(community);
     }

@@ -16,6 +16,7 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
     const [clearMessages, setClearMessages] = useState(false);
 
     useEffect(() => {
+        if (!room) return
         const ws = new WebSocket(wsUrl);
         webSocket.current = ws;
 
@@ -47,11 +48,19 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
         <div className='room-display-wrapper'>
             {isLoaded && (
                 <>
-                {room?.name}
-                <div>
-                    <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} isLoaded={isLoaded} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
-                    <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} isLoaded={isLoaded} webSocket={webSocket} />
-                </div>
+                {room ? (
+                    <>
+                    {room.name}
+                    <div>
+                        <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} isLoaded={isLoaded} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
+                        <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} isLoaded={isLoaded} webSocket={webSocket} />
+                    </div>
+                    </>
+                ) : (
+                    <>
+                    <p>Please create a room to get started</p>
+                    </>
+                )}
                 </>
             )}
         </div>

@@ -17,7 +17,7 @@ const removeCommunity = () => {
 }
 
 export const loadCommunity = (id) => async (dispatch) => {
-    const response = await csrfFetch(`/api/community/${id}`);
+    const response = await csrfFetch(`/api/communities/${id}`);
     if (response.ok) {
         const data = await response.json();
         console.log('community fetch ', data);
@@ -25,6 +25,27 @@ export const loadCommunity = (id) => async (dispatch) => {
         return data
     } else {
         console.log(response.errors);
+    }
+}
+
+export const newCommunity = (community) => async (dispatch) => {
+    const { creator_id, name, description, privacy, price } = community;
+    const response = await csrfFetch('/api/communities', {
+        method: "POST",
+        body: JSON.stringify({
+            creator_id,
+            name,
+            description,
+            private: privacy,
+            price
+        })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setCommunity(data));
+        return data;
+    } else {
+        console.log('Errors while creating community: ', response);
     }
 }
 
