@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
+function RoomDisplay({ displayRoom, setDisplayRoom, roomDataLoaded }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
@@ -42,25 +42,21 @@ function RoomDisplay({ isLoaded, displayRoom, setDisplayRoom }) {
         return function() {
             return webSocket.current = null;
         }
-    }, [displayRoom, setRoomMessages, setClearMessages]);
+    }, [displayRoom, setRoomMessages, setClearMessages, roomDataLoaded]);
     
     return (
         <div className='room-display-wrapper'>
-            {isLoaded && (
+            {roomDataLoaded ? (
                 <>
-                {room ? (
-                    <>
                     {room.name}
                     <div>
-                        <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} isLoaded={isLoaded} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
-                        <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} isLoaded={isLoaded} webSocket={webSocket} />
+                        <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
+                        <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
                     </div>
-                    </>
-                ) : (
-                    <>
+                </>
+            ) : (
+                <>
                     <p>Please create a room to get started</p>
-                    </>
-                )}
                 </>
             )}
         </div>

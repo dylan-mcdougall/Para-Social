@@ -5,38 +5,39 @@ import CreateRoomModal from '../CreateRoomModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
 
-function CommunityRoomsScroll({ isLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
+    const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    useEffect(() => {
-        async function fetchRoomData() {
-            try {
-                await dispatch(loadRoom(displayRoom));
-                setDataLoaded(true)
-            } catch (error) {
-                console.log('Error fetching room data: ', error)
-            }
-        }
+    // useEffect(() => {
+    //     async function fetchRoomData() {
+    //         try {
+    //             await dispatch(loadRoom(displayRoom));
+    //             setDataLoaded(true)
+    //         } catch (error) {
+    //             console.log('Error fetching room data: ', error)
+    //         }
+    //     }
 
-        if (!displayRoom) return setDataLoaded(false);
+    //     if (!displayRoom) return setDataLoaded(false);
         
-        fetchRoomData();
+    //     fetchRoomData();
 
-        return () => {
-            setDataLoaded(false)
-        }
+    //     return () => {
+    //         setDataLoaded(false)
+    //     }
 
-    }, [dispatch, displayRoom, sessionUser.Communities])
+    // }, [dispatch, displayRoom, sessionUser])
 
     if (!community) return null;
     
     return (
         <div className='community-rooms-scroll-wrapper'>
             <ul className='community-rooms-ul'>
-                {dataLoaded && (
+                {roomDataLoaded && (
                     community?.Rooms?.length ? community?.Rooms?.map((room) => {
                         return (
                             <li className='room-item' key={room.id}>

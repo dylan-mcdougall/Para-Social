@@ -3,17 +3,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
+import { loadCommunity } from '../../store/community';
 
-function CommunityScrollBar({ isLoaded, displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
-        if (!community) setDataLoaded(false);
-        else setDataLoaded(true)
-    }, [community])
+        dispatch(loadCommunity(displayCommunity))
+        setDataLoaded(true)
+    }, [setDisplayCommunity])
     
     return (
         <div className='community-bar-wrapper'>

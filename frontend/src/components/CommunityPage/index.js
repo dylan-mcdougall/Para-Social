@@ -2,60 +2,45 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import './CommunityPage.css'
-import { loadCommunity } from '../../store/community';
+import { loadRoom } from '../../store/rooms';
 import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
 import CommunityMembersBar from '../CommunityMembersBar';
 
-function CommunityPage({ isLoaded, displayCommunity, setDisplayCommunity }) {
+function CommunityPage({ community, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const community = useSelector(state => state.community.community);
     const room = useSelector(state => state.room.room);
-    const [dataLoaded, setDataLoaded] = useState(false);
-    const [displayRoom, setDisplayRoom] = useState(null);
+    const [roomDataLoaded, setRoomDataLoaded] = useState(false);
+
+    console.log('Community Page community state: ', community);
+    console.log('Community Page room state: ', room);
 
     useEffect(() => {
-        async function fetchCommunityData() {
+        setDisplayRoom(community?.Rooms[0]?.id || null)
+    }, [community])
+
+    useEffect(() => {
+        async function fetchRoomData() {
             try {
-                await dispatch(loadCommunity(displayCommunity))
-                setDataLoaded(true);
+                await dispatch(loadRoom(displayRoom));
+                setRoomDataLoaded(true)
             } catch (error) {
-                console.log('Error fetching community data: ', error);
+                console.log('Error fetching room data: ', error)
             }
         }
         
-        
-        if (!sessionUser.Communities) {
-            return setDataLoaded(false);
-        }
-        
-        fetchCommunityData()
+        fetchRoomData();
+    }, [displayRoom, community, dataLoaded])
 
-        return () => {
-            setDataLoaded(false)
-        }
-    }, [dispatch, displayCommunity]);
-
-    useEffect(() => {
-        if (community?.Rooms?.length > 0) {
-            setDisplayRoom(community.Rooms[0].id);
-        } else {
-            setDisplayRoom(null);
-        }
-    }, [community, room]);
 
     return (
         <div className='community-page-wrapper'>
-            {isLoaded && (
-                <div>
-                    {dataLoaded && (
-                        <div className='community-page-content'>
-                            <CommunityRoomsScroll isLoaded={isLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
-                            <RoomDisplay displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
-                            <CommunityMembersBar isLoaded={isLoaded} />
-                        </div>
-                    )}
+            {dataLoaded && (
+                <div className='community-page-content'>
+                    <CommunityRoomsScroll roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
+                    <RoomDisplay roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
+                    <CommunityMembersBar />
                 </div>
             )}
         </div>

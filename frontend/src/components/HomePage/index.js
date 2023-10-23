@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import * as sessionActions from '../../store/session';
+import { loadCommunity } from '../../store/community';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
@@ -11,7 +12,9 @@ function HomePage() {
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
     const [isLoaded, setIsLoaded] = useState(false);
-    const [displayCommunity, setDisplayCommunity] = useState(null);
+    const [dataLoaded, setDataLoaded] = useState(false);
+    const [displayCommunity, setDisplayCommunity] = useState(1);
+    const [displayRoom, setDisplayRoom] = useState(null);
 
     console.log('Home Page community check: ', community);
 
@@ -35,6 +38,23 @@ function HomePage() {
 
     }, [sessionUser, community]);
 
+    useEffect(() => {
+        async function fetchCommunityData() {
+            try {
+                await dispatch(loadCommunity(displayCommunity))
+                setDataLoaded(true)
+            } catch (error) {
+                console.log('Error fetching community data: ', error);
+            }
+        }
+        
+        fetchCommunityData()
+
+        return () => {
+            setDataLoaded(false)
+        }
+    }, [dispatch, displayCommunity, isLoaded]);
+
     if (!sessionUser) {
         return <Redirect to='/' />
     }
@@ -45,7 +65,7 @@ function HomePage() {
             {isLoaded ? (
                 <>
                 <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
-                <CommunityPage displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} community={community} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>
