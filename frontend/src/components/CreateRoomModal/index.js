@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { newRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal';
+import { loadCommunity } from '../../store/community';
 
 function CreateRoomModal({ communityId }) {
     const dispatch = useDispatch();
@@ -17,6 +18,7 @@ function CreateRoomModal({ communityId }) {
             name
         }))
         .then(() => {
+            dispatch(loadCommunity(communityId))
             closeModal()
         })
         .catch(

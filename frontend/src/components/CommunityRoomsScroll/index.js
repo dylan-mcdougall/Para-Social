@@ -22,7 +22,7 @@ function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
                         return (
                             <li className='room-item' key={room.id}>
                                 <div className='room-navigation' onClick={() => setDisplayRoom(room.id)}>
-                                    {room.name}
+                                    {room?.name}
                                 </div>
                             </li>
                         )
