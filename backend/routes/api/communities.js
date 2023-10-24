@@ -197,7 +197,7 @@ router.patch('/:id', requireAuth, async (req, res) => {
     await community.update({
         name,
         description,
-        private,
+        private: privacy,
         price
     });
 

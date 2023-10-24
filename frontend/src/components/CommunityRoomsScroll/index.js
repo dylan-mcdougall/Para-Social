@@ -4,6 +4,7 @@ import { loadRoom } from '../../store/rooms';
 import CreateRoomModal from '../CreateRoomModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
+import UpdateRoomModal from '../UpdateRoomModal';
 
 function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
@@ -23,6 +24,9 @@ function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
                             <li className='room-item' key={room.id}>
                                 <div className='room-navigation' onClick={() => setDisplayRoom(room.id)}>
                                     {room?.name}
+                                    <OpenModalButton
+                                    buttonText={'...'}
+                                    modalComponent={() => <UpdateRoomModal communityId={community.id} roomId={room.id} />} />
                                 </div>
                             </li>
                         )

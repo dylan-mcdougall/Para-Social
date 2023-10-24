@@ -4,6 +4,7 @@ import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
 import { loadCommunity } from '../../store/community';
+import UpdateCommunityModal from '../UpdateCommunityModal';
 
 function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -24,6 +25,9 @@ function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
                     return (
                     <li className='community-item' onClick={() => setDisplayCommunity(community.id)} key={community.id}>
                         {community.name}
+                        <OpenModalButton
+                        buttonText={'...'}
+                        modalComponent={() => <UpdateCommunityModal communityId={community.id} />} />
                     </li>
                     )
                 })
