@@ -17,8 +17,8 @@ function CommunityPage({ community, dataLoaded, displayRoom, setDisplayRoom }) {
     console.log('Community Page room state: ', room);
 
     useEffect(() => {
-        setDisplayRoom(community?.Rooms[0]?.id || null)
-    }, [community])
+        setDisplayRoom(room?.id || community?.Rooms[0]?.id || null)
+    }, [community, room])
 
     useEffect(() => {
         async function fetchRoomData() {
@@ -36,6 +36,7 @@ function CommunityPage({ community, dataLoaded, displayRoom, setDisplayRoom }) {
 
     return (
         <div className='community-page-wrapper'>
+            <button onClick={handleDelete}>Delete Community</button>
             {dataLoaded && (
                 <div className='community-page-content'>
                     <CommunityRoomsScroll roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />

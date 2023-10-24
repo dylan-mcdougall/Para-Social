@@ -49,6 +49,39 @@ export const newCommunity = (community) => async (dispatch) => {
     }
 }
 
+export const updateCommunity = (community) => async (dispatch) => {
+    const { communityId, name, description, privacy, price } = community;
+    const response = await csrfFetch(`/api/communities/${communityId}`, {
+        method: 'PATCH',
+        body: JSON.stringify({
+            name,
+            description,
+            private: privacy,
+            price
+        })
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(setCommunity(data));
+        return data;
+    } else {
+        console.log('Errors while updating community: ', response);
+    }
+}
+
+export const deleteCommunity = (communityId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/communities/${communityId}`, {
+        method: "DELETE"
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(removeCommunity())
+        return data;
+    } else {
+        console.log("Errors while deleting community: ", response)
+    }
+}
+
 const initialState = { community: null };
 
 const communityReducer = (state = initialState, action) => {
@@ -57,6 +90,10 @@ const communityReducer = (state = initialState, action) => {
         case SET_COMMUNITY:
             newState = Object.assign({}, state);
             newState.community = action.payload;
+            return newState;
+        case REMOVE_COMMUNITY:
+            newState = Object.assign({}, state);
+            newState.community = null;
             return newState;
         default:
             return state;

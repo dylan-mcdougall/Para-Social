@@ -11,6 +11,7 @@ function HomePage() {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
+    const room = useSelector(state => state.room.room)
     const [isLoaded, setIsLoaded] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [displayCommunity, setDisplayCommunity] = useState(1);

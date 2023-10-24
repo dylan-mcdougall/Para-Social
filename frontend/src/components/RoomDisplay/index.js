@@ -42,7 +42,7 @@ function RoomDisplay({ displayRoom, setDisplayRoom, roomDataLoaded }) {
         return function() {
             return webSocket.current = null;
         }
-    }, [displayRoom, setRoomMessages, setClearMessages, roomDataLoaded]);
+    }, [displayRoom, setRoomMessages, setClearMessages, room]);
     
     return (
         <div className='room-display-wrapper'>

@@ -182,6 +182,28 @@ router.get('/:id/rooms', requireAuth, async (req, res) => {
     return res.json(targetRooms);
 })
 
+router.patch('/:id', requireAuth, async (req, res) => {
+    const { name, description, privacy, price } = req.body;
+    const community = await Community.findByPk(req.params.id);
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    if (community.creator_id !== req.user.id) {
+        return res.status(401).json({
+            "errors": "Forbidden"
+        });
+    }
+
+    await community.update({
+        name,
+        description,
+        private,
+        price
+    });
+
+    return res.json(community)
+})
+
 router.delete('/:id', requireAuth, async (req, res) => {
     const community = await Community.findByPk(req.params.id);
     if (!community) return res.status(404).json({

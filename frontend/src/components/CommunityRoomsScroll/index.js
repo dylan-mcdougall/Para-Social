@@ -12,26 +12,6 @@ function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    // useEffect(() => {
-    //     async function fetchRoomData() {
-    //         try {
-    //             await dispatch(loadRoom(displayRoom));
-    //             setDataLoaded(true)
-    //         } catch (error) {
-    //             console.log('Error fetching room data: ', error)
-    //         }
-    //     }
-
-    //     if (!displayRoom) return setDataLoaded(false);
-        
-    //     fetchRoomData();
-
-    //     return () => {
-    //         setDataLoaded(false)
-    //     }
-
-    // }, [dispatch, displayRoom, sessionUser])
-
     if (!community) return null;
     
     return (
