@@ -1,0 +1,13 @@
+.community-bar-wrapper {
+    margin: 1rem;
+    max-width: 15%;
+    border: 1px solid black;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+.community-item {
+    text-decoration: none;
+    list-style: none;
+    margin: 1rem;
+}

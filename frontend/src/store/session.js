@@ -39,6 +39,21 @@ export const login = (user) => async (dispatch) => {
   return response;
 };
 
+export const demoUser = () => async (dispatch) => {
+  const [credential, password] = ['Demo-lition', 'password'];
+  const response = await csrfFetch("/api/session", {
+    method: "POST",
+    body: JSON.stringify({
+      credential,
+      password,
+    }),
+  });
+  const data = await response.json();
+  dispatch(setUser(data.user));
+  console.log("Login successful");
+  return response;
+}
+
 export const userData = () => async (dispatch) => {
   const response = await csrfFetch('/api/users/current');
   if (response.ok) {
@@ -48,7 +63,6 @@ export const userData = () => async (dispatch) => {
     return data;
   } else {
     console.log(response.errors);
-    return response;
   }
 }
 

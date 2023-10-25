@@ -14,7 +14,7 @@ router.use(restoreUser);
 
 router.use('/session', sessionRouter);
 router.use('/users', usersRouter);
-router.use('/community', communitiesRouter);
+router.use('/communities', communitiesRouter);
 router.use('/rooms', roomsRouter);
 
 router.post('/test', (req, res) => {

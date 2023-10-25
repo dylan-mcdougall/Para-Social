@@ -1,29 +1,36 @@
 import React, { useState } from "react";
 import * as sessionActions from "../../store/session";
 import { useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import { Redirect} from "react-router-dom";
 import './LoginForm.css';
 
 function LoginFormPage({ login, setLogin }) {
   const dispatch = useDispatch();
-  const history = useHistory();
   const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
 
+  if (sessionUser) return <Redirect to="/home" />;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
     return dispatch(sessionActions.login({ credential, password }))
-    .then(() => history.push('/home'))
     .catch(
-      async (res) => {
-        const data = await res.json();
+      async (response) => {
+        const data = await response.json();
         if (data && data.errors) setErrors(data.errors);
       }
     );
   };
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    dispatch(sessionActions.demoUser());
+    return null
+  }
+
   if (!login) {
     return null
   }
@@ -51,6 +58,7 @@ function LoginFormPage({ login, setLogin }) {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
+        <a className="demo-user" onClick={handleClick}>Demo Login</a>
         <button type="submit">Log In</button>
       </form>
       <button onClick={() => setLogin(false)}>Sign Up</button>
