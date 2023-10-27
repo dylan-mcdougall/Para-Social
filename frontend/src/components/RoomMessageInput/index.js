@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { csrfFetch } from '../../store/csrf';
 import './RoomMessageInput.css';
+
+const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
 function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages }) {
     const dispatch = useDispatch();
@@ -12,10 +14,15 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
     const [content_type, setContent_type] = useState('text');
     const [content_src, setContent_src] = useState(null);
     const [content_src_name, setContent_src_name] = useState(null);
-    const [file, setFile] = useState('')
-
+    const fileRef = useRef(null);
+    
+    if (webSocket.current === null) {
+        const ws = new WebSocket(wsUrl);
+        webSocket.current = ws;
+    }
+    
     const onFileUpload = async (e) => {
-        e.preventDefault();
+        const file = e.target.files[0]
         const formData = new FormData();
         formData.append('image', file, file.name);
         formData.append('content_type', 'src');
@@ -29,8 +36,7 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
         setContent_src_name(data.content_src_name);
     }
 
-    const handleRemoveImage = async (e) => {
-        e.preventDefault();
+    const handleRemoveImage = async () => {
         setContent_type('text');
         setContent_src(null);
         setContent_src_name(null);
@@ -66,12 +72,16 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
 
         console.log(`Sending data: ${jsonMessage}`);
 
+
         webSocket.current.send(jsonMessage);
         setMessage('');
         setClearMessages(true);
         setContent_type('text');
         setContent_src(null);
         setContent_src_name(null);
+        if (fileRef.current) {
+            fileRef.current.value = ''
+        }
     }
 
     if (!room) return null;
@@ -86,13 +96,14 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
                 <button type='submit'>Submit</button>
             </form>
             <form onSubmit={onFileUpload}>
-                <input type='file' formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => setFile(e.target.files[0])} />
-                <button type='submit'>
-                    Upload
-                </button>
-                <button onClick={(e) => {handleRemoveImage(e)}}>
-                    Remove Image
-                </button>
+                <input type='file' ref={fileRef} formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => onFileUpload(e)} />
+                {content_src && (
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                        <img src={content_src} alt="Thumbnail" style={{ width: '50px', height: '50px' }} />
+                        <button style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
+                    </div>
+                )}
+
             </form>
         </>
     )

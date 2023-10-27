@@ -6,10 +6,11 @@ import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ isLoaded, room, clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ isLoaded, clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
+    const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {

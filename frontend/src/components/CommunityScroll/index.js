@@ -14,9 +14,10 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
+        if (!displayCommunity) return
         dispatch(loadCommunity(displayCommunity))
         setDataLoaded(true)
-    }, [setDisplayCommunity]);
+    }, [displayCommunity]);
 
     const handleClick = async (communityId) => {
         await setDisplayCommunity(communityId)
@@ -41,7 +42,7 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
             </ul>
             <OpenModalButton
                 buttonText={'+'}
-                modalComponent={() => <CreateCommunityModal />} />
+                modalComponent={() => <CreateCommunityModal  />} />
         </div>
     )
 }

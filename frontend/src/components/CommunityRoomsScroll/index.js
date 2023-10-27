@@ -8,7 +8,7 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 
-function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ setClearMessages, webSocket, roomDataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -17,8 +17,11 @@ function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
     console.log('Room scroll sessionUser check: ', sessionUser)
 
     const handleClick = (roomId) => {
+        setClearMessages(true)
+        if (webSocket.current) {
+            webSocket.current.close()
+        }
         setDisplayRoom(roomId)
-        removeRoom()
     }
 
     if (!community) return null;
@@ -58,7 +61,7 @@ function CommunityRoomsScroll({ roomDataLoaded, displayRoom, setDisplayRoom }) {
             </ul>
             <OpenModalButton
                 buttonText={'+'}
-                modalComponent={() => <CreateRoomModal communityId={community.id} />} />
+                modalComponent={() => <CreateRoomModal webSocket={webSocket} communityId={community.id} />} />
         </div>
     )
 }

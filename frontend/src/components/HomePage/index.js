@@ -6,6 +6,7 @@ import { loadCommunity } from '../../store/community';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
+import { removeRoom } from '../../store/rooms';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -14,7 +15,7 @@ function HomePage() {
     const room = useSelector(state => state.room.room)
     const [isLoaded, setIsLoaded] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [displayCommunity, setDisplayCommunity] = useState(1);
+    const [displayCommunity, setDisplayCommunity] = useState(null);
     const [displayRoom, setDisplayRoom] = useState(null);
 
     console.log('Home Page community check: ', community);
@@ -29,17 +30,24 @@ function HomePage() {
             }
         }   
         fetchData();
-    }, [dispatch, community]);
+        dispatch(removeRoom())
+        setDisplayRoom(null)
+    }, [community]);
 
     useEffect(() => {
-        if (community) return setDisplayCommunity(community.id);
-        if (sessionUser?.Communities?.length > 0) {
-            setDisplayCommunity(sessionUser.Communities[0].id);
+        if (community) {
+            setDisplayRoom(community?.Rooms[0]?.id || null)
+            setDisplayCommunity(community?.id)
+        } else {
+            if (sessionUser?.Communities?.length > 0) {
+                setDisplayCommunity(sessionUser.Communities[0].id || null);
+            }
         }
 
     }, [sessionUser, community]);
 
     useEffect(() => {
+        if (!displayCommunity) return 
         async function fetchCommunityData() {
             try {
                 await dispatch(loadCommunity(displayCommunity))
@@ -48,13 +56,17 @@ function HomePage() {
                 console.log('Error fetching community data: ', error);
             }
         }
-        
         fetchCommunityData()
 
         return () => {
             setDataLoaded(false)
         }
-    }, [dispatch, displayCommunity, isLoaded]);
+    }, [displayCommunity, isLoaded]);
+
+    useEffect(() => {
+        dispatch(removeRoom())
+        setDisplayRoom(null)
+    }, [community])
 
     if (!sessionUser) {
         return <Redirect to='/' />
@@ -66,7 +78,7 @@ function HomePage() {
             {isLoaded ? (
                 <>
                 <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
-                <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} community={community} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>

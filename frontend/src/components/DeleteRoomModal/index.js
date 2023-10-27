@@ -4,7 +4,7 @@ import { useModal } from '../../context/Modal';
 import { deleteRoom } from '../../store/rooms';
 import { loadCommunity } from '../../store/community';
 
-function DeleteRoomModal({ setClearMessages, setDisplayRoom, roomId }) {
+function DeleteRoomModal({ setDisplayRoom, roomId }) {
     const dispatch = useDispatch();
     const community = useSelector(state => state.community.community);
     const { closeModal } = useModal();
@@ -12,7 +12,6 @@ function DeleteRoomModal({ setClearMessages, setDisplayRoom, roomId }) {
     const handleDelete = () => {
         dispatch(deleteRoom(community.id, roomId));
         dispatch(loadCommunity(community.id))
-        setClearMessages(true);
         setDisplayRoom(community?.Rooms[0]?.id);
         closeModal()
     }

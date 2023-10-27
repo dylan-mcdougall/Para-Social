@@ -132,6 +132,10 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
 
     const { content_type, content_message, content_src, content_src_name } = req.body;
 
+    if (!content_message && !content_src) return res.status(400).json({
+        'errors': 'Please include either a message or an image.'
+    });
+
     const payload = await RoomMessage.create({
         room_id: req.params.id,
         user_id: req.user.id,
