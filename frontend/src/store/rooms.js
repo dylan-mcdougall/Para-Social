@@ -10,7 +10,7 @@ const setRoom = (room) => {
     }
 }
 
-const removeRoom = () => {
+export const removeRoom = () => {
     return {
         type: REMOVE_ROOM,
     }
@@ -68,6 +68,18 @@ export const deleteRoom = (communityId, roomId) => async (dispatch) => {
         return data;
     } else {
         console.log('Errors while deleting room: ', response)
+    }
+}
+
+export const deleteRoomMessage = (roomId, messageId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/rooms/${roomId}/messages/${messageId}`, {
+        method: 'DELETE'
+    })
+    if (response.ok) {
+        const data = response.json()
+        return data
+    } else {
+        console.log('Errors while deleting message: ', response);
     }
 }
 

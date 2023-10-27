@@ -4,7 +4,7 @@ import { newRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal';
 import { loadCommunity } from '../../store/community';
 
-function CreateRoomModal({ communityId }) {
+function CreateRoomModal({ webSocket, communityId }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState({});
@@ -18,6 +18,9 @@ function CreateRoomModal({ communityId }) {
             name
         }))
         .then(() => {
+            if (webSocket.current) {
+                webSocket.current.close()
+            }
             dispatch(loadCommunity(communityId))
             closeModal()
         })

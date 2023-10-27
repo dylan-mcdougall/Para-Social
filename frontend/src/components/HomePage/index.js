@@ -6,6 +6,7 @@ import { loadCommunity } from '../../store/community';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
+import { removeRoom } from '../../store/rooms';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -14,32 +15,36 @@ function HomePage() {
     const room = useSelector(state => state.room.room)
     const [isLoaded, setIsLoaded] = useState(false);
     const [dataLoaded, setDataLoaded] = useState(false);
-    const [displayCommunity, setDisplayCommunity] = useState(1);
+    const [displayCommunity, setDisplayCommunity] = useState(null);
     const [displayRoom, setDisplayRoom] = useState(null);
+    const [allowRoom, setAllowRoom] = useState(false);
 
     console.log('Home Page community check: ', community);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                dispatch(sessionActions.userData())
+                await dispatch(sessionActions.userData())
                 setIsLoaded(true)
             } catch (error) {
                 console.log(error);
             }
         }   
         fetchData();
-    }, [dispatch, community]);
+    }, [community]);
 
     useEffect(() => {
-        if (community) return setDisplayCommunity(community.id);
-        if (sessionUser?.Communities?.length > 0) {
-            setDisplayCommunity(sessionUser.Communities[0].id);
+        if (isLoaded) {
+            if (community) {
+                setDisplayCommunity(community.id)
+            } else {
+                setDisplayCommunity(sessionUser?.Communities[0]?.id || null)
+            }
         }
-
-    }, [sessionUser, community]);
+    }, [sessionUser, isLoaded])
 
     useEffect(() => {
+        if (!displayCommunity) return 
         async function fetchCommunityData() {
             try {
                 await dispatch(loadCommunity(displayCommunity))
@@ -48,13 +53,19 @@ function HomePage() {
                 console.log('Error fetching community data: ', error);
             }
         }
-        
-        fetchCommunityData()
+        fetchCommunityData();
+        setAllowRoom(true)
 
         return () => {
             setDataLoaded(false)
         }
-    }, [dispatch, displayCommunity, isLoaded]);
+    }, [displayCommunity]);
+
+    useEffect(() => {
+        if (community?.Rooms) {
+            setDisplayRoom(community?.Rooms[0]?.id)
+        }
+    }, [community])
 
     if (!sessionUser) {
         return <Redirect to='/' />
@@ -65,8 +76,8 @@ function HomePage() {
         <div className='home-page-wrapper'>
             {isLoaded ? (
                 <>
-                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
-                <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} community={community} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityScrollBar allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
+                <CommunityPage allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>

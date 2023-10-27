@@ -1,25 +1,63 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as sessionActions from '../../store/session';
 import './CommunityPage.css'
 import { loadRoom } from '../../store/rooms';
 import { deleteCommunity } from '../../store/community';
 import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
 import CommunityMembersBar from '../CommunityMembersBar';
+import { v4 as uuidv4 } from 'uuid';
 
-function CommunityPage({ community, dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
+const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
+
+function CommunityPage({ isLoaded, allowRoom, dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
+    const community = useSelector(state => state.community.community);
     const room = useSelector(state => state.room.room);
     const [roomDataLoaded, setRoomDataLoaded] = useState(false);
+    const webSocket = useRef(null);
+    const [roomMessages, setRoomMessages] = useState([]);
+    const [clearMessages, setClearMessages] = useState(false);
+
+    useEffect(() => {
+        if (!room) return
+
+        if (webSocket.current) {
+            webSocket.current.close()
+        }
+
+        const ws = new WebSocket(wsUrl);
+        webSocket.current = ws;
+
+        ws.onopen = (e) => {
+            console.log(`connected ${e}`);
+        }
+
+        ws.onmessage = (e) => {
+            const parsedData = JSON.parse(e.data);
+            parsedData.tempId = uuidv4();
+            return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
+        }
+
+        ws.onerror = (e) => {
+            console.log(e);
+        }
+
+        ws.onclose = (e) => {
+            console.log(`connection closed ${e}`);
+            return webSocket.current = null;
+        }
+
+        return function() {
+            if (webSocket.current) {
+                webSocket.current.close()
+            }
+        }
+    }, [displayRoom]);
 
     console.log('Community Page community state: ', community);
     console.log('Community Page room state: ', room);
-
-    useEffect(() => {
-        setDisplayRoom(room?.id || community?.Rooms[0]?.id || null)
-    }, [community, room])
 
     useEffect(() => {
         async function fetchRoomData() {
@@ -31,12 +69,14 @@ function CommunityPage({ community, dataLoaded, displayCommunity, setDisplayComm
             }
         }
         
-        fetchRoomData();
+        if (allowRoom) {
+            fetchRoomData();
+        }
 
         return () => {
             setRoomDataLoaded(false)
         }
-    }, [displayRoom, community, dataLoaded, displayCommunity])
+    }, [allowRoom, displayRoom])
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -49,9 +89,9 @@ function CommunityPage({ community, dataLoaded, displayCommunity, setDisplayComm
             <button onClick={handleDelete}>Delete Community</button>
             {dataLoaded && (
                 <div className='community-page-content'>
-                    <CommunityRoomsScroll roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
-                    <RoomDisplay setDisplayCommunity={setDisplayCommunity} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
-                    <CommunityMembersBar />
+                    <CommunityRoomsScroll clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
+                    <RoomDisplay roomMessages={roomMessages} setRoomMessages={setRoomMessages} clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} setDisplayCommunity={setDisplayCommunity} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
+                    <CommunityMembersBar isLoaded={isLoaded} community={community} />
                 </div>
             )}
         </div>

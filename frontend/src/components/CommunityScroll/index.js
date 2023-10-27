@@ -5,17 +5,24 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
 import { loadCommunity } from '../../store/community';
 import UpdateCommunityModal from '../UpdateCommunityModal';
+import { removeRoom } from '../../store/rooms';
 
-function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
+        if (!displayCommunity) return
         dispatch(loadCommunity(displayCommunity))
         setDataLoaded(true)
-    }, [setDisplayCommunity])
+    }, [displayCommunity]);
+
+    const handleClick = async (communityId) => {
+        await dispatch(removeRoom())
+        await setDisplayCommunity(communityId)
+    }
     
     return (
         <div className='community-bar-wrapper'>
@@ -23,7 +30,7 @@ function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
             {dataLoaded && (
                 sessionUser?.Communities?.map((community) => {
                     return (
-                    <li className='community-item' onClick={() => setDisplayCommunity(community.id)} key={community.id}>
+                    <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
                         {community.name}
                         <OpenModalButton
                         buttonText={'...'}
@@ -35,7 +42,7 @@ function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
             </ul>
             <OpenModalButton
                 buttonText={'+'}
-                modalComponent={() => <CreateCommunityModal />} />
+                modalComponent={() => <CreateCommunityModal  />} />
         </div>
     )
 }
