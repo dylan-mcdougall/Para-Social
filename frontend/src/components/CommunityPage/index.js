@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function CommunityPage({ allowRoom, dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
+function CommunityPage({ isLoaded, allowRoom, dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -91,7 +91,7 @@ function CommunityPage({ allowRoom, dataLoaded, displayCommunity, setDisplayComm
                 <div className='community-page-content'>
                     <CommunityRoomsScroll clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
                     <RoomDisplay roomMessages={roomMessages} setRoomMessages={setRoomMessages} clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} setDisplayCommunity={setDisplayCommunity} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
-                    <CommunityMembersBar />
+                    <CommunityMembersBar isLoaded={isLoaded} community={community} />
                 </div>
             )}
         </div>

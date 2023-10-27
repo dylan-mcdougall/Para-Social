@@ -2,9 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import './CommunityMembersBar.css';
 
-function CommunityMembersBar({ isLoaded }) {
-    const dispatch = useDispatch();
-    const community = useSelector(state => state.community.community);
+function CommunityMembersBar({ isLoaded, community }) {
+
+    console.log('Community Members Bar ----------', community)
 
     return (
         <div className='community-members-wrapper'>

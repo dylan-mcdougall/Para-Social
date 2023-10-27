@@ -62,7 +62,9 @@ function HomePage() {
     }, [displayCommunity]);
 
     useEffect(() => {
-        setDisplayRoom(community?.Rooms[0]?.id)
+        if (community?.Rooms) {
+            setDisplayRoom(community?.Rooms[0]?.id)
+        }
     }, [community])
 
     if (!sessionUser) {
