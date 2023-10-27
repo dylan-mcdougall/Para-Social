@@ -1,10 +1,11 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
-const { Room, RoomMessage } = require('../../db/models');
+const { Room, RoomMessage, User } = require('../../db/models');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const randomImageName = require('./helper');
 const dotenv = require('dotenv');
+const sharp = require('sharp');
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
@@ -39,7 +40,7 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
         "errors": "Only the author of a message can delete it."
     });
 
-    if (targetMessage.content_type === 'src') {
+    if (targetMessage.content_type === 'src' && targetMessage.content_src !== null) {
         const params = {
             Bucket: bucketName,
             Key: targetMessage.content_src_name
@@ -79,6 +80,18 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
     return res.json(targetMessage);
 })
 
+router.delete('/id/image/:imageName', requireAuth, async (req, res) => {
+    const params = {
+        Bucket: bucketName,
+        Key: req.params.imageName
+    }
+    const command = new DeleteObjectCommand(params);
+    await s3.send(command);
+    return res.json({
+        "message": "Image deleted successfully."
+    })
+})
+
 router.post('/:id/image', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
 
@@ -86,11 +99,13 @@ router.post('/:id/image', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
 
+    const buffer = await sharp(req.file.buffer).resize({ height: 280, width: 280, fit: 'contain' }).toBuffer()
+
     const imageName = randomImageName();
     const params = {
         Bucket: bucketName,
         Key: imageName,
-        Body: req.file.buffer,
+        Body: buffer,
         ContentType: req.file.mimetype
     }
 
@@ -100,6 +115,7 @@ router.post('/:id/image', requireAuth, async (req, res) => {
         await s3.send(command);
         
         return res.json({
+            content_src: `https://${bucketName}.s3.amazonaws.com/${imageName}`,
             content_src_name: imageName
         });
     } catch (error) {
@@ -137,7 +153,12 @@ router.get('/:id', requireAuth, async (req, res) => {
             id: req.params.id
         },
         include: [
-            { model: RoomMessage, as: 'Messages' }
+            {
+                model: RoomMessage, as: 'Messages',
+                include: [
+                    { model: User }
+                ]
+            }
         ]
     });
     if (!room) return res.status(404).json({
@@ -155,7 +176,7 @@ router.get('/:id', requireAuth, async (req, res) => {
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
         message.content_src = url;
     }
-
+    console.log(room.Messages);
     return res.json(room);
 })
 

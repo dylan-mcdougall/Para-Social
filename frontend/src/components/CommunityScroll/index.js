@@ -5,8 +5,9 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
 import { loadCommunity } from '../../store/community';
 import UpdateCommunityModal from '../UpdateCommunityModal';
+import { removeRoom } from '../../store/rooms';
 
-function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -15,7 +16,12 @@ function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
     useEffect(() => {
         dispatch(loadCommunity(displayCommunity))
         setDataLoaded(true)
-    }, [setDisplayCommunity])
+    }, [setDisplayCommunity]);
+
+    const handleClick = async (communityId) => {
+        await setDisplayCommunity(communityId)
+        removeRoom()
+    }
     
     return (
         <div className='community-bar-wrapper'>
@@ -23,7 +29,7 @@ function CommunityScrollBar({ displayCommunity, setDisplayCommunity }) {
             {dataLoaded && (
                 sessionUser?.Communities?.map((community) => {
                     return (
-                    <li className='community-item' onClick={() => setDisplayCommunity(community.id)} key={community.id}>
+                    <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
                         {community.name}
                         <OpenModalButton
                         buttonText={'...'}

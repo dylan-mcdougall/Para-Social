@@ -34,6 +34,7 @@ function UpdateRoomModal({ communityId, roomId }) {
         <>
         <form onSubmit={handleSubmit}>
             <label>
+                New Room Name
                 <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             {errors && <p>{errors.errors}</p>}

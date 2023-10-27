@@ -65,7 +65,7 @@ function HomePage() {
         <div className='home-page-wrapper'>
             {isLoaded ? (
                 <>
-                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
                 <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} community={community} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (

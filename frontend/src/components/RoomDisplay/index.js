@@ -46,20 +46,12 @@ function RoomDisplay({ setDisplayCommunity, displayRoom, setDisplayRoom, roomDat
             return webSocket.current = null;
         }
     }, [displayRoom, setRoomMessages, setClearMessages, room]);
-
-    const handleDelete = (e) => {
-        e.preventDefault();
-        dispatch(deleteRoom(community.id, room.id));
-        dispatch(loadCommunity(community.id));
-        setDisplayRoom(community?.Rooms[0]?.id);
-    }
     
     return (
         <div className='room-display-wrapper'>
             {roomDataLoaded ? (
                 <>
                     {room?.name}
-                    <button onClick={handleDelete}>Delete Room</button>
                     <div>
                         <RoomMessages room={room} clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
                         <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
