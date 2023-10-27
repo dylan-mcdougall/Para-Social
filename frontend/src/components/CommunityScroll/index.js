@@ -20,8 +20,8 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
     }, [displayCommunity]);
 
     const handleClick = async (communityId) => {
+        await dispatch(removeRoom())
         await setDisplayCommunity(communityId)
-        removeRoom()
     }
     
     return (

@@ -13,7 +13,9 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
         <div className='room-display-wrapper'>
             {roomDataLoaded ? (
                 <>
-                    {room?.name}
+                    {room ? room?.name : (
+                        <p>Please create a room first.</p>
+                    )}
                     <div>
                         <RoomMessages clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
                         <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />

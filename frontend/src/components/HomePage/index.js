@@ -17,34 +17,31 @@ function HomePage() {
     const [dataLoaded, setDataLoaded] = useState(false);
     const [displayCommunity, setDisplayCommunity] = useState(null);
     const [displayRoom, setDisplayRoom] = useState(null);
+    const [allowRoom, setAllowRoom] = useState(false);
 
     console.log('Home Page community check: ', community);
 
     useEffect(() => {
         async function fetchData() {
             try {
-                dispatch(sessionActions.userData())
+                await dispatch(sessionActions.userData())
                 setIsLoaded(true)
             } catch (error) {
                 console.log(error);
             }
         }   
         fetchData();
-        dispatch(removeRoom())
-        setDisplayRoom(null)
     }, [community]);
 
     useEffect(() => {
-        if (community) {
-            setDisplayRoom(community?.Rooms[0]?.id || null)
-            setDisplayCommunity(community?.id)
-        } else {
-            if (sessionUser?.Communities?.length > 0) {
-                setDisplayCommunity(sessionUser.Communities[0].id || null);
+        if (isLoaded) {
+            if (community) {
+                setDisplayCommunity(community.id)
+            } else {
+                setDisplayCommunity(sessionUser?.Communities[0]?.id || null)
             }
         }
-
-    }, [sessionUser, community]);
+    }, [sessionUser, isLoaded])
 
     useEffect(() => {
         if (!displayCommunity) return 
@@ -56,16 +53,16 @@ function HomePage() {
                 console.log('Error fetching community data: ', error);
             }
         }
-        fetchCommunityData()
+        fetchCommunityData();
+        setAllowRoom(true)
 
         return () => {
             setDataLoaded(false)
         }
-    }, [displayCommunity, isLoaded]);
+    }, [displayCommunity]);
 
     useEffect(() => {
-        dispatch(removeRoom())
-        setDisplayRoom(null)
+        setDisplayRoom(community?.Rooms[0]?.id)
     }, [community])
 
     if (!sessionUser) {
@@ -77,8 +74,8 @@ function HomePage() {
         <div className='home-page-wrapper'>
             {isLoaded ? (
                 <>
-                <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
-                <CommunityPage displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                <CommunityScrollBar allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
+                <CommunityPage allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
                 </>
             ) : (
                 <div>

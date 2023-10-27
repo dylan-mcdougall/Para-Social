@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function CommunityPage({ dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
+function CommunityPage({ allowRoom, dataLoaded, displayCommunity, setDisplayCommunity, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -59,14 +59,7 @@ function CommunityPage({ dataLoaded, displayCommunity, setDisplayCommunity, disp
     console.log('Community Page community state: ', community);
     console.log('Community Page room state: ', room);
 
-    // useEffect(() => {
-    //     if (!displayCommunity) return
-    //     if (!community?.Rooms) return setDisplayRoom(null)
-    //     setDisplayRoom(room?.id || community?.Rooms[0]?.id)
-    // }, [community, room])
-
     useEffect(() => {
-        if (!displayCommunity) return
         async function fetchRoomData() {
             try {
                 await dispatch(loadRoom(displayRoom));
@@ -76,12 +69,14 @@ function CommunityPage({ dataLoaded, displayCommunity, setDisplayCommunity, disp
             }
         }
         
-        fetchRoomData();
+        if (allowRoom) {
+            fetchRoomData();
+        }
 
         return () => {
             setRoomDataLoaded(false)
         }
-    }, [displayRoom, community, dataLoaded, displayCommunity])
+    }, [allowRoom, displayRoom])
 
     const handleDelete = (e) => {
         e.preventDefault();

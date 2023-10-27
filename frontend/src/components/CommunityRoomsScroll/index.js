@@ -16,12 +16,12 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, roomDataLoaded, dis
     console.log('Room scroll community check: ', community)
     console.log('Room scroll sessionUser check: ', sessionUser)
 
-    const handleClick = (roomId) => {
+    const handleClick = async (roomId) => {
         setClearMessages(true)
         if (webSocket.current) {
             webSocket.current.close()
         }
-        setDisplayRoom(roomId)
+        await setDisplayRoom(roomId)
     }
 
     if (!community) return null;
