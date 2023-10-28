@@ -78,15 +78,8 @@ function CommunityPage({ isLoaded, allowRoom, dataLoaded, displayCommunity, setD
         }
     }, [allowRoom, displayRoom])
 
-    const handleDelete = (e) => {
-        e.preventDefault();
-        dispatch(deleteCommunity(community.id));
-        setDisplayCommunity(sessionUser?.Communities[0]?.id);
-    }
-
     return (
         <div className='community-page-wrapper'>
-            <button onClick={handleDelete}>Delete Community</button>
             {dataLoaded && (
                 <div className='community-page-content'>
                     <CommunityRoomsScroll clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
