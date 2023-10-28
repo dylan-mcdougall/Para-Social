@@ -5,7 +5,8 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
 import { loadCommunity } from '../../store/community';
 import UpdateCommunityModal from '../UpdateCommunityModal';
-import { removeRoom } from '../../store/rooms';
+import { FaPenSquare } from 'react-icons/fa';
+import DeleteCommunityModal from '../DeleteCommunityModal';
 
 function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -20,8 +21,7 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
     }, [displayCommunity]);
 
     const handleClick = async (communityId) => {
-        await dispatch(removeRoom())
-        await setDisplayCommunity(communityId)
+        setDisplayCommunity(communityId)
     }
     
     return (
@@ -33,8 +33,11 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
                     <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
                         {community.name}
                         <OpenModalButton
-                        buttonText={'...'}
+                        buttonText={<FaPenSquare />}
                         modalComponent={() => <UpdateCommunityModal communityId={community.id} />} />
+                        <OpenModalButton
+                        buttonText={'X'}
+                        modalComponent={() => <DeleteCommunityModal setDisplayCommunity={setDisplayCommunity} />} />
                     </li>
                     )
                 })

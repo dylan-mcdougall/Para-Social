@@ -31,10 +31,12 @@ function LandingPage() {
     return (
         <div className='landing-page-wrapper'>
             <div className='landing-page-left'>
-                imageboi
+                <img className='landing-left-image' src='https://aaprojectbucket.s3.us-west-1.amazonaws.com/influencers.jpg' alt='Demographic Image' />
             </div>
             <div className='landing-page-right'>
-                {landingRight}
+                <div className='landing-right-flex'>
+                    {landingRight}
+                </div>
             </div>
         </div>
     )
