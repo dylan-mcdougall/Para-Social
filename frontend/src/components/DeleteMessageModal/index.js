@@ -4,12 +4,13 @@ import { useModal } from '../../context/Modal';
 import { deleteRoomMessage } from '../../store/rooms';
 import { loadRoom } from '../../store/rooms';
 
-function DeleteRoomMessageModal({ roomId, messageId }) {
+function DeleteRoomMessageModal({ setClearMessages, roomId, messageId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleDelete = () => {
         dispatch(deleteRoomMessage(roomId, messageId));
+        setClearMessages(true);
         dispatch(loadRoom(roomId));
         closeModal();
     }
