@@ -5,22 +5,97 @@ h3,
 div,
 p,
 ul,
-li {
+li,
+button {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+body,
+div#root {
+    height: 100vh;
+    width: 100vw;
 }
 
 .landing-page-wrapper {
     display: flex;
     flex-direction: row;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
 }
 
 .landing-page-left {
     display: flex;
     flex-direction: column;
+    height: 100%;
+    width: 50%;
+    background-color: lightblue;
 }
 
 .landing-page-right {
     display: flex;
     flex-direction: column;
+    border-inline: 1px lightgrey solid;
+    height: 100%;
+    width: 50%;
+}
+
+.landing-left-image {
+    margin: 3rem;
+}
+
+.landing-right-flex {
+    margin: 4rem;
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .5rem;
+}
+
+.landing-right-flex form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 1rem;
+    width: 50%;
+}
+
+.landing-right-flex label {
+    width: 100%;
+}
+
+.landing-right-flex form input {
+    font-size: 16px;
+    padding: 1rem;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    width: 100%;
+    margin: 1rem;
+}
+
+.landing-right-flex form label, a, button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.landing-right-flex form a {
+    width: 100%;
+    border: 1px solid lightgrey;
+    border-radius: 12px;
+    padding: .5rem 1rem;
+    margin: 1rem;
+}
+
+.landing-right-flex form button {
+    width: 100%;
+    font-size: 14px;
+    width: 100%;
+    border-radius: 12px;
+    padding: .5rem 1rem;
+    margin: 1rem;
 }
