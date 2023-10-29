@@ -1,28 +1,153 @@
 #modal {
-    position: fixed;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 10;
-  }
-  
-  #modal-background {
-    position: fixed;
-    z-index: 10;
-    top: 0;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
-  }
-  
-  #modal-content {
-    position: absolute;
-    background-color:white;
-    z-index: 10;
-  }
-  
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+
+#modal-background {
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+#modal-content {
+  position: absolute;
+  background-color: white;
+  z-index: 10;
+  border-radius: 4px;
+}
+
+#modal-content form {
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+}
+
+#modal-content label {
+  width: 100%;
+}
+
+#modal-content input {
+  font-size: 14px;
+  padding: .5rem 0;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  width: 100%;
+  margin: .5rem 0;
+}
+
+#modal-content textarea {
+  font-size: 14px;
+  padding: .5rem 0;
+  border: 1px solid lightgray;
+  border-radius: 6px;
+  width: 100%;
+  min-height: 100px;
+  margin: .5rem 0;
+}
+
+#modal-content form > button {
+  width: 100%;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 1px solid lightgray;
+  padding: .5rem 0;
+  margin: .5rem 0;
+}
+
+#modal-content form > button:hover {
+  cursor: pointer;
+  background-color: #eaeaea;
+}
+
+.private-radio {
+  display: inline-flex;
+  align-self: center;
+  gap: 1rem;
+  margin: 0;
+}
+
+#modal-content .private-radio input {
+  width: auto;
+  padding: 1rem;
+}
+
+.price-input {
+  display: flex;
+  gap: 1rem;
+  align-self: center;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+}
+
+#modal-content .price-input input {
+  width: 80%;
+}
+
+.modal-form {
+  margin: 1rem;
+}
+
+.modal-form h3 {
+  padding: .5rem 0;
+  margin: .5rem 0;
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.delete-modal {
+  margin: 1rem;
+}
+
+.delete-modal h3 {
+  padding: .5rem 0;
+  margin: .5rem 0;
+  text-align: center;
+  border-bottom: 1px solid lightgray;
+}
+
+.delete-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-buttons button {
+  width: 33%;
+  font-size: 14px;
+  border: 1px solid black;
+  padding: .5rem 0;
+  margin: .5rem 2rem;
+}
+
+.delete-buttons button:hover {
+  cursor: pointer;
+}
+
+.yes {
+  color: white;
+  background-color: red;
+}
+
+.no {
+  color: black;
+  background-color: lightgray;
+}
+
+.yes:hover {
+  background-color: rgb(192, 1, 1);
+}
+
+.no:hover {
+  background-color: #b9b9b9;
+}

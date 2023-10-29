@@ -1,9 +1,11 @@
 .community-page-wrapper {
     display: flex;
     height: 100%;
+    width: 100%;
 }
 
 .community-page-content {
     display: flex;
     height: 100%;
+    width: 100%;
 }

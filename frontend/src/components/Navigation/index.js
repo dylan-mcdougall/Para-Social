@@ -17,9 +17,8 @@ function Navigation({ isLoaded }){
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
+      <li className='profile-button'>
         <ProfileButton user={sessionUser} />
-        <button onClick={logout}>Log Out</button>
       </li>
     );
   } else {
@@ -35,9 +34,6 @@ function Navigation({ isLoaded }){
 
   return (
     <ul className={navClassName}>
-      <li>
-        <NavLink exact to="/">Home</NavLink>
-      </li>
       {isLoaded && sessionLinks}
     </ul>
   );

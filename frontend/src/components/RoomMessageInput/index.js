@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { csrfFetch } from '../../store/csrf';
+import { FaPaperPlane } from 'react-icons/fa';
 import './RoomMessageInput.css';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
@@ -15,6 +16,7 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
     const [content_src, setContent_src] = useState(null);
     const [content_src_name, setContent_src_name] = useState(null);
     const fileRef = useRef(null);
+    const formRef = useRef(null);
     
     if (webSocket.current === null) {
         const ws = new WebSocket(wsUrl);
@@ -84,28 +86,33 @@ function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages
         }
     }
 
+    const onEnterPress = (e) => {
+        if (e.keyCode == 13 && e.shiftKey == false) {
+          e.preventDefault();
+          formRef.current.requestSubmit();
+        }
+    }
+
     if (!room) return null;
 
     return (
-        <>
-            <form onSubmit={e => handleSendMessage(e)}>
+        <div className='room-message-input-wrapper'>
+            <form ref={formRef} onSubmit={e => handleSendMessage(e)}>
                 <label>
-                    Send Message
-                    <input type='text' value={message} onChange={e => setMessage(e.target.value)} />
+                    <textarea type='text' onKeyDown={e => onEnterPress(e)} rows={2} placeholder={`Message ${room.name}`} value={message} onChange={e => setMessage(e.target.value)} />
                 </label>
-                <button type='submit'>Submit</button>
+                    <button className='submit-message' type='submit'><FaPaperPlane /></button>
             </form>
-            <form onSubmit={onFileUpload}>
-                <input type='file' ref={fileRef} formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => onFileUpload(e)} />
-                {content_src && (
-                    <div style={{ position: 'relative', display: 'inline-block' }}>
-                        <img src={content_src} alt="Thumbnail" style={{ width: '50px', height: '50px' }} />
-                        <button style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
-                    </div>
-                )}
-
-            </form>
-        </>
+                    <form className='file-upload' onSubmit={onFileUpload}>
+                        <input type='file' ref={fileRef} formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => onFileUpload(e)} />
+                        {content_src && (
+                            <div style={{ position: 'relative', display: 'inline-block' }}>
+                                <img src={content_src} alt="Thumbnail" style={{ width: '50px', height: '50px' }} />
+                                <button style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
+                            </div>
+                        )}
+                    </form>
+        </div>
     )
 }
 

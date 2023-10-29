@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateRoom } from '../../store/rooms';
+import { loadRoom, updateRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal';
 import { loadCommunity } from '../../store/community';
 
-function UpdateRoomModal({ communityId, roomId }) {
+function UpdateRoomModal({ setClearMessages, setDisplayRoom, communityId, roomId }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState({});
@@ -19,6 +19,7 @@ function UpdateRoomModal({ communityId, roomId }) {
             name: name
         }))
         .then(() => {
+            setClearMessages(true);
             dispatch(loadCommunity(communityId))
             closeModal()
         })
@@ -31,16 +32,18 @@ function UpdateRoomModal({ communityId, roomId }) {
     }
 
     return (
-        <>
+        <div className='modal-form'>
+            <h3>
+                Update Room Name
+            </h3>
         <form onSubmit={handleSubmit}>
             <label>
-                New Room Name
-                <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+                <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             {errors && <p>{errors.errors}</p>}
             <button type='submit'>Submit</button>
         </form>
-        </>
+        </div>
     )
 }
 

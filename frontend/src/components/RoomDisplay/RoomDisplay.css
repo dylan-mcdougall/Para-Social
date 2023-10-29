@@ -1,7 +1,13 @@
 .room-display-wrapper {
     display: flex;
     flex-direction: column;
-    margin: 1rem;
-    border: 1px solid black;
+    border-right: 1px solid black;
+    background-color: lightgrey;
     height: 100%;
+    width: 65%;
+}
+
+.room-heading {
+    text-align: center;
+    margin-top: .25rem;
 }

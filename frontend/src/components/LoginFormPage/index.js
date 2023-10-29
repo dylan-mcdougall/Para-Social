@@ -58,9 +58,9 @@ function LoginFormPage({ login, setLogin }) {
           />
         </label>
         {errors.credential && <p>{errors.credential}</p>}
-        <a className="demo-user" onClick={handleClick}>Demo Login</a>
         <button type="submit">Log In</button>
         <button onClick={() => setLogin(false)}>Sign Up</button>
+        <a className="demo-user" onClick={handleClick}>Demo Login</a>
       </form>
     </>
   );

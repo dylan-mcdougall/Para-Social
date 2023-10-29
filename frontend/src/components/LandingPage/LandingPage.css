@@ -1,15 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@500&family=Roboto:wght@300;400&display=swap');
+
 body,
 h1,
 h2,
 h3,
+h4,
 div,
 p,
 ul,
 li,
+a,
+form,
+label,
+input,
 button {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
+}
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: 'Montserrat', sans-serif;
 }
 
 body,
@@ -48,19 +66,22 @@ div#root {
 }
 
 .landing-right-flex {
-    margin: 4rem;
-    border: 1px solid gray;
+    margin: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: .5rem;
 }
 
+.landing-right-flex h1 {
+    font-size: 24px;
+}
+
 .landing-right-flex form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 1rem;
+    margin: .5rem 1rem 1rem;
     width: 50%;
 }
 
@@ -74,7 +95,7 @@ div#root {
     border: 1px solid lightgrey;
     border-radius: 6px;
     width: 100%;
-    margin: 1rem;
+    margin: .75rem;
 }
 
 .landing-right-flex form label, a, button {
@@ -88,14 +109,26 @@ div#root {
     border: 1px solid lightgrey;
     border-radius: 12px;
     padding: .5rem 1rem;
-    margin: 1rem;
+    margin: .5rem;
 }
 
-.landing-right-flex form button {
+.landing-right-flex form a:hover {
+    cursor: pointer;
+    color: white;
+    background-color: grey;
+}
+
+.landing-right-flex form > button {
     width: 100%;
     font-size: 14px;
-    width: 100%;
     border-radius: 12px;
+    border: 1px solid lightgray;
     padding: .5rem 1rem;
-    margin: 1rem;
+    margin: .5rem;
+}
+
+.landing-right-flex form > button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: grey;
 }
