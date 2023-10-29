@@ -1,0 +1,50 @@
+.room-message-input-wrapper {
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+    background-color: white;
+}
+
+.room-message-input-wrapper form {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    width: 100%;
+}
+
+.room-message-bottom {
+    margin: 0 .5rem;
+    width: 97%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.room-message-input-wrapper form label {
+    margin: 0 .25rem;
+    width: 90%;
+}
+
+.room-message-input-wrapper form label textarea {
+    margin: .5rem 0;
+    width: 100%;
+    border: none;
+    resize: none;
+    outline: none;
+}
+
+.submit-message {
+    border: none;
+    background-color: inherit;
+}
+
+.submit-message:hover {
+    cursor: pointer;
+}
+
+.room-message-input-wrapper .file-upload {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+}

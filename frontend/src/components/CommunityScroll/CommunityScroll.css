@@ -1,13 +1,81 @@
 .community-bar-wrapper {
-    margin: 1rem;
-    max-width: 15%;
-    border: 1px solid black;
-    overflow-y: scroll;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 20%;
+    border-right: 1px solid black;
+    overflow-y: auto;
     overflow-x: hidden;
+}
+
+.community-bar-ul {
+    display: flex;
+    flex-direction: column;
+}
+
+.community-bar-ul h3 {
+    padding: 1rem 0;
+    text-align: center;
+    align-self: center;
+    border-bottom: 1px solid grey;
+    width: 90%;
+}
+
+.community-item-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid lightgray;
+}
+
+.community-item-wrapper:hover {
+    background-color: #f0f0f0;
 }
 
 .community-item {
     text-decoration: none;
     list-style: none;
+    padding: .75rem .5rem;
+}
+
+.community-item:hover {
+    cursor: pointer;
+}
+
+.community-actions {
+    display: flex;
+    gap: .25rem;
+    justify-content: space-around;
+}
+
+.new-community-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-community-button button {
     margin: 1rem;
+    font-size: 14px;
+    padding: 8px;
+    border: 1px solid lightgray;
+    border-radius: 4px;
+}
+
+.new-community-button button:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+}
+
+.community-actions button {
+    margin-right: .25rem;
+    background-color: inherit;
+    border: none;
+    font-size: 16px;
+}
+
+.community-actions button:hover {
+    cursor: pointer;
 }

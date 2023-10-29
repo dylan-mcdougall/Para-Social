@@ -8,18 +8,21 @@ import RoomMessageInput from '../RoomMessageInput';
 
 function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMessages, webSocket, setDisplayCommunity, displayRoom, setDisplayRoom, roomDataLoaded }) {
     const room = useSelector(state => state.room.room);
-    
+
     return (
         <div className='room-display-wrapper'>
             {roomDataLoaded ? (
                 <>
-                    {room ? room?.name : (
-                        <p>Please create a room first.</p>
-                    )}
-                    <div>
+                    {room ?
+                        <h4 className='room-heading'>
+                            {room?.name}
+                        </h4> : (
+                            <p>Please create a room first.</p>
+                        )}
+                    <>
                         <RoomMessages clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
                         <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
-                    </div>
+                    </>
                 </>
             ) : (
                 <>

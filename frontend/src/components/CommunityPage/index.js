@@ -82,7 +82,7 @@ function CommunityPage({ isLoaded, allowRoom, dataLoaded, displayCommunity, setD
         <div className='community-page-wrapper'>
             {dataLoaded && (
                 <div className='community-page-content'>
-                    <CommunityRoomsScroll clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
+                    <CommunityRoomsScroll clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} dataLoaded={dataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
                     <RoomDisplay roomMessages={roomMessages} setRoomMessages={setRoomMessages} clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} setDisplayCommunity={setDisplayCommunity} roomDataLoaded={roomDataLoaded} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} />
                     <CommunityMembersBar isLoaded={isLoaded} community={community} />
                 </div>

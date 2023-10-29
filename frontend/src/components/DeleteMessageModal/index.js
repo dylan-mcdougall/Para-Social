@@ -10,18 +10,20 @@ function DeleteRoomMessageModal({ setClearMessages, roomId, messageId }) {
 
     const handleDelete = () => {
         dispatch(deleteRoomMessage(roomId, messageId));
-        setClearMessages(true);
         dispatch(loadRoom(roomId));
+        setClearMessages(true);
         closeModal();
     }
 
     return (
-        <div className='delete-room-message-wrapper'>
+        <div className='delete-modal'>
             <h3>
                 Are you sure you want to delete this message?
             </h3>
-            <button className='yes' onClick={() => handleDelete()}>Delete Message</button>
-            <button className='no' onClick={() => closeModal()}>No</button>
+            <div className='delete-buttons'>
+                <button className='yes' onClick={() => handleDelete()}>Delete Message</button>
+                <button className='no' onClick={() => closeModal()}>No</button>
+            </div>
         </div>
     )
 }

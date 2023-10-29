@@ -7,8 +7,9 @@ import { loadCommunity } from '../../store/community';
 import UpdateCommunityModal from '../UpdateCommunityModal';
 import { FaPenSquare } from 'react-icons/fa';
 import DeleteCommunityModal from '../DeleteCommunityModal';
+import Navigation from '../Navigation';
 
-function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ isLoaded, setDisplayRoom, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -27,25 +28,41 @@ function CommunityScrollBar({ setDisplayRoom, displayCommunity, setDisplayCommun
     return (
         <div className='community-bar-wrapper'>
             <ul className='community-bar-ul'>
+                <Navigation isLoaded={isLoaded} />
+                <h3>
+                    Communities
+                </h3>
             {dataLoaded && (
-                sessionUser?.Communities?.map((community) => {
-                    return (
-                    <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
-                        {community.name}
-                        <OpenModalButton
-                        buttonText={<FaPenSquare />}
-                        modalComponent={() => <UpdateCommunityModal communityId={community.id} />} />
-                        <OpenModalButton
-                        buttonText={'X'}
-                        modalComponent={() => <DeleteCommunityModal setDisplayCommunity={setDisplayCommunity} />} />
-                    </li>
-                    )
-                })
-            )}
+                    sessionUser?.Communities?.map((community) => {
+                        let validatedPermissions = null;
+                        if (sessionUser.id === community.creator_id) {
+                            validatedPermissions = (
+                                <div className='community-actions'>
+                                    <OpenModalButton
+                                        buttonText={<FaPenSquare />}
+                                        modalComponent={() => <UpdateCommunityModal community={community} />} />
+                                    <OpenModalButton
+                                        buttonText={'X'}
+                                        modalComponent={() => <DeleteCommunityModal community={community} setDisplayCommunity={setDisplayCommunity} />} />
+                                </div>
+                            )
+                        }
+                        return (
+                            <div className='community-item-wrapper'>
+                                <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
+                                    {community.name}
+                                </li>
+                                {validatedPermissions}
+                            </div>
+                        )
+                    })
+                )}
             </ul>
-            <OpenModalButton
-                buttonText={'+'}
-                modalComponent={() => <CreateCommunityModal  />} />
+            <div className='new-community-button'>
+                <OpenModalButton
+                    buttonText={'+ Add a Community'}
+                    modalComponent={() => <CreateCommunityModal />} />
+            </div>
         </div>
     )
 }

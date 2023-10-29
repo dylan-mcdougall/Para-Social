@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { removeRoom } from '../../store/rooms';
 import { FaPenSquare } from 'react-icons/fa'
 import CreateRoomModal from '../CreateRoomModal';
 import DeleteRoomModal from '../DeleteRoomModal';
@@ -8,14 +7,14 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 
-function CommunityRoomsScroll({ setClearMessages, webSocket, roomDataLoaded, displayRoom, setDisplayRoom }) {
-    const dispatch = useDispatch();
+function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
 
-    console.log('Room scroll community check: ', community)
-    console.log('Room scroll sessionUser check: ', sessionUser)
-
+    useEffect(() => {
+        setClearMessages(true)
+    }, [community])
+    
     const handleClick = async (roomId) => {
         setClearMessages(true)
         if (webSocket.current) {
@@ -29,28 +28,31 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, roomDataLoaded, dis
     return (
         <div className='community-rooms-scroll-wrapper'>
             <ul className='community-rooms-ul'>
-                {roomDataLoaded && (
-                    community?.Rooms?.length ? community?.Rooms?.map((room) => {
+                <h3>
+                    Rooms
+                </h3>
+                {dataLoaded && (
+                    community?.Rooms ? community?.Rooms?.map((room) => {
                         let validatedOwner = null;
                         if (sessionUser.id === community?.creator_id) {
                             validatedOwner = (
-                                <>
+                                <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal communityId={community.id} roomId={room.id} />} />
+                                        modalComponent={() => <UpdateRoomModal setDisplayRoom={setDisplayRoom} setClearMessages={setClearMessages}communityId={community.id} roomId={room.id} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
-                                </>
+                                </div>
                             )
                         }
                         return (
-                            <li className='room-item' key={room.id}>
-                                <div className='room-navigation' onClick={() => handleClick(room.id)}>
+                            <div className='room-item-wrapper'>
+                                <li className='room-item' key={room.id} onClick={() => handleClick(room.id)}>
                                     {room?.name}
-                                    {validatedOwner}
-                                </div>
-                            </li>
+                                </li>
+                                {validatedOwner}
+                            </div>
                         )
                     }) : (
                         <li className='room-item missing'>
@@ -59,9 +61,11 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, roomDataLoaded, dis
                     )
                 )}
             </ul>
-            <OpenModalButton
-                buttonText={'+'}
-                modalComponent={() => <CreateRoomModal webSocket={webSocket} communityId={community.id} />} />
+            <div className='new-room-button'>
+                <OpenModalButton
+                    buttonText={'+ Add a Room'}
+                    modalComponent={() => <CreateRoomModal webSocket={webSocket} communityId={community.id} />} />
+            </div>
         </div>
     )
 }

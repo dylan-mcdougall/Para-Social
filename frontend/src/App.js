@@ -4,9 +4,6 @@ import { Route, Switch } from "react-router-dom";
 import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
-import Navigation from "./components/Navigation";
-import TempFileUpload from "./components/TempFileUpload";
-import TempRoomServer from "./components/TempRoomServer";
 import LandingPage from "./components/LandingPage";
 import HomePage from './components/HomePage';
 
@@ -19,20 +16,13 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
       {isLoaded && (
         <Switch>
-          <Route path="/login">
+        <Route path="/login">
             <LoginFormPage />
           </Route>
           <Route path="/signup">
             <SignupFormPage />
-          </Route>
-          <Route path='/fakepage'>
-            <TempFileUpload />
-          </Route>
-          <Route path='/chatpage'>
-            <TempRoomServer />
           </Route>
           <Route path='/home'>
             <HomePage />

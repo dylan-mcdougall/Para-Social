@@ -33,28 +33,29 @@ function CreateCommunityModal() {
     }
 
     return (
-        <>
+        <div className='modal-form'>
+        <h3>
+            Create A Community
+        </h3>
         <form onSubmit={handleSubmit}>
             <label>
-                Community Name
-                <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+                <input type='text' placeholder='Community Name' value={name} onChange={(e) => setName(e.target.value)} />
             </label>
             <label>
-                Community Description
-                <textarea value={description} onChange={(e) => setDescription(e.target.value)} />
+                <textarea value={description} placeholder="What's your community about?" onChange={(e) => setDescription(e.target.value)} />
             </label>
-            <label>
+            <label className='private-radio'>
                 Private?
                 <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
             </label>
-            <label>
-                Price
+            <label className='price-input'>
+                Price:
                 <input type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
             </label>
             {errors && <p>{errors.errors}</p>}
             <button type='submit'>Submit</button>
         </form>
-        </>
+        </div>
     )
 }
 

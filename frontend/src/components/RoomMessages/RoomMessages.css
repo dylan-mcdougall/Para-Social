@@ -1,25 +1,67 @@
 .room-messages-wrapper {
-    margin: 1rem;
-    border: 1px solid black;
-    height: 60vh;
+    border-bottom: 1px solid lightgray;
+    background-color: rgb(242, 242, 242);
+    height: 75%;
+    margin: 1rem 0;
 }
 
 .room-messages-ul {
     display: flex;
-    flex-direction: column;
-    overflow-y: scroll;
+    flex-direction: column-reverse;
+    overflow-y: auto;
     overflow-wrap: normal;
-    /* height: 60vh;
-    max-width: 50vw; */
+    height: 100%;
+    width: auto;
 }
 
 .message-item {
+    display: flex;
+    flex-direction: column;
     text-decoration: none;
     list-style: none;
     margin: 1rem;
+    padding: 0 .5rem .5rem;
 }
 
-.testing-ws {
-    color: rgba(12, 232, 12, 0.4);
-    background-color: green;
+.message-item:hover {
+    background-color: white;
+}
+
+.message-details {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+}
+
+.message-details-left {
+    display: flex;
+    align-items: flex-end;
+}
+
+.message-details p {
+    margin: .5rem .5rem 0 0;
+}
+
+.message-username {
+    color: green;
+}
+
+.message-username.current {
+    color: blue;
+}
+
+.message-details button {
+    color: red;
+    background-color: inherit;
+    border: none;
+}
+
+.datetime-sent {
+    font-size: 12px;
+}
+
+.message-content {
+    display: flex;
+    flex-direction: column;
+    margin: .5rem 0;
 }

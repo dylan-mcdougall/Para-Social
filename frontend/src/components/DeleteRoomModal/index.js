@@ -17,12 +17,14 @@ function DeleteRoomModal({ setDisplayRoom, roomId }) {
     }
 
     return (
-        <div className='delete-room-wrapper'>
+        <div className='delete-modal'>
             <h3>
                 Are you sure you want to delete this room?
             </h3>
-            <button className='yes' onClick={() => handleDelete()}>Delete Room</button>
-            <button className='no' onClick={() => closeModal()}>No</button>
+            <div className='delete-buttons'>
+                <button className='yes' onClick={() => handleDelete()}>Delete Room</button>
+                <button className='no' onClick={() => closeModal()}>No</button>
+            </div>
         </div>
     )
 }

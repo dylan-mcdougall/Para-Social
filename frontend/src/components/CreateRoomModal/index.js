@@ -33,16 +33,19 @@ function CreateRoomModal({ webSocket, communityId }) {
     }
 
     return (
-        <>
+        <div className='modal-form'>
+            <h3>
+                Create A Room
+            </h3>
             <form onSubmit={handleSubmit}>
                 <label>
-                    Room Name
-                    <input type='text' value={name} onChange={(e) => setName(e.target.value)} />
+                    <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
                 {errors && <p>{errors.errors}</p>}
                 <button type='submit'>Submit</button>
             </form>
-        </>)
+        </div>
+    )
 }
 
 export default CreateRoomModal;

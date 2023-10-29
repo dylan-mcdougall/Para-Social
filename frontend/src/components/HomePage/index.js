@@ -7,6 +7,7 @@ import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
 import { removeRoom } from '../../store/rooms';
+import Navigation from '../Navigation';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -62,6 +63,7 @@ function HomePage() {
     }, [displayCommunity]);
 
     useEffect(() => {
+        if (room) return
         if (community?.Rooms) {
             setDisplayRoom(community?.Rooms[0]?.id)
         }
@@ -74,16 +76,18 @@ function HomePage() {
 
     return (
         <div className='home-page-wrapper'>
-            {isLoaded ? (
-                <>
-                <CommunityScrollBar allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
-                <CommunityPage allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
-                </>
-            ) : (
-                <div>
-                    <h1>Loading...</h1>
-                </div>
-            )}
+            <div className='home-page-flex'>
+                {isLoaded ? (
+                    <>
+                        <CommunityScrollBar allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setDisplayRoom={setDisplayRoom} isLoaded={isLoaded} />
+                        <CommunityPage allowRoom={allowRoom} setAllowRoom={setAllowRoom} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                    </>
+                ) : (
+                    <div>
+                        <h1>Loading...</h1>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

@@ -80,7 +80,7 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
     return res.json(targetMessage);
 })
 
-router.delete('/id/image/:imageName', requireAuth, async (req, res) => {
+router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
     const params = {
         Bucket: bucketName,
         Key: req.params.imageName
@@ -99,7 +99,7 @@ router.post('/:id/image', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
 
-    const buffer = await sharp(req.file.buffer).resize({ height: 280, width: 280, fit: 'contain' }).toBuffer()
+    const buffer = await sharp(req.file.buffer).resize({ height: 180, width: 180, fit: 'contain' }).toBuffer()
 
     const imageName = randomImageName();
     const params = {

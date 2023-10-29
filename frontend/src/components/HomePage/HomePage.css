@@ -1,5 +1,15 @@
 .home-page-wrapper {
     display: flex;
     flex-direction: row;
-    max-height: 70vh;
+    height: 100%;
+    width: 100%;
+    background-color: darkslategrey;
+}
+
+.home-page-flex {
+    display: flex;
+    width: 100%;
+    border: 1px solid lightgray;
+    margin: 1rem;
+    background-color: white;
 }
