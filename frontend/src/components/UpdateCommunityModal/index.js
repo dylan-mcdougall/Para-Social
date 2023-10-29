@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateCommunity } from '../../store/community';
+import { loadCommunity, updateCommunity } from '../../store/community';
 import { useModal } from '../../context/Modal';
-import { loadCommunity } from '../../store/community';
 
-function UpdateCommunityModal({ community }) {
+function UpdateCommunityModal({ community, setPromptRender }) {
     const dispatch = useDispatch();
     const [name, setName] = useState(community.name);
     const [description, setDescription] = useState(community.description);
@@ -24,7 +23,8 @@ function UpdateCommunityModal({ community }) {
             price
         }))
         .then(() => {
-            loadCommunity(community.id)
+            setPromptRender(true)
+            dispatch(loadCommunity(community.id))
             closeModal()
         })
         .catch(

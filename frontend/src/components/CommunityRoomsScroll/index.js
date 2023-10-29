@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPenSquare } from 'react-icons/fa'
 import CreateRoomModal from '../CreateRoomModal';
@@ -6,15 +6,24 @@ import DeleteRoomModal from '../DeleteRoomModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
+import { loadCommunity } from '../../store/community';
 
-function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
+    const [promptRoomScroll, setPromptRoomScroll] = useState(false)
 
     useEffect(() => {
-        setClearMessages(true)
-    }, [community])
-    
+        if (dataLoaded && community) {
+            dispatch(loadCommunity(community.id))
+        }
+
+        return () => {
+            setPromptRoomScroll(false)
+        }
+    }, [promptRoomScroll])
+
     const handleClick = async (roomId) => {
         setClearMessages(true)
         if (webSocket.current) {
@@ -22,8 +31,6 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
         }
         await setDisplayRoom(roomId)
     }
-
-    if (!community) return null;
 
     return (
         <div className='community-rooms-scroll-wrapper'>
@@ -39,10 +46,10 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setDisplayRoom={setDisplayRoom} setClearMessages={setClearMessages}communityId={community.id} roomId={room.id} />} />
+                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} roomId={room.id} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
-                                        modalComponent={() => <DeleteRoomModal setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
+                                        modalComponent={() => <DeleteRoomModal setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
                                 </div>
                             )
                         }
@@ -64,7 +71,7 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
             <div className='new-room-button'>
                 <OpenModalButton
                     buttonText={'+ Add a Room'}
-                    modalComponent={() => <CreateRoomModal webSocket={webSocket} communityId={community.id} />} />
+                    modalComponent={() => <CreateRoomModal setPromptRoomScroll={setPromptRoomScroll} setDisplayRoom={setDisplayRoom} webSocket={webSocket} communityId={community.id} />} />
             </div>
         </div>
     )

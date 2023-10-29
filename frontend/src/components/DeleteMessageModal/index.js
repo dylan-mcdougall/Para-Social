@@ -2,15 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { deleteRoomMessage } from '../../store/rooms';
-import { loadRoom } from '../../store/rooms';
 
 function DeleteRoomMessageModal({ setClearMessages, roomId, messageId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
-    const handleDelete = () => {
-        dispatch(deleteRoomMessage(roomId, messageId));
-        dispatch(loadRoom(roomId));
+    const handleDelete = async () => {
+        await dispatch(deleteRoomMessage(roomId, messageId));
         setClearMessages(true);
         closeModal();
     }

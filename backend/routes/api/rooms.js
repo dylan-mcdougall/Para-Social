@@ -47,9 +47,14 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
         }
         const command = new DeleteObjectCommand(params);
         await s3.send(command);
+        await targetMessage.destroy();
+        return res.json({
+            "message": "Message successfully deleted."
+        })
     }
-
+    
     await targetMessage.destroy();
+    
     return res.json({
         "message": "Message successfully deleted."
     })

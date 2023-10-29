@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { newCommunity } from '../../store/community';
 import { useModal } from '../../context/Modal';
+import { removeRoom } from '../../store/rooms';
 
 function CreateCommunityModal() {
     const dispatch = useDispatch();
@@ -22,6 +23,7 @@ function CreateCommunityModal() {
             price
         }))
         .then(() => {
+            dispatch(removeRoom())
             closeModal()
         })
         .catch(
