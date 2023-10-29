@@ -4,7 +4,7 @@ import { newRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal';
 import { loadCommunity } from '../../store/community';
 
-function CreateRoomModal({ webSocket, communityId }) {
+function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, communityId }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState({});
@@ -13,23 +13,22 @@ function CreateRoomModal({ webSocket, communityId }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
-        return dispatch(newRoom({
-            communityId,
-            name
-        }))
-        .then(() => {
+        try {
+            const newRoomData = await dispatch(newRoom({
+                communityId,
+                name
+            }))
             if (webSocket.current) {
                 webSocket.current.close()
             }
+            setDisplayRoom(newRoomData.id)
+            setPromptRoomScroll(true)
             dispatch(loadCommunity(communityId))
             closeModal()
-        })
-        .catch(
-            async (response) => {
-                const data = await response.json();
-                if (data && data.errors) setErrors(data.errors);
-            }
-        )
+        } catch (error) {
+            console.log('Error creating room: ', error)
+            setErrors(error)
+        }
     }
 
     return (

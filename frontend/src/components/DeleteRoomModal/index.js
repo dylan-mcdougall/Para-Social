@@ -2,18 +2,19 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal';
 import { deleteRoom } from '../../store/rooms';
-import { loadCommunity } from '../../store/community';
 
-function DeleteRoomModal({ setDisplayRoom, roomId }) {
+function DeleteRoomModal({ setPromptRoomScroll, displayRoom, setDisplayRoom, roomId }) {
     const dispatch = useDispatch();
     const community = useSelector(state => state.community.community);
     const { closeModal } = useModal();
 
     const handleDelete = () => {
         dispatch(deleteRoom(community.id, roomId));
-        dispatch(loadCommunity(community.id))
-        setDisplayRoom(community?.Rooms[0]?.id);
-        closeModal()
+        if (displayRoom === roomId) {
+            setDisplayRoom(community?.Rooms[0]?.id);
+        }
+        setPromptRoomScroll(true);
+        closeModal();
     }
 
     return (

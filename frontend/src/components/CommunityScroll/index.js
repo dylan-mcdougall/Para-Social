@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
@@ -8,21 +8,17 @@ import UpdateCommunityModal from '../UpdateCommunityModal';
 import { FaPenSquare } from 'react-icons/fa';
 import DeleteCommunityModal from '../DeleteCommunityModal';
 import Navigation from '../Navigation';
+import { removeRoom } from '../../store/rooms';
 
-function CommunityScrollBar({ isLoaded, setDisplayRoom, displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const community = useSelector(state => state.community.community);
-    const [dataLoaded, setDataLoaded] = useState(false);
-
-    useEffect(() => {
-        if (!displayCommunity) return
-        dispatch(loadCommunity(displayCommunity))
-        setDataLoaded(true)
-    }, [displayCommunity]);
 
     const handleClick = async (communityId) => {
-        setDisplayCommunity(communityId)
+        if (displayCommunity !== communityId) {
+            dispatch(removeRoom())
+            setDisplayCommunity(communityId)
+        } else return setDisplayCommunity(communityId)
     }
     
     return (
@@ -40,10 +36,10 @@ function CommunityScrollBar({ isLoaded, setDisplayRoom, displayCommunity, setDis
                                 <div className='community-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateCommunityModal community={community} />} />
+                                        modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
-                                        modalComponent={() => <DeleteCommunityModal community={community} setDisplayCommunity={setDisplayCommunity} />} />
+                                        modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
                                 </div>
                             )
                         }
@@ -61,7 +57,7 @@ function CommunityScrollBar({ isLoaded, setDisplayRoom, displayCommunity, setDis
             <div className='new-community-button'>
                 <OpenModalButton
                     buttonText={'+ Add a Community'}
-                    modalComponent={() => <CreateCommunityModal />} />
+                    modalComponent={() => <CreateCommunityModal setPromptRender={setPromptRender} />} />
             </div>
         </div>
     )

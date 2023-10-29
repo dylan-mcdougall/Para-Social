@@ -4,7 +4,7 @@ import { loadRoom, updateRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal';
 import { loadCommunity } from '../../store/community';
 
-function UpdateRoomModal({ setClearMessages, setDisplayRoom, communityId, roomId }) {
+function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, roomId }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [errors, setErrors] = useState({});
@@ -20,7 +20,7 @@ function UpdateRoomModal({ setClearMessages, setDisplayRoom, communityId, roomId
         }))
         .then(() => {
             setClearMessages(true);
-            dispatch(loadCommunity(communityId))
+            setPromptRoomScroll(true);
             closeModal()
         })
         .catch(
