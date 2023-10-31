@@ -48,18 +48,20 @@ function UpdateCommunityModal({ community, setPromptRender }) {
             <label>
                 
                 <textarea value={description} placeholder='Community Description' onChange={(e) => setDescription(e.target.value)} />
-            </label>
-            <label className='private-radio'>
-                Private?
-                <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
-            </label>
-            <label className='price-input'>
-                Price
-                <input type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
-            </label>
-            {errors && <p>{errors.errors}</p>}
-            <button type='submit'>Submit</button>
-        </form>
+                </label>
+                <label className='private-radio'>
+                    Private?
+                    <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
+                </label>
+                <label className='price-input'>
+                    Price
+                    <input type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
+                </label>
+                {errors && (<div className='errors'>
+                    <p>{errors.name ? <p>Please include a Community Name.</p> : null}</p> <p>{errors.description ? <p>Please include a description.</p> : null}</p>
+                </div>)}
+                <button type='submit'>Submit</button>
+            </form>
         </div>
     )
 }

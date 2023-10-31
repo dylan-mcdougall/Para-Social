@@ -132,3 +132,9 @@ div#root {
     color: white;
     background-color: grey;
 }
+
+.errors {
+    display: flex;
+    flex-direction: column;
+    color: red;
+}

@@ -46,7 +46,7 @@ function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages,
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} roomId={room.id} />} />
+                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
