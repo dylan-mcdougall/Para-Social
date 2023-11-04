@@ -1,8 +1,9 @@
 .room-display-wrapper {
     display: flex;
     flex-direction: column;
-    border-right: 1px solid black;
-    background-color: lightgrey;
+    border-right: 1px solid lightgray;
+    background-color: #070c0c;
+    color: #c1c7d3;
     height: 100%;
     width: 65%;
 }

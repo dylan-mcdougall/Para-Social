@@ -58,7 +58,6 @@ export const userData = () => async (dispatch) => {
   const response = await csrfFetch('/api/users/current');
   if (response.ok) {
     const data = await response.json();
-    console.log('Fetch function ', data)
     dispatch(setDetailedUser(data));
     return data;
   } else {
@@ -109,7 +108,6 @@ const sessionReducer = (state = initialState, action) => {
       return newState;
     case SET_DETAILED_USER:
       newState = Object.assign({}, state);
-      console.log('session reducer ', action.payload)
       newState.user = action.payload;
       return newState;
     case REMOVE_USER:

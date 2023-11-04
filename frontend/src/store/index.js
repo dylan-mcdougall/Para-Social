@@ -3,7 +3,6 @@ import { combineReducers, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import sessionReducer from "./session";
 import communityReducer from "./community";
-import { restoreCSRF, csrfFetch } from './csrf';
 import roomReducer from "./rooms";
 
 const rootReducer = combineReducers({

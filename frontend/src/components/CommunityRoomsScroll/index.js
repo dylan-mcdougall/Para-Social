@@ -8,7 +8,7 @@ import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 import { loadCommunity } from '../../store/community';
 
-function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);

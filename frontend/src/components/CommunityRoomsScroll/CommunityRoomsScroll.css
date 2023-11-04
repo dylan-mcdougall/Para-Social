@@ -4,7 +4,9 @@
     justify-content: space-between;
     height: 100%;
     width: 18%;
-    border-right: 1px solid black;
+    border-right: 1px solid #898D96;
+    color: #c1c7d3;
+    background-color: #070c0c;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -27,7 +29,6 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid lightgray;
 }
 
 .room-item-wrapper:hover {

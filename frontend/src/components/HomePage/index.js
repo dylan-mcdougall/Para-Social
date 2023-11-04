@@ -48,20 +48,23 @@ function HomePage() {
 
 
     return (
-        <div className='home-page-wrapper'>
-            <div className='home-page-flex'>
-                {isLoaded ? (
-                    <>
-                        <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} dataLoaded={dataLoaded} isLoaded={isLoaded} />
-                        <CommunityPage promptRender={promptRender} setPromptRender={setPromptRender} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
-                    </>
-                ) : (
-                    <div>
-                        <h1>Loading...</h1>
-                    </div>
-                )}
+        <>
+            <Navigation isLoaded={isLoaded} />
+            <div className='home-page-wrapper'>
+                <div className='home-page-flex'>
+                    {isLoaded ? (
+                        <>
+                            <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} dataLoaded={dataLoaded} isLoaded={isLoaded} />
+                            <CommunityPage promptRender={promptRender} setPromptRender={setPromptRender} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                        </>
+                    ) : (
+                        <div>
+                            <h1>Loading...</h1>
+                        </div>
+                    )}
+                </div>
             </div>
-        </div>
+        </>
     );
 }
 

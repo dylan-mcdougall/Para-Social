@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
-import { loadCommunity } from '../../store/community';
 import UpdateCommunityModal from '../UpdateCommunityModal';
 import { FaPenSquare } from 'react-icons/fa';
 import DeleteCommunityModal from '../DeleteCommunityModal';
@@ -24,7 +23,6 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
     return (
         <div className='community-bar-wrapper'>
             <ul className='community-bar-ul'>
-                <Navigation isLoaded={isLoaded} />
                 <h3>
                     Communities
                 </h3>
@@ -47,8 +45,8 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                             <div className='community-item-wrapper'>
                                 <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
                                     {community.name}
+                                    {validatedPermissions}
                                 </li>
-                                {validatedPermissions}
                             </div>
                         )
                     })

@@ -20,7 +20,6 @@ export const loadCommunity = (id) => async (dispatch) => {
     const response = await csrfFetch(`/api/communities/${id}`);
     if (response.ok) {
         const data = await response.json();
-        console.log('community fetch ', data);
         dispatch(setCommunity(data));
         return data
     } else {

@@ -3,6 +3,8 @@
     flex-direction: column;
     height: 100%;
     width: 15%;
+    color: #c1c7d3;
+    background-color: #070c0c;
 }
 
 .community-members-ul {

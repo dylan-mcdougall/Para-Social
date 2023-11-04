@@ -1,25 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
-
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li className='profile-button'>
-        <ProfileButton user={sessionUser} />
-      </li>
+      <>
+        <li>
+          Para-Social
+        </li>
+        <li>
+          Browse Communities
+        </li>
+        <li>
+          Analytics
+        </li>
+        <li className='profile-button'>
+          <ProfileButton user={sessionUser} />
+        </li>
+      </>
     );
   } else {
     sessionLinks = (

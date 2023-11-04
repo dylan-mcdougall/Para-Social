@@ -10,7 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, displayCommunity, setDisplayCommunity }) {
+function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, displayCommunity  }) {
     const dispatch = useDispatch();
     const community = useSelector(state => state.community.community);
     const room = useSelector(state => state.room.room);
