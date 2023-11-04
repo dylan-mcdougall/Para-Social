@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { loadCommunity, updateCommunity } from '../../store/community';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 
 function UpdateCommunityModal({ community, setPromptRender }) {
     const dispatch = useDispatch();

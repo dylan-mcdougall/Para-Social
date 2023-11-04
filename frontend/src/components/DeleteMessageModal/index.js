@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 import { deleteRoomMessage } from '../../store/rooms';
 
 function DeleteRoomMessageModal({ setClearMessages, roomId, messageId }) {

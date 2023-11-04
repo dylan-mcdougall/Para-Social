@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 import { deleteCommunity } from '../../store/community';
 
 function DeleteCommunityModal({ setPromptRender, community }) {

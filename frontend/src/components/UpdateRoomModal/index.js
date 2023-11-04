@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from '../../store/rooms';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 
 
 function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, room }) {

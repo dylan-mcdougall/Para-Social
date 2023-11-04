@@ -3,11 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
-import UpdateCommunityModal from '../UpdateCommunityModal';
-import { FaPenSquare } from 'react-icons/fa';
-import DeleteCommunityModal from '../DeleteCommunityModal';
-import Navigation from '../Navigation';
 import { removeRoom } from '../../store/rooms';
+import OpenMenuButton from '../OpenMenuButton';
+import CommunitySettingsMenu from '../CommunitySettingsMenu';
+import { IoSettingsSharp } from 'react-icons/io5';
 
 function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -28,24 +27,15 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                 </h3>
             {dataLoaded && (
                     sessionUser?.Communities?.map((community) => {
-                        let validatedPermissions = null;
-                        if (sessionUser.id === community.creator_id) {
-                            validatedPermissions = (
-                                <div className='community-actions'>
-                                    <OpenModalButton
-                                        buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
-                                    <OpenModalButton
-                                        buttonText={'X'}
-                                        modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
-                                </div>
-                            )
-                        }
                         return (
                             <div className='community-item-wrapper'>
                                 <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
-                                    {community.name}
-                                    {validatedPermissions}
+                                    <div className='item-content'>
+                                        {community.name}
+                                        <OpenMenuButton
+                                        buttonIcon={<IoSettingsSharp />}
+                                        menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
+                                    </div>
                                 </li>
                             </div>
                         )

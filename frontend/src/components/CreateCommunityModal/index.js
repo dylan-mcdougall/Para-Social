@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { newCommunity } from '../../store/community';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 import { removeRoom } from '../../store/rooms';
 
 function CreateCommunityModal() {
