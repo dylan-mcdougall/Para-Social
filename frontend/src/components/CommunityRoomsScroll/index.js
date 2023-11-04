@@ -56,9 +56,11 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
                         return (
                             <div className='room-item-wrapper'>
                                 <li className='room-item' key={room.id} onClick={() => handleClick(room.id)}>
-                                    {room?.name}
+                                    <div className='item-content'>
+                                        {room?.name}
+                                        {validatedOwner}
+                                    </div>
                                 </li>
-                                {validatedOwner}
                             </div>
                         )
                     }) : (

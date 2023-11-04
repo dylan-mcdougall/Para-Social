@@ -25,24 +25,67 @@
 }
 
 .room-item-wrapper {
+    position: relative;
+    background-color: #070c0c;
+    color: #c1c7d3;
+    margin: .5rem 0 .5rem .25rem;
+    height: 3.5rem;      
+    border-radius: 100px;
+    width: 96%;       
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
+    overflow: hidden;
 }
 
-.room-item-wrapper:hover {
-    background-color: #f0f0f0;
+.room-item-wrapper:hover::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    height: 3.25rem;
+    width: 100%;
+    background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+    animation: animate 4s linear infinite;
+}
+
+.room-item-wrapper:hover::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    height: 3.25rem;
+    width: 100%;
+    background-image: conic-gradient(transparent, transparent, transparent, #e800a6);
+    animation: animate 4s linear infinite;
+    animation-delay: -2s;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .room-item {
-    text-decoration: none;
-    list-style: none;
-    padding: .75rem .5rem;
+    position: absolute; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 1000px; 
+    height: 96%;      
+    width: 98%;  
+    background-color: #070c0c;
+    color: #c1c7d3;
+    overflow: hidden;
+    z-index: 2;
 }
 
 .room-item:hover {
     cursor: pointer;
+    color: #dde2ed;
 }
 
 .room-actions {

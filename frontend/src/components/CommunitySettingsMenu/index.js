@@ -3,7 +3,6 @@ import { useSelector } from 'react-redux';
 import UpdateCommunityModal from '../UpdateCommunityModal';
 import DeleteCommunityModal from '../DeleteCommunityModal';
 import OpenModalButton from '../OpenModalButton';
-import { FaPenSquare } from 'react-icons/fa';
 
 
 function CommunitySettingsMenu({ community, setPromptRender }) {
@@ -12,14 +11,18 @@ function CommunitySettingsMenu({ community, setPromptRender }) {
     let validatedPermissions;
     if (community.creator_id === sessionUser.id) {
         validatedPermissions = (
-            <>
-                <OpenModalButton
-                    buttonText={<FaPenSquare />}
-                    modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
-                <OpenModalButton
-                    buttonText={'X'}
-                    modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
-            </>
+            <div className='menu-shell'>
+                <div className='menu-item'>
+                    <OpenModalButton
+                        buttonText={'Update Community'}
+                        modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
+                </div>
+                <div className='menu-item'>
+                    <OpenModalButton
+                        buttonText={'Delete Community'}
+                        modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
+                </div>
+            </div>
         )
     } else {
         validatedPermissions = (

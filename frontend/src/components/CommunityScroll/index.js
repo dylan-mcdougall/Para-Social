@@ -6,7 +6,7 @@ import './CommunityScroll.css'
 import { removeRoom } from '../../store/rooms';
 import OpenMenuButton from '../OpenMenuButton';
 import CommunitySettingsMenu from '../CommunitySettingsMenu';
-import { IoSettingsSharp } from 'react-icons/io5';
+import { FiSettings } from 'react-icons/fi';
 
 function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                                     <div className='item-content'>
                                         {community.name}
                                         <OpenMenuButton
-                                        buttonIcon={<IoSettingsSharp />}
+                                        buttonIcon={<FiSettings />}
                                         menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
                                     </div>
                                 </li>
