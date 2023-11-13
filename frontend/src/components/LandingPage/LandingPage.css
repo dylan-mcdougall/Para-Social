@@ -23,6 +23,7 @@ button {
 
 * {
     font-family: 'Roboto', sans-serif;
+    box-sizing: border-box;
 }
 
 h1,

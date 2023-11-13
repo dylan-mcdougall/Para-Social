@@ -1,7 +1,6 @@
 .room-messages-wrapper {
-    border-bottom: 1px solid lightgray;
-    background-color: #2a2a2a;
-    height: 75%;
+    background-color: #3e4245;
+    height: 82%;
     margin: 1rem 0;
 }
 
@@ -19,12 +18,13 @@
     flex-direction: column;
     text-decoration: none;
     list-style: none;
-    margin: 1rem;
+    width: 100%;
+    margin: 1rem 0;
     padding: 0 .5rem .5rem;
 }
 
 .message-item:hover {
-    background-color: white;
+    background-color: #34383a;
 }
 
 .message-details {

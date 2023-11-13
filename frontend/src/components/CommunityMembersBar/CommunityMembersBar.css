@@ -4,7 +4,7 @@
     height: 100%;
     width: 15%;
     color: #c1c7d3;
-    background-color: #070c0c;
+    background-color: #24272b;
 }
 
 .community-members-ul {
@@ -16,8 +16,8 @@
     padding: 1rem 0;
     text-align: center;
     align-self: center;
-    border-bottom: 1px solid grey;
-    width: 90%;
+    border-bottom: .5px solid grey;
+    width: 100%;
 }
 
 .member-item-wrapper {
@@ -25,11 +25,10 @@
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
-    border-bottom: 1px solid lightgray;
 }
 
 .member-item-wrapper:hover {
-    background-color: #f0f0f0;
+    background-color: #34393e;
 }
 
 .member-item {

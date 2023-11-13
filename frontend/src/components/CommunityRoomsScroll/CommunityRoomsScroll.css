@@ -4,9 +4,8 @@
     justify-content: space-between;
     height: 100%;
     width: 18%;
-    border-right: 1px solid #898D96;
     color: #c1c7d3;
-    background-color: #070c0c;
+    background-color: #212427;
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -26,10 +25,10 @@
 
 .room-item-wrapper {
     position: relative;
-    background-color: #070c0c;
+    background-color: #212427;
     color: #c1c7d3;
-    margin: .5rem 0 .5rem .25rem;
-    height: 3.5rem;      
+    margin: .5rem 0 0 .25rem;
+    height: 2.25rem;      
     border-radius: 100px;
     width: 96%;       
     display: flex;
@@ -42,7 +41,7 @@
     content: '';
     position: absolute;
     z-index: 1;
-    height: 3.25rem;
+    height: 2rem;
     width: 100%;
     background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
     animation: animate 4s linear infinite;
@@ -52,7 +51,7 @@
     content: '';
     position: absolute;
     z-index: 1;
-    height: 3.25rem;
+    height: 2rem;
     width: 100%;
     background-image: conic-gradient(transparent, transparent, transparent, #e800a6);
     animation: animate 4s linear infinite;
@@ -77,7 +76,7 @@
     border-radius: 1000px; 
     height: 96%;      
     width: 98%;  
-    background-color: #070c0c;
+    background-color: #212427;
     color: #c1c7d3;
     overflow: hidden;
     z-index: 2;

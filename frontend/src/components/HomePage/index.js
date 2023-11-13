@@ -48,8 +48,7 @@ function HomePage() {
 
 
     return (
-        <>
-            <Navigation isLoaded={isLoaded} />
+        <div className='page-wrapper'>
             <div className='home-page-wrapper'>
                 <div className='home-page-flex'>
                     {isLoaded ? (
@@ -64,7 +63,7 @@ function HomePage() {
                     )}
                 </div>
             </div>
-        </>
+        </div>
     );
 }
 

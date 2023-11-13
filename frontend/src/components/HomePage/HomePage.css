@@ -1,3 +1,10 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
 .home-page-wrapper {
     position: relative;
     display: flex;
@@ -9,6 +16,4 @@
 .home-page-flex {
     display: flex;
     width: 100%;
-    border: 1px solid lightgray;
-    background-color: white;
 }

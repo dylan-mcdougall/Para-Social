@@ -4,9 +4,8 @@
     justify-content: space-between;
     height: 100%;
     width: 20%;
-    border-right: 1px solid lightgray;
     color: #c1c7d3;
-    background-color: #070c0c;
+    background-color: #1b1e20;
     overflow-y: auto;
     overflow-x: hidden;
     position: relative;
@@ -28,9 +27,9 @@
 
 .community-item-wrapper {
     position: relative;
-    background-color: #070c0c;
+    background-color: #1b1e20;
     color: #c1c7d3;
-    margin: .5rem 0 .5rem .25rem;
+    margin: .5rem 0 .5rem;
     height: 3.5rem;      
     border-radius: 100px;
     width: 96%;       
@@ -89,35 +88,41 @@
 .community-item {
     position: absolute; 
     display: flex;
-    justify-content: space-between;
     align-items: center;
     border-radius: 1000px; 
     height: 96%;      
     width: 98%;  
-    background-color: #070c0c;
+    background-color: #1b1e20;
     color: #c1c7d3;
-    overflow: hidden;
     z-index: 2;
 }
 
 .community-item:hover {
     cursor: pointer;
     color: #dde2ed;
-    /* background-color: #0f1818; */
 }
 
 .item-content {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 100%;
+    width: 85%;
     height: 100%;
     margin: 1rem;
 }
 
+.community-name {
+    display: block;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 70%;
+}
+
 .item-content button {
-    color: #070c0c;
-    background-color: #070c0c;
+    color: #1b1e20;
+    background-color: #1b1e20;
     border: none;
 }
 

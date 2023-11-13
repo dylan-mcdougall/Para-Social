@@ -22,16 +22,13 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
     return (
         <div className='community-bar-wrapper'>
             <ul className='community-bar-ul'>
-                <h3>
-                    Communities
-                </h3>
             {dataLoaded && (
                     sessionUser?.Communities?.map((community) => {
                         return (
                             <div className='community-item-wrapper'>
                                 <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
                                     <div className='item-content'>
-                                        {community.name}
+                                        <p className='community-name'>{community?.name}</p>
                                         <OpenMenuButton
                                         buttonIcon={<FiSettings />}
                                         menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />

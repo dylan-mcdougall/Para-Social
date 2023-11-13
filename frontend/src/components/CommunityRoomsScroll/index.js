@@ -36,7 +36,7 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
         <div className='community-rooms-scroll-wrapper'>
             <ul className='community-rooms-ul'>
                 <h3>
-                    Rooms
+                    {community?.name}
                 </h3>
                 {dataLoaded && (
                     community?.Rooms ? community?.Rooms?.map((room) => {

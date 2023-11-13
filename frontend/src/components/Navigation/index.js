@@ -11,28 +11,25 @@ function Navigation({ isLoaded }){
   if (sessionUser) {
     sessionLinks = (
       <>
-        <li>
-          Para-Social
-        </li>
-        <li>
-          Browse Communities
-        </li>
-        <li>
-          Analytics
-        </li>
-        <li className='profile-button'>
-          <ProfileButton user={sessionUser} />
-        </li>
+        <div className='nav-left'>
+          <li className='title'>
+            Para-Social
+          </li>
+          <li className='link'>
+            Browse Communities
+          </li>
+          <li className='link'>
+            Analytics
+          </li>
+        </div>
+        <div className='nav-right'>
+          <li className='profile-button'>
+            <ProfileButton user={sessionUser} />
+          </li>
+        </div>
       </>
     );
-  } else {
-    sessionLinks = (
-      <li>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </li>
-    );
-  }
+  } else return null
 
   const navClassName = "nav-wrapper" + (sessionUser ? " " : " hidden");
 
