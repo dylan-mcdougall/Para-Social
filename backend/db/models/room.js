@@ -31,6 +31,13 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [1, 30]
       }
+    }, 
+    classification: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: ['about', 'text', 'voice', 'announcement']
+      }
     }
   }, {
     sequelize,

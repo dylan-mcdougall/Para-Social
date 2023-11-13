@@ -28,6 +28,10 @@ module.exports = {
         type: Sequelize.STRING(30),
         allowNull: false
       },
+      classification: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,
