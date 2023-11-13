@@ -20,7 +20,6 @@ export const loadRoom = (id) => async (dispatch) => {
     const response = await csrfFetch(`/api/rooms/${id}`);
     if (response.ok) {
         const data = await response.json();
-        console.log('room fetch, ', data);
         dispatch(setRoom(data));
         return data
     } else {

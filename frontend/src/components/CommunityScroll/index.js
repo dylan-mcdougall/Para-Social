@@ -1,14 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityScroll.css'
-import { loadCommunity } from '../../store/community';
-import UpdateCommunityModal from '../UpdateCommunityModal';
-import { FaPenSquare } from 'react-icons/fa';
-import DeleteCommunityModal from '../DeleteCommunityModal';
-import Navigation from '../Navigation';
 import { removeRoom } from '../../store/rooms';
+import OpenMenuButton from '../OpenMenuButton';
+import CommunitySettingsMenu from '../CommunitySettingsMenu';
+import { FiSettings } from 'react-icons/fi';
 
 function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -24,31 +22,18 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
     return (
         <div className='community-bar-wrapper'>
             <ul className='community-bar-ul'>
-                <Navigation isLoaded={isLoaded} />
-                <h3>
-                    Communities
-                </h3>
             {dataLoaded && (
                     sessionUser?.Communities?.map((community) => {
-                        let validatedPermissions = null;
-                        if (sessionUser.id === community.creator_id) {
-                            validatedPermissions = (
-                                <div className='community-actions'>
-                                    <OpenModalButton
-                                        buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
-                                    <OpenModalButton
-                                        buttonText={'X'}
-                                        modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
-                                </div>
-                            )
-                        }
                         return (
                             <div className='community-item-wrapper'>
                                 <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
-                                    {community.name}
+                                    <div className='item-content'>
+                                        <p className='community-name'>{community?.name}</p>
+                                        <OpenMenuButton
+                                        buttonIcon={<FiSettings />}
+                                        menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
+                                    </div>
                                 </li>
-                                {validatedPermissions}
                             </div>
                         )
                     })

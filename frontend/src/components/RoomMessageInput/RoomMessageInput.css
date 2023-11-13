@@ -1,10 +1,14 @@
 .room-message-input-wrapper {
+    position: absolute;
+    bottom: 0;
     align-self: center;
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 60%;
-    background-color: white;
+    width: 50rem;
+    background-color: #4d545a;
+    margin: 1rem;
+    border-radius: 1rem;
 }
 
 .room-message-input-wrapper form {
@@ -32,6 +36,8 @@
     border: none;
     resize: none;
     outline: none;
+    color: #c1c7d3;
+    background-color: #4d545a;
 }
 
 .submit-message {
@@ -41,6 +47,10 @@
 
 .submit-message:hover {
     cursor: pointer;
+}
+
+.room-message-input-wrapper button {
+    color: #c1c7d3;
 }
 
 .room-message-input-wrapper .file-upload {

@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import * as sessionActions from '../../store/session';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
-
-  const logout = (e) => {
-    e.preventDefault();
-    dispatch(sessionActions.logout());
-  };
 
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li className='profile-button'>
-        <ProfileButton user={sessionUser} />
-      </li>
+      <>
+        <div className='nav-left'>
+          <li className='title'>
+            Para-Social
+          </li>
+          <li className='link'>
+            Browse Communities
+          </li>
+          <li className='link'>
+            Analytics
+          </li>
+        </div>
+        <div className='nav-right'>
+          <li className='profile-button'>
+            <ProfileButton user={sessionUser} />
+          </li>
+        </div>
+      </>
     );
-  } else {
-    sessionLinks = (
-      <li>
-        <NavLink to="/login">Log In</NavLink>
-        <NavLink to="/signup">Sign Up</NavLink>
-      </li>
-    );
-  }
+  } else return null
 
   const navClassName = "nav-wrapper" + (sessionUser ? " " : " hidden");
 

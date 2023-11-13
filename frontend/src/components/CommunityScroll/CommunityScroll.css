@@ -4,14 +4,17 @@
     justify-content: space-between;
     height: 100%;
     width: 20%;
-    border-right: 1px solid black;
+    color: #c1c7d3;
+    background-color: #1b1e20;
     overflow-y: auto;
     overflow-x: hidden;
+    position: relative;
 }
 
 .community-bar-ul {
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .community-bar-ul h3 {
@@ -23,24 +26,107 @@
 }
 
 .community-item-wrapper {
+    position: relative;
+    background-color: #1b1e20;
+    color: #c1c7d3;
+    margin: .5rem 0 .5rem;
+    height: 3.5rem;      
+    border-radius: 100px;
+    width: 96%;       
     display: flex;
-    flex-direction: row;
+    justify-content: center;
     align-items: center;
-    justify-content: space-between;
-    border-bottom: 1px solid lightgray;
+    overflow: hidden;
 }
 
-.community-item-wrapper:hover {
-    background-color: #f0f0f0;
+.community-item-wrapper:hover button {
+    color: #00ccff;
+    animation: spin 12s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.community-item-wrapper:hover::before {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    height: 3.25rem;
+    width: 100%;
+    background-image: conic-gradient(transparent, transparent, transparent, #00ccff);
+    animation: animate 4s linear infinite;
+}
+
+.community-item-wrapper:hover::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    height: 3.25rem;
+    width: 100%;
+    background-image: conic-gradient(transparent, transparent, transparent, #e800a6);
+    animation: animate 4s linear infinite;
+    animation-delay: -2s;
+}
+
+@keyframes animate {
+    0% {
+        transform: rotate(0deg)
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .community-item {
-    text-decoration: none;
-    list-style: none;
-    padding: .75rem .5rem;
+    position: absolute; 
+    display: flex;
+    align-items: center;
+    border-radius: 1000px; 
+    height: 96%;      
+    width: 98%;  
+    background-color: #1b1e20;
+    color: #c1c7d3;
+    z-index: 2;
 }
 
 .community-item:hover {
+    cursor: pointer;
+    color: #dde2ed;
+}
+
+.item-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 85%;
+    height: 100%;
+    margin: 1rem;
+}
+
+.community-name {
+    display: block;
+    flex-wrap: nowrap;
+    overflow-x: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 70%;
+}
+
+.item-content button {
+    color: #1b1e20;
+    background-color: #1b1e20;
+    border: none;
+}
+
+.item-content button:hover {
     cursor: pointer;
 }
 

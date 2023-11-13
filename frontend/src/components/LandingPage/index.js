@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import './LandingPage.css';
 import LoginFormPage from '../LoginFormPage';
 import SignupFormPage from '../SignupFormPage';
 
 function LandingPage() {
     const sessionUser = useSelector(state => state.session.user);
-    const history = useHistory();
-    
-    
     const [login, setLogin] = useState(true);
 
     useEffect(() => {
@@ -23,10 +20,9 @@ function LandingPage() {
         landingRight = <SignupFormPage login={login} setLogin={setLogin} />
     }
 
-    // if (sessionUser) {
-    //     history.push('/home');
-    //     return null
-    // }
+    if (sessionUser) {
+        return <Redirect to='/home' />
+    }
     
     return (
         <div className='landing-page-wrapper'>

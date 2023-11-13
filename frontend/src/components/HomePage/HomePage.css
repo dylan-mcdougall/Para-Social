@@ -1,15 +1,19 @@
+.page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    width: 100%;
+}
+
 .home-page-wrapper {
+    position: relative;
     display: flex;
     flex-direction: row;
     height: 100%;
     width: 100%;
-    background-color: darkslategrey;
 }
 
 .home-page-flex {
     display: flex;
     width: 100%;
-    border: 1px solid lightgray;
-    margin: 1rem;
-    background-color: white;
 }

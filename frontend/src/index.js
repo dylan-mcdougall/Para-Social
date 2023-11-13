@@ -8,7 +8,8 @@ import App from './App';
 import { store } from './store';
 import * as sessionActions from "./store/session";
 
-import { ModalProvider, Modal } from './context/Modal';
+import { ModalProvider, Modal } from './context/Modal/Modal';
+import { MenuProvider, Menu } from './context/ContextMenu/ContextMenu';
 
 
 if (process.env.NODE_ENV !== 'production') {
@@ -21,14 +22,17 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root() {
   return (
-    <ModalProvider>
-      <ReduxProvider store={store}>
-        <BrowserRouter>
-          <App />
-          <Modal />
-        </BrowserRouter>
-      </ReduxProvider>
-    </ModalProvider>
+    <MenuProvider>
+      <ModalProvider>
+        <ReduxProvider store={store}>
+          <BrowserRouter>
+            <App />
+            <Menu />
+            <Modal />
+          </BrowserRouter>
+        </ReduxProvider>
+      </ModalProvider>
+    </MenuProvider>
   );
 }
 

@@ -1,11 +1,10 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useModal } from '../../context/Modal';
+import { useDispatch } from 'react-redux';
+import { useModal } from '../../context/Modal/Modal';
 import { deleteCommunity } from '../../store/community';
 
 function DeleteCommunityModal({ setPromptRender, community }) {
     const dispatch = useDispatch();
-    const sessionUser = useSelector(state => state.session.user);
     const { closeModal } = useModal();
 
     const handleDelete = () => {

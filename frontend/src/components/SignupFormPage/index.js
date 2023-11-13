@@ -63,7 +63,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
+        {errors.email && <p className='errors'>{errors.email}</p>}
         <label>
           <input
             type="text"
@@ -73,7 +73,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
+        {errors.username && <p className='errors'>{errors.username}</p>}
         <label>
           <input
             type="text"
@@ -83,7 +83,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
+        {errors.firstName && <p className='errors'>{errors.firstName}</p>}
         <label>
           <input
             type="text"
@@ -93,7 +93,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
+        {errors.lastName && <p className='errors'>{errors.lastName}</p>}
         <label>
           <input
             type="password"
@@ -103,7 +103,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
+        {errors.password && <p className='errors'>{errors.password}</p>}
         <label>
           <input
             type="password"
@@ -113,7 +113,7 @@ function SignupFormPage({ login, setLogin }) {
             required
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
         <button onClick={() => setLogin(true)}>Login</button>
         <a className="demo-user" onClick={handleClick}>Demo Login</a>

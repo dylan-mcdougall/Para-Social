@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { v4 as uuidv4 } from 'uuid';
 import { csrfFetch } from '../../store/csrf';
 import { FaPaperPlane } from 'react-icons/fa';
@@ -7,8 +7,7 @@ import './RoomMessageInput.css';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function RoomMessageInput({ isLoaded, webSocket, clearMessages, setClearMessages }) {
-    const dispatch = useDispatch();
+function RoomMessageInput({ webSocket, setClearMessages }) {
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [message, setMessage] = useState('');

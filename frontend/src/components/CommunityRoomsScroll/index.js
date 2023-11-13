@@ -8,7 +8,7 @@ import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 import { loadCommunity } from '../../store/community';
 
-function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const community = useSelector(state => state.community.community);
@@ -36,7 +36,7 @@ function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages,
         <div className='community-rooms-scroll-wrapper'>
             <ul className='community-rooms-ul'>
                 <h3>
-                    Rooms
+                    {community?.name}
                 </h3>
                 {dataLoaded && (
                     community?.Rooms ? community?.Rooms?.map((room) => {
@@ -46,7 +46,7 @@ function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages,
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} roomId={room.id} />} />
+                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
@@ -56,9 +56,11 @@ function CommunityRoomsScroll({ promptRender, setPromptRender, setClearMessages,
                         return (
                             <div className='room-item-wrapper'>
                                 <li className='room-item' key={room.id} onClick={() => handleClick(room.id)}>
-                                    {room?.name}
+                                    <div className='item-content'>
+                                        {room?.name}
+                                        {validatedOwner}
+                                    </div>
                                 </li>
-                                {validatedOwner}
                             </div>
                         )
                     }) : (

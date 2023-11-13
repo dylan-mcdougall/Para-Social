@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { newRoom } from '../../store/rooms';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 import { loadCommunity } from '../../store/community';
 
 function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, communityId }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
-    const [errors, setErrors] = useState({});
+    const [errors, setErrors] = useState(null);
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
@@ -40,7 +40,9 @@ function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, commu
                 <label>
                     <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
-                {errors && <p>{errors.errors}</p>}
+                {errors && (<div className='errors'>
+                    {errors ? <p>Room name must exist and be unique.</p> : null}
+                </div>)}
                 <button type='submit'>Submit</button>
             </form>
         </div>

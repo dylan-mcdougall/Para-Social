@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { newCommunity } from '../../store/community';
-import { useModal } from '../../context/Modal';
+import { useModal } from '../../context/Modal/Modal';
 import { removeRoom } from '../../store/rooms';
 
 function CreateCommunityModal() {
@@ -28,7 +28,10 @@ function CreateCommunityModal() {
         })
         .catch(
             async (response) => {
+                console.log('this is your target ', response)
                 const data = await response.json();
+                console.log('this is your target data ', data)
+                console.log(data.errors)
                 if (data && data.errors) setErrors(data.errors);
             }
         )
@@ -49,14 +52,16 @@ function CreateCommunityModal() {
             <label className='private-radio'>
                 Private?
                 <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
-            </label>
-            <label className='price-input'>
-                Price:
-                <input type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
-            </label>
-            {errors && <p>{errors.errors}</p>}
-            <button type='submit'>Submit</button>
-        </form>
+                </label>
+                <label className='price-input'>
+                    Price:
+                    <input type='number' value={price} onChange={(e) => setPrice(e.target.value)} />
+                </label>
+                {errors && (<div className='errors'>
+                    <p>{errors.name ? <p>Please include a Community Name.</p> : null}</p> <p>{errors.description ? <p>Please include a description.</p> : null}</p>
+                </div>)}
+                <button type='submit'>Submit</button>
+            </form>
         </div>
     )
 }

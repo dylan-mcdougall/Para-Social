@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { loadRoom, updateRoom } from '../../store/rooms';
-import { useModal } from '../../context/Modal';
-import { loadCommunity } from '../../store/community';
+import { updateRoom } from '../../store/rooms';
+import { useModal } from '../../context/Modal/Modal';
 
-function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, roomId }) {
+
+function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, room }) {
     const dispatch = useDispatch();
-    const [name, setName] = useState('');
-    const [errors, setErrors] = useState({});
+    const [name, setName] = useState(room.name);
+    const [errors, setErrors] = useState(null);
     const { closeModal } = useModal();
 
     const handleSubmit = async (e) => {
@@ -15,7 +15,7 @@ function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, r
         setErrors({});
         return dispatch(updateRoom({
             communityId,
-            roomId,
+            roomId: room.id,
             name: name
         }))
         .then(() => {
@@ -36,13 +36,15 @@ function UpdateRoomModal({ setPromptRoomScroll, setClearMessages, communityId, r
             <h3>
                 Update Room Name
             </h3>
-        <form onSubmit={handleSubmit}>
-            <label>
-                <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
-            </label>
-            {errors && <p>{errors.errors}</p>}
-            <button type='submit'>Submit</button>
-        </form>
+            <form onSubmit={handleSubmit}>
+                <label>
+                    <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
+                </label>
+                {errors && (<div className='errors'>
+                    <p>Room name must exist and be unique.</p>
+                </div>)}
+                <button type='submit'>Submit</button>
+            </form>
         </div>
     )
 }
