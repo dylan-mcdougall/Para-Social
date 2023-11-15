@@ -18,6 +18,8 @@ const routes = require('./routes');
 
 const app = express();
 
+const map = new Map();
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -109,7 +111,9 @@ async function processQueue() {
     return console.log('Processing completed.');
 }
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', function connection(ws) { 
+    map.set(ws)
+
     ws.on('error', console.error);
 
     ws.on('message', function message(data) {

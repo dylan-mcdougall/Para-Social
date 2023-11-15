@@ -6,7 +6,7 @@ import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
@@ -16,19 +16,11 @@ function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessag
         if (displayRoom === null || displayRoom === undefined) return
         dispatch(loadRoom(displayRoom));
         setDataLoaded(true)
-        if (clearMessages) {
-            setRoomMessages([]);
-            setClearMessages(false);
-        }
         if (!room?.Messages?.length) {
             return;
         }
         roomMessages = roomMessages.filter(msg => !msg.tempId);
-
-        return () => {
-            setClearMessages(false)
-        }
-    }, [displayRoom, clearMessages, roomMessages]);
+    }, [displayRoom, roomMessages]);
 
     return (
         <div className='room-messages-wrapper'>
@@ -47,7 +39,7 @@ function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessag
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal setClearMessages={setClearMessages} roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
                                         </>
                                     )
                                 }

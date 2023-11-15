@@ -7,7 +7,7 @@ import './RoomMessageInput.css';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function RoomMessageInput({ webSocket, setClearMessages }) {
+function RoomMessageInput({ webSocket }) {
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [message, setMessage] = useState('');
@@ -76,7 +76,6 @@ function RoomMessageInput({ webSocket, setClearMessages }) {
 
         webSocket.current.send(jsonMessage);
         setMessage('');
-        setClearMessages(true);
         setContent_type('text');
         setContent_src(null);
         setContent_src_name(null);
