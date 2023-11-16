@@ -26,8 +26,8 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
         if (!room) return
         const messages = [...room?.Messages]
         messages.sort((a, b) => {
-            if (a.createdAt > b.createdAt) return -1
-            if (b.createdAt > a.createdAt) return 1
+            if (a.createdAt > b.createdAt) return 1
+            if (b.createdAt > a.createdAt) return -1
             return 0
         });
         setRoomMessages([...messages])
