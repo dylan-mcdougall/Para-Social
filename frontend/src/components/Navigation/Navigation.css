@@ -9,7 +9,12 @@
     border: none;
     border-radius: 2000px;
     font-size: 1.70rem;
-    padding: .5rem 0 0;
+    padding: .5rem;
+}
+
+.profile-button button:hover {
+    cursor: pointer;
+    background-color: #0090b4;
 }
 
 .nav-wrapper {
