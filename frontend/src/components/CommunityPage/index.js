@@ -16,6 +16,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
     const room = useSelector(state => state.room.room);
     const webSocket = useRef(null);
     const [roomMessages, setRoomMessages] = useState([]);
+    const [clearMessages, setClearMessages] = useState(false);
     const [displayRoom, setDisplayRoom] = useState(null);
     const [roomDataLoaded, setRoomDataLoaded] = useState(false);
 
@@ -23,7 +24,18 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         if (displayCommunity) {
             dispatch(loadCommunity(displayCommunity))
         }
+        setClearMessages(true)
     }, [displayCommunity])
+
+    useEffect(() => {
+        if (clearMessages) {
+            setRoomMessages([])
+        }
+
+        return () => {
+            setClearMessages(false)
+        }
+    }, [clearMessages])
 
     useEffect(() => {
         if (!room) return
@@ -89,7 +101,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         <div className='community-page-wrapper'>
             {dataLoaded && (
                 <div className='community-page-content'>
-                    <CommunityRoomsScroll community={community} promptRender={promptRender} setPromptRender={setPromptRender} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} webSocket={webSocket} dataLoaded={dataLoaded} />
+                    <CommunityRoomsScroll community={community} setRoomMessages={setRoomMessages} promptRender={promptRender} setPromptRender={setPromptRender} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} webSocket={webSocket} dataLoaded={dataLoaded} />
                     <RoomDisplay displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomMessages={roomMessages} setRoomMessages={setRoomMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} />
                     <CommunityMembersBar isLoaded={isLoaded} community={community} />
                 </div>
