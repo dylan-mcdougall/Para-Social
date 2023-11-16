@@ -7,27 +7,41 @@ import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 import { loadCommunity } from '../../store/community';
+import { separatedRooms } from './roomManagement';
 
-function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ community, webSocket, setRoomMessages, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    const community = useSelector(state => state.community.community);
-    const [promptRoomScroll, setPromptRoomScroll] = useState(false)
+    // const community = useSelector(state => state.community.community);
+    const [promptRoomScroll, setPromptRoomScroll] = useState(false);
+    const [scrollDataLoaded, setScrollDataLoaded] = useState(false);
+
+    console.log(community)
+
+    // useEffect(() => {
+    //     if (dataLoaded && community) {
+    //         dispatch(loadCommunity(community.id))
+    //         setScrollDataLoaded(true)
+    //     }
+        
+    //     return () => {
+    //         setPromptRoomScroll(false)
+    //     }
+    // }, [promptRoomScroll])
 
     useEffect(() => {
-        if (dataLoaded && community) {
-            dispatch(loadCommunity(community.id))
+        if (community) {
+            const { pinnedRooms, rooms } = separatedRooms(community?.Rooms)
         }
-
         return () => {
-            setPromptRoomScroll(false)
+            setScrollDataLoaded(false)
         }
-    }, [promptRoomScroll])
-
+    }, [community])
+    
     const handleClick = async (roomId) => {
-        setClearMessages(true)
         if (webSocket.current) {
             webSocket.current.close()
+            setRoomMessages([])
         }
         await setDisplayRoom(roomId)
     }
@@ -46,7 +60,7 @@ function CommunityRoomsScroll({ setClearMessages, webSocket, dataLoaded, display
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setClearMessages={setClearMessages} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} />} />
+                                        modalComponent={() => <UpdateRoomModal setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />

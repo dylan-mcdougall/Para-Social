@@ -6,36 +6,56 @@ import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
-        if (displayRoom === null || displayRoom === undefined) return
-        dispatch(loadRoom(displayRoom));
+        if (!room) return
+        roomMessages = roomMessages.filter((el) => el.room_id === room.id)
         setDataLoaded(true)
-        if (clearMessages) {
-            setRoomMessages([]);
-            setClearMessages(false);
-        }
-        if (!room?.Messages?.length) {
-            return;
-        }
-        roomMessages = roomMessages.filter(msg => !msg.tempId);
-
-        return () => {
-            setClearMessages(false)
-        }
-    }, [displayRoom, clearMessages, roomMessages]);
+    }, [roomMessages])
 
     return (
         <div className='room-messages-wrapper'>
             {dataLoaded && (
                 <ul className='room-messages-ul'>
                     <div>
-                        {room?.Messages?.length ? (
+                        {roomMessages?.length ? (
+                            roomMessages.map((message) => {
+                                let usernameClass = 'message-username';
+                                if (sessionUser.id === message.user_id) {
+                                    usernameClass = usernameClass + ' current'
+                                }
+                                let validatedPermissions = null;
+                                if (sessionUser.id === message.user_id) {
+                                    validatedPermissions = (
+                                        <>
+                                            <OpenModalButton
+                                                buttonText={'X'}
+                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                        </>
+                                    )
+                                }
+                                return (
+                                    <li className='message-item' key={message.id}>
+                                        <div className='message-details'>
+                                            <div className='message-details-left'>
+                                                <p className={usernameClass}>{message?.username ? message?.username : message?.User?.username} </p>
+                                                <p className='datetime-sent'> Sent {moment(message?.created ? message?.created : message?.createdAt).format('l LT')}</p>
+                                            </div>
+                                            {validatedPermissions}
+                                        </div>
+                                        <div className='message-content'>
+                                            {message?.content_message}
+                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                        </div>
+                                    </li>
+                                )
+                            })
+                        ) : (
                             room.Messages.map((message) => {
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
@@ -47,7 +67,7 @@ function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessag
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal setClearMessages={setClearMessages} roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
                                         </>
                                     )
                                 }
@@ -64,16 +84,6 @@ function RoomMessages({ clearMessages, setClearMessages, displayRoom, roomMessag
                                             {message?.content_message}
                                             {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
                                         </div>
-                                    </li>
-                                )
-                            })
-                        ) : (
-                            roomMessages.map((message, index) => {
-                                return (
-                                    <li className='message-item ws' key={message.id || index}>
-                                        <p className='testing-ws'>
-                                            {message?.content_message || message?.data?.content_message}
-                                        </p>
                                     </li>
                                 )
                             })

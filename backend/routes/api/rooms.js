@@ -185,7 +185,6 @@ router.get('/:id', requireAuth, async (req, res) => {
         const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
         message.content_src = url;
     }
-    console.log(room.Messages);
     return res.json(room);
 })
 

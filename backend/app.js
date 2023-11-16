@@ -27,20 +27,16 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(express.json());
 
-
 if (!isProduction) {
-    // enable cors only in development
     app.use(cors());
 }
 
-// helmet helps set a variety of headers to better secure your app
 app.use(
     helmet.crossOriginResourcePolicy({
         policy: "cross-origin"
     })
 );
 
-// Set the _csrf token and create req.csrfToken method
 app.use(
     csurf({
         cookie: {
@@ -62,7 +58,6 @@ app.use((_req, _res, next) => {
 });
 
 app.use((err, _req, _res, next) => {
-    // check if error is a Sequelize error:
     if (err instanceof ValidationError) {
         let errors = {};
         for (let error of err.errors) {
@@ -92,7 +87,6 @@ const wss = new WebSocketServer({ server })
 const messageQueue = [];
 
 async function processQueue() {
-    console.log(messageQueue);
     while (messageQueue.length) {
         const message = messageQueue.shift();
         const { room_id, user_id, content_type, content_message, content_src, content_src_name } = message;
@@ -109,23 +103,45 @@ async function processQueue() {
     return console.log('Processing completed.');
 }
 
-wss.on('connection', function connection(ws) {
-    ws.on('error', console.error);
+const rooms = {};
 
-    ws.on('message', function message(data) {
-        if (data instanceof Buffer) {
-            data = data.toString('utf8');
+wss.on('connection', function connection(ws) { 
+    ws.on('message', (message) => {
+        console.log('Receiving message: ', message)
+        const data = JSON.parse(message);
+        if (data.action === 'join') {
+            const roomId = data.room_id;
+            if (!rooms[roomId]) {
+                rooms[roomId] = new Set();
+            }
+            rooms[roomId].add(ws);
+            ws.roomId = roomId;
         }
-        const parsedData = JSON.parse(data);
-        messageQueue.push(parsedData.data);
-        console.log('received: %s', data);
-        ws.send(data);
-        processQueue();
+
+        if (data.action === 'message' && ws.roomId) {
+            messageQueue.push(data.data);
+            console.log('sending message to database', data);
+            processQueue()
+
+            rooms[ws.roomId].forEach(client => {
+                if (client !== ws && client.readyState) {
+                    const parsedData = JSON.stringify(data.data)
+                    console.log('Sending Clients message: ', data)
+                    client.send(parsedData);
+                }
+            });
+
+        }
     });
 
-    ws.on('close', function close() {
-        console.log('connection closed')
-    })
+    ws.on('close', () => {
+        if (ws.roomId && rooms[ws.roomId]) {
+            rooms[ws.roomId].delete(ws);
+            if (rooms[ws.roomId].size === 0) {
+                delete rooms[ws.roomId];
+            }
+        }
+    });
 });
 
 module.exports = server;

@@ -7,7 +7,7 @@ import './RoomMessageInput.css';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
-function RoomMessageInput({ webSocket, setClearMessages }) {
+function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [message, setMessage] = useState('');
@@ -16,11 +16,6 @@ function RoomMessageInput({ webSocket, setClearMessages }) {
     const [content_src_name, setContent_src_name] = useState(null);
     const fileRef = useRef(null);
     const formRef = useRef(null);
-    
-    if (webSocket.current === null) {
-        const ws = new WebSocket(wsUrl);
-        webSocket.current = ws;
-    }
     
     const onFileUpload = async (e) => {
         const file = e.target.files[0]
@@ -65,9 +60,10 @@ function RoomMessageInput({ webSocket, setClearMessages }) {
             username: sessionUser.username,
             created: new Date()
         }
+        setRoomMessages([...roomMessages, newMessage])
 
         const jsonMessage = JSON.stringify({
-            type: 'send-message',
+            action: 'message',
             data: newMessage
         });
 
@@ -76,7 +72,6 @@ function RoomMessageInput({ webSocket, setClearMessages }) {
 
         webSocket.current.send(jsonMessage);
         setMessage('');
-        setClearMessages(true);
         setContent_type('text');
         setContent_src(null);
         setContent_src_name(null);
@@ -91,6 +86,8 @@ function RoomMessageInput({ webSocket, setClearMessages }) {
           formRef.current.requestSubmit();
         }
     }
+
+    console.log('roomMessages, ', roomMessages)
 
     if (!room) return null;
 
