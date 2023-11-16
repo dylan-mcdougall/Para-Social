@@ -16,6 +16,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
     const room = useSelector(state => state.room.room);
     const webSocket = useRef(null);
     const [roomMessages, setRoomMessages] = useState([]);
+    const [clearMessages, setClearMessages] = useState(false);
     const [displayRoom, setDisplayRoom] = useState(null);
     const [roomDataLoaded, setRoomDataLoaded] = useState(false);
 
@@ -23,7 +24,18 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         if (displayCommunity) {
             dispatch(loadCommunity(displayCommunity))
         }
+        setClearMessages(true)
     }, [displayCommunity])
+
+    useEffect(() => {
+        if (clearMessages) {
+            setRoomMessages([])
+        }
+
+        return () => {
+            setClearMessages(false)
+        }
+    }, [clearMessages])
 
     useEffect(() => {
         if (!room) return
@@ -36,17 +48,23 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         webSocket.current = ws;
 
         ws.onopen = (e) => {
-            console.log(`connected ${e}`);
+            const data = {
+                action: 'join',
+                room_id: room.id
+            }
+            const parsedData = JSON.stringify(data)
+            ws.send(parsedData)
+            return console.log(`connected ${e}`);
         }
 
         ws.onmessage = (e) => {
-            const parsedData = JSON.parse(e.data);
-            parsedData.tempId = uuidv4();
+            const parsedData = JSON.parse(e.data)
             return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
         }
 
         ws.onerror = (e) => {
-            console.log(e);
+            console.log('closing websocket connection ', e);
+            return webSocket.current = null
         }
 
         ws.onclose = (e) => {
@@ -83,7 +101,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         <div className='community-page-wrapper'>
             {dataLoaded && (
                 <div className='community-page-content'>
-                    <CommunityRoomsScroll community={community} promptRender={promptRender} setPromptRender={setPromptRender} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} webSocket={webSocket} dataLoaded={dataLoaded} />
+                    <CommunityRoomsScroll community={community} setRoomMessages={setRoomMessages} promptRender={promptRender} setPromptRender={setPromptRender} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} webSocket={webSocket} dataLoaded={dataLoaded} />
                     <RoomDisplay displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomMessages={roomMessages} setRoomMessages={setRoomMessages} webSocket={webSocket} roomDataLoaded={roomDataLoaded} />
                     <CommunityMembersBar isLoaded={isLoaded} community={community} />
                 </div>

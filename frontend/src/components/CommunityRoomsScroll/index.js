@@ -9,7 +9,7 @@ import UpdateRoomModal from '../UpdateRoomModal';
 import { loadCommunity } from '../../store/community';
 import { separatedRooms } from './roomManagement';
 
-function CommunityRoomsScroll({ community, webSocket, dataLoaded, displayRoom, setDisplayRoom }) {
+function CommunityRoomsScroll({ community, webSocket, setRoomMessages, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     // const community = useSelector(state => state.community.community);
@@ -41,6 +41,7 @@ function CommunityRoomsScroll({ community, webSocket, dataLoaded, displayRoom, s
     const handleClick = async (roomId) => {
         if (webSocket.current) {
             webSocket.current.close()
+            setRoomMessages([])
         }
         await setDisplayRoom(roomId)
     }
