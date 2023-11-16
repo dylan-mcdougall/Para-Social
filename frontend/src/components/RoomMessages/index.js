@@ -43,8 +43,8 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                     <li className='message-item' key={message.id}>
                                         <div className='message-details'>
                                             <div className='message-details-left'>
-                                                <p className={usernameClass}>{message?.username} </p>
-                                                <p className='datetime-sent'> Sent {moment(message?.created).format('l LT')}</p>
+                                                <p className={usernameClass}>{message?.username ? message?.username : message?.User?.username} </p>
+                                                <p className='datetime-sent'> Sent {moment(message?.created ? message?.created : message?.createdAt).format('l LT')}</p>
                                             </div>
                                             {validatedPermissions}
                                         </div>
@@ -56,12 +56,34 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                 )
                             })
                         ) : (
-                            room.Messages.map((message, index) => {
+                            room.Messages.map((message) => {
+                                let usernameClass = 'message-username';
+                                if (sessionUser.id === message.user_id) {
+                                    usernameClass = usernameClass + ' current'
+                                }
+                                let validatedPermissions = null;
+                                if (sessionUser.id === message.user_id) {
+                                    validatedPermissions = (
+                                        <>
+                                            <OpenModalButton
+                                                buttonText={'X'}
+                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                        </>
+                                    )
+                                }
                                 return (
-                                    <li className='message-item ws' key={message.id || index}>
-                                        <p className='testing-ws'>
-                                            {message?.content_message || message?.data?.content_message}
-                                        </p>
+                                    <li className='message-item' key={message.id}>
+                                        <div className='message-details'>
+                                            <div className='message-details-left'>
+                                                <p className={usernameClass}>{message?.User?.username} </p>
+                                                <p className='datetime-sent'> Sent {moment(message?.createdAt).format('l LT')}</p>
+                                            </div>
+                                            {validatedPermissions}
+                                        </div>
+                                        <div className='message-content'>
+                                            {message?.content_message}
+                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                        </div>
                                     </li>
                                 )
                             })

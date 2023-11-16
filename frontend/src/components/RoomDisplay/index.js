@@ -22,6 +22,17 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
         }
     }, [community])
 
+    useEffect(() => {
+        if (!room) return
+        const messages = [...room?.Messages]
+        messages.sort((a, b) => {
+            if (a.createdAt > b.createdAt) return -1
+            if (b.createdAt > a.createdAt) return 1
+            return 0
+        });
+        setRoomMessages([...messages])
+    }, [room])
+
     return (
         <div className='room-display-wrapper'>
             {roomDataLoaded ? (
