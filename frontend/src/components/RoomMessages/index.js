@@ -13,22 +13,18 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
     const [dataLoaded, setDataLoaded] = useState(false);
 
     useEffect(() => {
-        if (displayRoom === null || displayRoom === undefined) return
-        dispatch(loadRoom(displayRoom));
+        if (!room) return
+        roomMessages = roomMessages.filter((el) => el.room_id === room.id)
         setDataLoaded(true)
-        if (!room?.Messages?.length) {
-            return;
-        }
-        roomMessages = roomMessages.filter(msg => !msg.tempId);
-    }, [displayRoom, roomMessages]);
+    }, [roomMessages])
 
     return (
         <div className='room-messages-wrapper'>
             {dataLoaded && (
                 <ul className='room-messages-ul'>
                     <div>
-                        {room?.Messages?.length ? (
-                            room.Messages.map((message) => {
+                        {roomMessages?.length ? (
+                            roomMessages.map((message) => {
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
@@ -47,8 +43,8 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                     <li className='message-item' key={message.id}>
                                         <div className='message-details'>
                                             <div className='message-details-left'>
-                                                <p className={usernameClass}>{message?.User?.username} </p>
-                                                <p className='datetime-sent'> Sent {moment(message?.createdAt).format('l LT')}</p>
+                                                <p className={usernameClass}>{message?.username} </p>
+                                                <p className='datetime-sent'> Sent {moment(message?.created).format('l LT')}</p>
                                             </div>
                                             {validatedPermissions}
                                         </div>
@@ -60,7 +56,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                 )
                             })
                         ) : (
-                            roomMessages.map((message, index) => {
+                            room.Messages.map((message, index) => {
                                 return (
                                     <li className='message-item ws' key={message.id || index}>
                                         <p className='testing-ws'>

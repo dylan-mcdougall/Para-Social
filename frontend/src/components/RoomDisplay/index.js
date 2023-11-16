@@ -34,7 +34,7 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
                         )}
                     <>
                         <RoomMessages clearMessages={clearMessages} setClearMessages={setClearMessages} displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
-                        <RoomMessageInput clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
+                        <RoomMessageInput roomMessages={roomMessages} setRoomMessages={setRoomMessages} clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
                     </>
                 </>
             ) : (

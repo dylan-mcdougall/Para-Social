@@ -36,17 +36,23 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         webSocket.current = ws;
 
         ws.onopen = (e) => {
-            console.log(`connected ${e}`);
+            const data = {
+                action: 'join',
+                room_id: room.id
+            }
+            const parsedData = JSON.stringify(data)
+            ws.send(parsedData)
+            return console.log(`connected ${e}`);
         }
 
         ws.onmessage = (e) => {
-            const parsedData = JSON.parse(e.data);
-            parsedData.tempId = uuidv4();
+            const parsedData = JSON.parse(e.data)
             return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
         }
 
         ws.onerror = (e) => {
-            console.log(e);
+            console.log('closing websocket connection ', e);
+            return webSocket.current = null
         }
 
         ws.onclose = (e) => {
