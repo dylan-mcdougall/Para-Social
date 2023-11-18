@@ -18,12 +18,33 @@ module.exports = (sequelize, DataTypes) => {
         models.Community,
         { through: models.Membership, foreignKey: 'user_id', otherKey: 'community_id' }
       );
-      User.hasMany(models.Membership, { foreignKey: 'user_id', onDelete: 'CASCADE' });
-      User.hasMany(models.RoomMessage, { foreignKey: 'user_id', otherKey: 'id' });
+      User.hasMany(
+        models.UserCommunityData,
+        { foreignKey: 'user_id', otherKey: 'id' }
+      );
+      User.belongsToMany(
+        models.UserCommunityData,
+        { foreignKey: 'user_id', otherKey: 'id' }
+      );
+      User.hasMany(
+        models.Membership, 
+        { foreignKey: 'user_id', onDelete: 'CASCADE' }
+      );
+      User.hasMany(
+        models.RoomMessage, 
+        { foreignKey: 'user_id', otherKey: 'id' }
+      );
+      User.hasOne(
+        models.Image,
+        { 
+          as: 'ProfileImage', foreignKey: 'imageableId', onDelete: 'CASCADE', 
+          hooks: true, constraints: false, scope: { imageableType: 'User' } 
+        }
+      )
     }
   }
   User.init({
-    firstName: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -35,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -68,6 +89,22 @@ module.exports = (sequelize, DataTypes) => {
         len: [3, 256],
         isEmail: true
       }
+    },
+    age: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    sex: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['male', 'female', 'non-binary', 'other', 'declined']]
+      }
+    },
+    num_communities: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 0
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
