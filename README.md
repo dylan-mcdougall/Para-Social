@@ -11,5 +11,6 @@ Feature List:
 
 Current db schema
 
-![Screenshot 2023-10-07 105711](https://github.com/dylan-mcdougall/aa-capstone/assets/107007986/b6da5343-1ba9-4de0-a574-289e8876d4b6)
+![image](https://github.com/dylan-mcdougall/Para-Social/assets/107007986/a249287d-197f-4098-a564-42eb14f575f3)
+
 
