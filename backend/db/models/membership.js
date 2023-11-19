@@ -43,7 +43,11 @@ module.exports = (sequelize, DataTypes) => {
       attributes: {
         exclude: ['createdAt', 'updatedAt']
       }
-    }
+    },
+    indexes: [{
+      unique: true,
+      fields: ['user_id', 'community_id']
+    }]
   });
   return Membership;
 };

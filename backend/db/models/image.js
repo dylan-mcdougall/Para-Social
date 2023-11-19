@@ -40,6 +40,9 @@ module.exports = (sequelize, DataTypes) => {
     imageableType: {
       type: DataTypes.STRING,
       allowNull: false,
+      validate: {
+        isIn: [['User', 'Community', 'RoomMessage']]
+      }
     }
   }, {
     sequelize,

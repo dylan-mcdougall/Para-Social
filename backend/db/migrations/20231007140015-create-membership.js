@@ -20,6 +20,7 @@ module.exports = {
           model: 'Users',
           key: 'id'
         },
+        onDelete: 'CASCADE',
         allowNull: false
       },
       community_id: {
@@ -46,6 +47,11 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
+
+    await queryInterface.addIndex(options, {
+      fields: ['user_id', 'community_id'],
+      unique: true
+    });
   },
   async down(queryInterface, Sequelize) {
     options.tableName = 'Memberships';

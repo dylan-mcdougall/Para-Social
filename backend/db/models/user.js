@@ -20,11 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       User.hasMany(
         models.UserCommunityData,
-        { foreignKey: 'user_id', otherKey: 'id' }
-      );
-      User.belongsToMany(
-        models.UserCommunityData,
-        { foreignKey: 'user_id', otherKey: 'id' }
+        { foreignKey: 'user_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
       User.hasMany(
         models.Membership, 

@@ -20,11 +20,7 @@ module.exports = (sequelize, DataTypes) => {
       );
       Community.hasMany(
         models.UserCommunityData,
-        { foreignKey: 'community_id', otherKey: 'id' }
-      );
-      Community.belongsTo(
-        models.UserCommunityData,
-        { foreignKey: 'community_id', otherKey: 'id' }
+        { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
       Community.hasMany(
         models.Membership, 
@@ -66,10 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
+      allowNull: true
   }
   }, {
     sequelize,

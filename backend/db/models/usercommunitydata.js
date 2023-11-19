@@ -10,22 +10,14 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      UserCommunityData.belongsToMany(
+      UserCommunityData.belongsTo(
         models.User,
         { foreignKey: 'user_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
-      UserCommunityData.belongsToMany(
+      UserCommunityData.belongsTo(
         models.Community,
         { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
-      UserCommunityData.hasMany(
-        models.User,
-        { foreignKey: 'user_id' }
-      );
-      UserCommunityData.hasMany(
-        models.Community,
-        { foreignKey: 'community_id' }
-      )
     }
   }
   UserCommunityData.init({
@@ -63,6 +55,10 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'UserCommunityData',
+    indexes: [{
+      unique: true,
+      fields: ['user_id', 'community_id']
+    }]
   });
   return UserCommunityData;
 };
