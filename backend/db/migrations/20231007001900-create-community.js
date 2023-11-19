@@ -5,8 +5,10 @@ if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA; 
 }
 
+
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = 'Communities';
     await queryInterface.createTable('Communities', {
       id: {
         allowNull: false,

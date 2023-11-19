@@ -18,7 +18,7 @@ module.exports = (sequelize, DataTypes) => {
         models.Community,
         { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
       );
-    }
+    };
   }
   UserCommunityData.init({
     user_id: {
@@ -33,16 +33,16 @@ module.exports = (sequelize, DataTypes) => {
     message_count: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 0,
     },
     community_rank: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      defaultValue: 0
+      defaultValue: 0,
     },
     funds_spent: {
       type: DataTypes.FLOAT(2),
-      allowNull: true
+      allowNull: true,
     },
     events_participated: {
       type: DataTypes.INTEGER,
@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     last_room: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
     }
   }, {
     sequelize,

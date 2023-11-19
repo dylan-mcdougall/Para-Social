@@ -32,18 +32,13 @@ module.exports = {
         allowNull: false,
         unique: true
       },
-      age: {
-        type: Sequelize.INTEGER,
+      d_o_b: {
+        type: Sequelize.DATE,
         allowNull: false
       },
       sex: {
         type: Sequelize.STRING,
         allowNull: false
-      },
-      num_communities: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,

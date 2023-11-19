@@ -7,6 +7,7 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
+    options.tableName = 'UserCommunityData';
     await queryInterface.createTable('UserCommunityData', {
       id: {
         allowNull: false,

@@ -86,9 +86,14 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
-    age: {
-      type: DataTypes.INTEGER,
-      allowNull: false
+    d_o_b: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        isBefore: "2023-11-19",
+        isAfter: "1900-01-01"
+      }
     },
     sex: {
       type: DataTypes.STRING,
@@ -96,11 +101,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isIn: [['male', 'female', 'non-binary', 'other', 'declined']]
       }
-    },
-    num_communities: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0
     },
     hashedPassword: {
       type: DataTypes.STRING.BINARY,
