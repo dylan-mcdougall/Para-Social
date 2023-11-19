@@ -11,6 +11,7 @@ Feature List:
 
 Current db schema
 
-![image](https://github.com/dylan-mcdougall/Para-Social/assets/107007986/a249287d-197f-4098-a564-42eb14f575f3)
+![image](https://github.com/dylan-mcdougall/Para-Social/assets/107007986/8f9ebd95-5689-41be-bff0-631157b5ea0b)
+
 
 
