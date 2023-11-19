@@ -7,6 +7,8 @@ import { removeRoom } from '../../store/rooms';
 import OpenMenuButton from '../OpenMenuButton';
 import CommunitySettingsMenu from '../CommunitySettingsMenu';
 import { FiSettings } from 'react-icons/fi';
+import { GoPlus } from 'react-icons/go';
+import ProfileButton from '../Navigation/ProfileButton';
 
 function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
@@ -39,10 +41,19 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                     })
                 )}
             </ul>
-            <div className='new-community-button'>
-                <OpenModalButton
-                    buttonText={'+ Add a Community'}
-                    modalComponent={() => <CreateCommunityModal setPromptRender={setPromptRender} />} />
+            <div className='navigation'>
+                <div className='new-community-button'>
+                    <OpenModalButton
+                        buttonText={<GoPlus />}
+                        modalComponent={() => <CreateCommunityModal setPromptRender={setPromptRender} />} />
+                </div>
+                {sessionUser ? (
+                    <div className='profile-button'>
+                        <ProfileButton user={sessionUser} />
+                    </div>
+                ) : <div className='loading'>
+                    Loading
+                </div>}
             </div>
         </div>
     )
