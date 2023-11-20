@@ -55,15 +55,6 @@ module.exports = {
       }, {
         room_id: 7,
         user_id: 1,
-        content_type: 'text',
-        content_message: 'How about a video?'
-      }, {
-        room_id: 7,
-        user_id: 2,
-        content_type: 'src'
-      }, {
-        room_id: 7,
-        user_id: 1,
         content_type: 'src',
         content_message: 'Sure would be cool if I could send a message while sharing a clip or image.'
       }
