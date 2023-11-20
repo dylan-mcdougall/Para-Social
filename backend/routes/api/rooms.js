@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
-const { Room, RoomMessage, User } = require('../../db/models');
+const { Room, RoomMessage, User, Image } = require('../../db/models');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
 const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 const randomImageName = require('./helper');
@@ -165,7 +165,8 @@ router.get('/:id', requireAuth, async (req, res) => {
             {
                 model: RoomMessage, as: 'Messages',
                 include: [
-                    { model: User }
+                    { model: User },
+                    { model: Image }
                 ]
             }
         ]
@@ -174,17 +175,20 @@ router.get('/:id', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
     for (const message of room.Messages) {
-        const getObjectParams = {
-            Bucket: bucketName,
-            Key: message.content_src_name ? message.content_src_name : null
+        if (message.Images.length) {
+            const getObjectParams = {
+                Bucket: bucketName,
+                Key: message.Images[0].name
+            }
+            if (!getObjectParams.Key) {
+                continue
+            }
+            const command = new GetObjectCommand(getObjectParams);
+            const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
+            message.Images[0].url = url;
         }
-        if (!getObjectParams.Key) {
-            continue
-        }
-        const command = new GetObjectCommand(getObjectParams);
-        const url = await getSignedUrl(s3, command, { expiresIn: 3600 })
-        message.content_src = url;
     }
+    console.log('backend room: ', room)
     return res.json(room);
 })
 

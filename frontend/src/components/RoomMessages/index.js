@@ -12,6 +12,8 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
+    console.log('room state here: ', room);
+
     useEffect(() => {
         if (!room) return
         roomMessages = roomMessages.filter((el) => el.room_id === room.id)
@@ -50,7 +52,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                            {message?.content_type === 'src' ? <img src={message.Images[0].url} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )
@@ -82,7 +84,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                            {message?.content_type === 'src' ? <img src={message.Images[0].url} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )
