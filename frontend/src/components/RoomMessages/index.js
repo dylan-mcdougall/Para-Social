@@ -56,7 +56,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                 )
                             })
                         ) : (
-                            room.Messages.map((message) => {
+                            room?.Messages?.map((message) => {
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
