@@ -22,6 +22,23 @@ const s3 = new S3Client({
     region: bucketRegion
 })
 
+const uploadS3 = async (params) => {
+    const imageName = randomImageName();
+    const command = new PutObjectCommand(params);
+
+    try {
+        await s3.send(command);
+        
+        return {
+            url: `https://${bucketName}.s3.amazonaws.com/${imageName}`,
+            name: imageName
+        };
+    } catch (error) {
+        console.log("There was an issue uploading this image to AWS: ", error)
+    }
+
+}
+
 const router = express.Router();
 
 router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
@@ -95,9 +112,9 @@ router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
     return res.json({
         "message": "Image deleted successfully."
     })
-})
+});
 
-router.post('/:id/image', requireAuth, async (req, res) => {
+router.post('/:id/image-preview', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
 
     if (!room) return res.status(404).json({
@@ -106,7 +123,6 @@ router.post('/:id/image', requireAuth, async (req, res) => {
 
     const buffer = await sharp(req.file.buffer).resize({ height: 180, width: 180, fit: 'contain' }).toBuffer()
 
-    const imageName = randomImageName();
     const params = {
         Bucket: bucketName,
         Key: imageName,
@@ -114,19 +130,41 @@ router.post('/:id/image', requireAuth, async (req, res) => {
         ContentType: req.file.mimetype
     }
 
-    const command = new PutObjectCommand(params)
-
     try {
-        await s3.send(command);
-        
-        return res.json({
-            content_src: `https://${bucketName}.s3.amazonaws.com/${imageName}`,
-            content_src_name: imageName
-        });
+        const dataValues = await uploadS3(params)
+        if (dataValues) {
+            return res.json(dataValues);
+        } else throw new Error("There was an issue when expecting a response from AWS.")
     } catch (error) {
-        console.error('There was an issue uploading this image, ', error)
+        console.error('There was an issue uploading this image: ', error)
     }
-})
+});
+
+router.post('/:id/image', requireAuth, async (req, res) => {
+    const room = await Room.findByPk(req.params.id);
+    const messageId = req.body.messageId;
+    const imageData = req.body.imageData;
+    
+
+    if (!room) return res.status(404).json({
+        "errors": "No room associated with this id exists."
+    });
+
+    const image = Image.create({
+        url: imageData.url,
+        name: imageData.name,
+        imageableId: messageId,
+        imageableType: 'RoomMessage'
+    });
+
+    if (image) {
+        return res.json(image);
+    } else {
+        return res.status(500).json({
+            "errors": "There was an unexpected issue when commiting image data to database."
+        })
+    }
+});
 
 router.post('/:id/messages', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
