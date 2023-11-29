@@ -52,7 +52,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_type === 'src' ? <img src={message.Images[0].url} alt="Uploaded Content" /> : null}
+                                            {message?.content_type === 'src' ? <img className='message-image' src={message.Images[0].url} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )
