@@ -27,6 +27,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                     <div>
                         {roomMessages?.length ? (
                             roomMessages.map((message) => {
+                                console.log('message data here! ', message)
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
@@ -52,7 +53,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_type === 'src' ? <img className='message-image' src={message.Images[0].url} alt="Uploaded Content" /> : null}
+                                            {message?.content_type === 'src' ? <img className='message-image' src={message?.Images?.length ? message?.Images[0].url : message.content_src} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )

@@ -22,14 +22,14 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
         const formData = new FormData();
         formData.append('image', file, file.name);
         formData.append('content_type', 'src');
-        const response = await csrfFetch(`/api/rooms/${room.id}/image`, {
+        const response = await csrfFetch(`/api/rooms/${room.id}/image-preview`, {
             method: 'POST',
             body: formData
         });
         const data = await response.json()
         setContent_type('src');
-        setContent_src(data.content_src);
-        setContent_src_name(data.content_src_name);
+        setContent_src(data.url);
+        setContent_src_name(data.name);
     }
 
     const handleRemoveImage = async () => {
@@ -81,7 +81,7 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     }
 
     const onEnterPress = (e) => {
-        if (e.keyCode == 13 && e.shiftKey == false) {
+        if (e.keyCode === 13 && e.shiftKey === false) {
           e.preventDefault();
           formRef.current.requestSubmit();
         }

@@ -2,7 +2,8 @@ const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { Room, RoomMessage, User, Image } = require('../../db/models');
 const { getSignedUrl } = require("@aws-sdk/s3-request-presigner");
-const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
+const { uploadS3, deleteS3 } = require('./S3Commands');
 const randomImageName = require('./helper');
 const dotenv = require('dotenv');
 const sharp = require('sharp');
@@ -22,22 +23,6 @@ const s3 = new S3Client({
     region: bucketRegion
 })
 
-const uploadS3 = async (params) => {
-    const imageName = randomImageName();
-    const command = new PutObjectCommand(params);
-
-    try {
-        await s3.send(command);
-        
-        return {
-            url: `https://${bucketName}.s3.amazonaws.com/${imageName}`,
-            name: imageName
-        };
-    } catch (error) {
-        console.log("There was an issue uploading this image to AWS: ", error)
-    }
-
-}
 
 const router = express.Router();
 
@@ -107,15 +92,17 @@ router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
         Bucket: bucketName,
         Key: req.params.imageName
     }
-    const command = new DeleteObjectCommand(params);
-    await s3.send(command);
-    return res.json({
-        "message": "Image deleted successfully."
-    })
+    const response = await deleteS3(params);
+    if (response.message === 'Success.') {
+        return res.json({
+            "message": "Image deleted successfully."
+        })
+    } else throw new Error("There was an error sending the delete command to AWS.")
 });
 
 router.post('/:id/image-preview', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
+    const imageName = randomImageName();
 
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
@@ -226,7 +213,6 @@ router.get('/:id', requireAuth, async (req, res) => {
             message.Images[0].url = url;
         }
     }
-    console.log('backend room: ', room)
     return res.json(room);
 })
 

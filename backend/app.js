@@ -7,7 +7,7 @@ const helmet = require('helmet');
 const cookieParser = require('cookie-parser');
 const multer = require('multer');
 const { WebSocketServer } = require('ws');
-const { RoomMessage } = require('./db/models');
+const { RoomMessage, Image } = require('./db/models');
 
 const { environment } = require('./config');
 const isProduction = environment === 'production';
@@ -85,8 +85,9 @@ const server = require('http').createServer(app);
 const wss = new WebSocketServer({ server })
 
 const messageQueue = [];
+const imageQueue = [];
 
-async function processQueue() {
+async function processTextQueue() {
     while (messageQueue.length) {
         const message = messageQueue.shift();
         const { room_id, user_id, content_type, content_message, content_src, content_src_name } = message;
@@ -95,10 +96,33 @@ async function processQueue() {
             user_id,
             content_type,
             content_message,
-            content_src,
-            content_src_name
         });
+        if (content_type === 'src') {
+            const messageId = payload.dataValues.id;
+            imageQueue.push({
+                content_src,
+                content_src_name,
+                messageId
+            });
+            processImageQueue();
+            console.log('Image sent to queue.')
+        }
         console.log('message created successfully', payload);
+    }
+    return console.log('Processing completed.');
+}
+
+async function processImageQueue() {
+    while (imageQueue.length) {
+        const image = imageQueue.shift();
+        const { content_src, content_src_name, messageId } = image;
+        const payload = await Image.create({
+            url: content_src,
+            name: content_src_name,
+            imageableId: messageId,
+            imageableType: 'RoomMessage'
+        });
+        console.log('Image created successfully ', payload);
     }
     return console.log('Processing completed.');
 }
@@ -120,8 +144,8 @@ wss.on('connection', function connection(ws) {
 
         if (data.action === 'message' && ws.roomId) {
             messageQueue.push(data.data);
-            console.log('sending message to database', data);
-            processQueue()
+            console.log('Sending message to database: ', data);
+            processTextQueue()
 
             rooms[ws.roomId].forEach(client => {
                 if (client !== ws && client.readyState) {
