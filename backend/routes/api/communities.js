@@ -1,6 +1,4 @@
 const express = require('express');
-const { check } = require('express-validator');
-const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
 const { User, Community, Room, Membership, Image } = require('../../db/models');
 const { S3Client } = require('@aws-sdk/client-s3');
