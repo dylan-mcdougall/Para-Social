@@ -127,32 +127,6 @@ router.post('/:id/image-preview', requireAuth, async (req, res) => {
     }
 });
 
-router.post('/:id/image', requireAuth, async (req, res) => {
-    const room = await Room.findByPk(req.params.id);
-    const messageId = req.body.messageId;
-    const imageData = req.body.imageData;
-    
-
-    if (!room) return res.status(404).json({
-        "errors": "No room associated with this id exists."
-    });
-
-    const image = Image.create({
-        url: imageData.url,
-        name: imageData.name,
-        imageableId: messageId,
-        imageableType: 'RoomMessage'
-    });
-
-    if (image) {
-        return res.json(image);
-    } else {
-        return res.status(500).json({
-            "errors": "There was an unexpected issue when commiting image data to database."
-        })
-    }
-});
-
 router.post('/:id/messages', requireAuth, async (req, res) => {
     const room = await Room.findByPk(req.params.id);
 

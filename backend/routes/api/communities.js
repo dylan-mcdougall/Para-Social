@@ -2,7 +2,26 @@ const express = require('express');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { requireAuth } = require('../../utils/auth');
-const { User, Community, Room, Membership } = require('../../db/models');
+const { User, Community, Room, Membership, Image } = require('../../db/models');
+const { S3Client } = require('@aws-sdk/client-s3');
+const { uploadS3, deleteS3 } = require('./S3Commands');
+const randomImageName = require('./helper');
+const dotenv = require('dotenv');
+const sharp = require('sharp');
+
+dotenv.config();
+const bucketName = process.env.BUCKET_NAME;
+const bucketRegion = process.env.BUCKET_REGION;
+const accessKey = process.env.ACCESS_KEY;
+const secretAccessKey = process.env.SECRET_ACCESS_KEY;
+
+const s3 = new S3Client({
+    credentials: {
+        accessKeyId: accessKey,
+        secretAccessKey: secretAccessKey,
+    },
+    region: bucketRegion
+})
 
 const router = express.Router();
 
@@ -180,7 +199,103 @@ router.get('/:id/rooms', requireAuth, async (req, res) => {
     })
 
     return res.json(targetRooms);
-})
+});
+
+router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
+    const community = await Community.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [
+            {
+                model: Image
+            }
+        ]
+    });
+    
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+
+    if ((community && !community.Images.length) || (community && community.Images[0].name !== req.params.imageName)) {
+        return res.status(400).json({
+            "errors": "This community does not contain the specified image."
+        })
+    }
+    
+    const params = {
+        Bucket: bucketName,
+        Key: req.params.imageName
+    }
+
+    try {
+        const response = await deleteS3(params);
+        if (response.message === 'Success.') {
+            await community.Image[0].destroy();
+            return res.json({
+                "message": "Image deleted successfully."
+            })
+        } else throw new Error("There was an error sending the delete command to AWS.")
+    } catch (error) {
+        console.log("There was an error when attempting to delete image from AWS and the database.")
+    }
+});
+
+router.post('/:id/images', requireAuth, async (req, res) => {
+    const community = await Community.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [
+            {
+                model: Image
+            }
+        ]
+    });
+    
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    
+    const params = {
+        Bucket: bucketName,
+    }
+
+    if (community.Images.length) {
+        try {
+            params.Key = community.Images[0].name;
+            const response = await deleteS3(params);
+            if (response.message && response.message === "Image deleted successfully.") {
+                await community.Images[0].destroy();
+                console.log("Community image successfully destroyed in database and AWS.")
+            } else throw new Error("There was an error when attempting to delete the image from AWS.");
+        } catch (error) {
+            console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
+        }
+    }
+    
+    
+    const buffer = await sharp(req.file.buffer).resize({ height: 512, width: 512, fit: 'contain' }).toBuffer()
+    const imageName = randomImageName();
+    params.Key = imageName;
+    params.Body = buffer;
+    params.ContentType = req.file.mimetype;
+    
+    try {
+        const dataValues = await uploadS3(params);
+        if (dataValues) {
+            const payload = await Image.create({
+                url: dataValues.url,
+                name: dataValues.name,
+                imageableId: req.params.id,
+                imageableType: "Community"
+            });
+            return res.json(payload);
+        }
+    } catch (error) {
+        console.log('There was an error uploading this image: ', error);
+    }
+});
 
 router.patch('/:id', requireAuth, async (req, res) => {
     const { name, description, privacy, price } = req.body;
