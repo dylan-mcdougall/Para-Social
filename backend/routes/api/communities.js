@@ -239,40 +239,20 @@ router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
     }
 });
 
-router.post('/:id/images', requireAuth, async (req, res) => {
-    const community = await Community.findOne({
-        where: {
-            id: req.params.id
-        },
-        include: [
-            {
-                model: Image
-            }
-        ]
-    });
-    
+router.post('/:id/image-preview', requireAuth, async (req, res) => {
+    const community = await Community.findByPk(req.params.id);
+
     if (!community) return res.status(404).json({
         "errors": "No community associated with this id exists."
     });
-    
+    if (community && community.creator_id !== req.user.id) return res.json({
+        "errors": "Forbidden"
+    });
+
     const params = {
         Bucket: bucketName,
     }
 
-    if (community.Images.length) {
-        try {
-            params.Key = community.Images[0].name;
-            const response = await deleteS3(params);
-            if (response.message && response.message === "Image deleted successfully.") {
-                await community.Images[0].destroy();
-                console.log("Community image successfully destroyed in database and AWS.")
-            } else throw new Error("There was an error when attempting to delete the image from AWS.");
-        } catch (error) {
-            console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
-        }
-    }
-    
-    
     const buffer = await sharp(req.file.buffer).resize({ height: 512, width: 512, fit: 'contain' }).toBuffer()
     const imageName = randomImageName();
     params.Key = imageName;
@@ -293,6 +273,52 @@ router.post('/:id/images', requireAuth, async (req, res) => {
     } catch (error) {
         console.log('There was an error uploading this image: ', error);
     }
+});
+
+router.post('/:id/images', requireAuth, async (req, res) => {
+    const community = await Community.findOne({
+        where: {
+            id: req.params.id
+        },
+        include: [
+            {
+                model: Image
+            }
+        ]
+    });
+    
+    if (!community) return res.status(404).json({
+        "errors": "No community associated with this id exists."
+    });
+    if (community && community.creator_id !== req.user.id) return res.status(401).json({
+        "errors": "Forbidden"
+    })
+    
+    const params = {
+        Bucket: bucketName,
+    }
+
+    if (community.Images.length) {
+        try {
+            params.Key = community.Images[0].name;
+            const response = await deleteS3(params);
+            if (response.message && response.message === "Image deleted successfully.") {
+                await community.Images[0].destroy();
+                console.log("Community image successfully destroyed in database and AWS.")
+            } else throw new Error("There was an error when attempting to delete the image from AWS.");
+        } catch (error) {
+            console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
+        }
+    }
+    
+    const payload = await Image.create({
+        url: req.body.url,
+        name: req.body.name,
+        imageableId: req.params.id,
+        imageableType: "Community"
+    });
+
+    if (payload) return res.json(payload);
 });
 
 router.patch('/:id', requireAuth, async (req, res) => {

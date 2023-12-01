@@ -22,6 +22,9 @@ function CommunitySettingsMenu({ community, setPromptRender }) {
                         buttonText={'Delete Community'}
                         modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
                 </div>
+                <div className='menu-upload'>
+                    
+                </div>
             </div>
         )
     } else {

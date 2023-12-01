@@ -104,7 +104,7 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
                         {content_src && (
                             <div style={{ position: 'relative', display: 'inline-block' }}>
                                 <img src={content_src} alt="Thumbnail" style={{ width: '50px', height: '50px' }} />
-                                <button style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
+                                <button style={{ color: 'red', position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
                             </div>
                         )}
                     </form>
