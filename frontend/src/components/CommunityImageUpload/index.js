@@ -49,7 +49,7 @@ function CommunityImageUpload({ setPromptRender, community }) {
     return (
         <div className='image-modal'>
             {imageSrc ? (<img className='image-preview' src={imageSrc} alt='Thumbnail' />)
-            : <FaPeopleGroup className='image-preview' />}
+            : <FaPeopleGroup style={{ backgroundColor: "lightblue", color: "black" }} className='image-preview' />}
             <form className='image-upload' onSubmit={handleSubmit}>
                 <label htmlFor='image'>
                     Upload a Community Image

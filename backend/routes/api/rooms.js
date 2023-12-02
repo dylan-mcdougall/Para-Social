@@ -127,7 +127,7 @@ router.post('/:id/image-preview', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
 
-    const buffer = await sharp(req.file.buffer).resize({ height: 180, width: 180, fit: 'contain' }).toBuffer()
+    const buffer = await sharp(req.file.buffer).resize({ height: 360, width: 360, fit: 'contain' }).toBuffer()
 
     const params = {
         Bucket: bucketName,
