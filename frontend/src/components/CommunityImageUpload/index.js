@@ -39,6 +39,7 @@ function CommunityImageUpload({ setPromptRender, community }) {
             closeModal();
             setImageName(null);
             setImageSrc(null);
+            setPromptRender(true)
         } else {
             throw new Error("There was an error committing your image to the database.")
         }

@@ -262,13 +262,7 @@ router.post('/:id/image-preview', requireAuth, async (req, res) => {
     try {
         const dataValues = await uploadS3(params);
         if (dataValues) {
-            const payload = await Image.create({
-                url: dataValues.url,
-                name: dataValues.name,
-                imageableId: req.params.id,
-                imageableType: "Community"
-            });
-            return res.json(payload);
+            return res.json(dataValues);
         }
     } catch (error) {
         console.log('There was an error uploading this image: ', error);
@@ -298,11 +292,11 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         Bucket: bucketName,
     }
 
-    if (community.CommunityImage.length) {
+    if (community.CommunityImage && community.CommunityImage.name) {
         try {
             params.Key = community.CommunityImage.name;
             const response = await deleteS3(params);
-            if (response.message && response.message === "Image deleted successfully.") {
+            if (response.message && response.message === "Success.") {
                 await community.CommunityImage.destroy();
                 console.log("Community image successfully destroyed in database and AWS.")
             } else throw new Error("There was an error when attempting to delete the image from AWS.");

@@ -113,13 +113,7 @@ router.post('/:id/image-preview', requireAuth, async (req, res) => {
   try {
       const dataValues = await uploadS3(params);
       if (dataValues) {
-          const payload = await Image.create({
-              url: dataValues.url,
-              name: dataValues.name,
-              imageableId: req.params.id,
-              imageableType: "User"
-          });
-          return res.json(payload);
+          return res.json(dataValues);
       }
   } catch (error) {
       console.log('There was an error uploading this image: ', error);
@@ -149,13 +143,13 @@ router.post('/:id/images', requireAuth, async (req, res) => {
       Bucket: bucketName,
   }
 
-  if (user.ProfileImage.url) {
+  if (user.ProfileImage && user.ProfileImage.name) {
       try {
           params.Key = user.ProfileImage.name;
           const response = await deleteS3(params);
-          if (response.message && response.message === "Image deleted successfully.") {
+          if (response.message && response.message === "Success.") {
               await user.ProfileImage.destroy();
-              console.log("user image successfully destroyed in database and AWS.")
+              console.log("User image successfully destroyed in database and AWS.")
           } else throw new Error("There was an error when attempting to delete the image from AWS.");
       } catch (error) {
           console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
