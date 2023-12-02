@@ -1,13 +1,13 @@
 import React, { useState, useRef } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { useModal } from '../../context/Modal/Modal';
-import { FaPeopleGroup } from "react-icons/fa6";
-import './ImageUpload.css';
+import { FaUser } from "react-icons/fa6";
+import './UserImageUpload.css';
 
-function ImageUpload({ setPromptRender, community }) {
+function UserImageUpload({ setPromptRender, user }) {
     const { closeModal } = useModal();
-    const [imageSrc, setImageSrc] = useState(community?.CommunityImage ? community?.CommunityImage?.url : null);
-    const [imageName, setImageName] = useState(community?.CommunityImage ? community?.CommunityImage?.name : null)
+    const [imageSrc, setImageSrc] = useState(user?.ProfileImage ? user?.ProfileImage?.url : null);
+    const [imageName, setImageName] = useState(user?.ProfileImage ? user?.ProfileImage?.name : null)
     const imageRef = useRef(null);
 
     console.log("Image Source HERE!: ", imageSrc)
@@ -16,7 +16,7 @@ function ImageUpload({ setPromptRender, community }) {
         const file = e.target.files[0]
         const formData = new FormData();
         formData.append('image', file, file.name);
-        const response = await csrfFetch(`api/communities/${community.id}/image-preview`, {
+        const response = await csrfFetch(`api/users/${user.id}/image-preview`, {
             method: 'POST',
             body: formData
         });
@@ -30,7 +30,7 @@ function ImageUpload({ setPromptRender, community }) {
             url: imageSrc,
             name: imageName
         }
-        const response = await csrfFetch(`/api/communities/${community.id}/images`, {
+        const response = await csrfFetch(`/api/users/${user.id}/images`, {
             method: 'POST',
             body: JSON.stringify(reqBody),
         });
@@ -48,10 +48,10 @@ function ImageUpload({ setPromptRender, community }) {
     return (
         <div className='image-modal'>
             {imageSrc ? (<img className='image-preview' src={imageSrc} alt='Thumbnail' />)
-            : <FaPeopleGroup className='image-preview' />}
+            : <FaUser className="image-preview" style={{backgroundColor : "#00ccff", color : "black"}} />}
             <form className='image-upload' onSubmit={handleSubmit}>
                 <label htmlFor='image'>
-                    Upload a Community Image
+                    Upload a Profile Image
                 </label>
                 <input type='file' ref={imageRef} formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => onFileUpload(e)} />
                 <button type='submit' className='image-submit'>Confirm Image</button>
@@ -60,4 +60,4 @@ function ImageUpload({ setPromptRender, community }) {
     )
 }
 
-export default ImageUpload
+export default UserImageUpload;

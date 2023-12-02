@@ -46,6 +46,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                     <li className='message-item' key={message.id}>
                                         <div className='message-details'>
                                             <div className='message-details-left'>
+                                                {}
                                                 <p className={usernameClass}>{message?.username ? message?.username : message?.User?.username} </p>
                                                 <p className='datetime-sent'> Sent {moment(message?.created ? message?.created : message?.createdAt).format('l LT')}</p>
                                             </div>

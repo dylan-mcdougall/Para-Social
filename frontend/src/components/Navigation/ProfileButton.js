@@ -2,11 +2,15 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import { FaUser } from 'react-icons/fa6';
+import OpenModalButton from "../OpenModalButton";
+import UserImageUpload from "../UserImageUpload";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+
+  console.log("USER OBJECT HERE!!!: ", user);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -36,15 +40,16 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <FaUser />
-      </button>
+      {user.ProfileImage ? <img className="profile image-item" src={user?.ProfileImage?.url} alt="Thumbnail" onClick={openMenu} /> : <FaUser onClick={openMenu} className="profile image-item" style={{backgroundColor : "#00ccff", color : "black"}} />}
       <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={logout}>Log Out</button>
+        <li className="profile-username">{user.username}</li>
+        <li className="user-image-upload">
+        <OpenModalButton
+                        buttonText={'Upload Image'}
+                        modalComponent={() => <UserImageUpload user={user} /> } />
+        </li>
+        <li className="logout">
+          <button className="logout" onClick={logout}>Log Out</button>
         </li>
       </ul>
     </>

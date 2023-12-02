@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import UpdateCommunityModal from '../UpdateCommunityModal';
 import DeleteCommunityModal from '../DeleteCommunityModal';
 import LeaveCommunityModal from '../LeaveCommunityModal';
-import ImageUpload from '../ImageUpload';
+import CommunityImageUpload from '../CommunityImageUpload';
 import OpenModalButton from '../OpenModalButton';
 import { useMenu } from '../../context/ContextMenu/ContextMenu';
 
@@ -27,7 +27,7 @@ function CommunitySettingsMenu({ community, setPromptRender }) {
                         buttonText={'Upload Image'}
                         onButtonClick={closeMenu}
                         propagateClick={true}
-                        modalComponent={() => <ImageUpload community={community} setPromptRender={setPromptRender} /> } />
+                        modalComponent={() => <CommunityImageUpload community={community} setPromptRender={setPromptRender} /> } />
                 </div>
                 <div className='menu-item delete-community'>
                     <OpenModalButton
