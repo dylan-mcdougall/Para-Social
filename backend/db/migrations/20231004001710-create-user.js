@@ -14,11 +14,11 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      firstName: {
+      first_name: {
         type: Sequelize.STRING(40),
         allowNull: false
       },
-      lastName: {
+      last_name: {
         type: Sequelize.STRING(40),
         allowNull: false
       },
@@ -31,6 +31,14 @@ module.exports = {
         type: Sequelize.STRING(256),
         allowNull: false,
         unique: true
+      },
+      d_o_b: {
+        type: Sequelize.DATE,
+        allowNull: false
+      },
+      sex: {
+        type: Sequelize.STRING,
+        allowNull: false
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,

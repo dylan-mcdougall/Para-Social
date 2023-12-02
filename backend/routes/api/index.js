@@ -9,7 +9,6 @@ router.post('/test', function(req, res) {
     res.json({ requestBody: req.body });
   });
 
-// GET /api/restore-user
 router.use(restoreUser);
 
 router.use('/session', sessionRouter);
@@ -28,8 +27,6 @@ router.get(
   }
 );
 
-
-// GET /api/require-auth
 const { requireAuth } = require('../../utils/auth.js');
 router.get(
   '/require-auth',

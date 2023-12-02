@@ -17,7 +17,14 @@ module.exports = (sequelize, DataTypes) => {
       RoomMessage.belongsTo(
         models.User,
         { foreignKey: 'user_id', otherKey: 'id' }
-      )
+      );
+      RoomMessage.hasMany(
+        models.Image,
+        {
+          foreignKey: 'imageableId', onDelete: 'CASCADE', hooks: true,
+          constraints: false, scope: { imageableType: 'RoomMessage' }
+        }
+      );
     }
   }
   RoomMessage.init({
@@ -28,6 +35,10 @@ module.exports = (sequelize, DataTypes) => {
     user_id: {
       type: DataTypes.INTEGER,
       allowNull: false
+    },
+    ws_message_id: {
+      type: DataTypes.STRING,
+      allowNull: true
     },
     content_type: {
       type: DataTypes.STRING,
@@ -42,14 +53,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [0, 300]
       }
-    },
-    content_src: {
-      type: DataTypes.TEXT,
-      allowNull: true
-    },
-    content_src_name: {
-      type: DataTypes.TEXT,
-      allowNull: true
     }
   }, {
     sequelize,

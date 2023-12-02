@@ -7,33 +7,26 @@ if (process.env.NODE_ENV === 'production') {
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    options.tableName = 'Memberships'
-    await queryInterface.createTable('Memberships', {
+    await queryInterface.createTable('Images', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Users',
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
+      url: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      community_id: {
-        type: Sequelize.INTEGER,
-        references: {
-          model: 'Communities',
-          key: 'id'
-        },
-        onDelete: 'CASCADE',
+      name: {
+        type: Sequelize.STRING,
         allowNull: false
       },
-      status: {
+      imageableId: {
+        type: Sequelize.INTEGER,
+        allowNull: false
+      },
+      imageableType: {
         type: Sequelize.STRING,
         allowNull: false
       },
@@ -48,14 +41,9 @@ module.exports = {
         defaultValue: Sequelize.literal("CURRENT_TIMESTAMP")
       }
     }, options);
-
-    await queryInterface.addIndex(options, {
-      fields: ['user_id', 'community_id'],
-      unique: true
-    });
   },
   async down(queryInterface, Sequelize) {
-    options.tableName = 'Memberships';
+    options.tableName = 'Images';
     return queryInterface.dropTable(options);
   }
 };

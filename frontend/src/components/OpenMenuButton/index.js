@@ -21,7 +21,6 @@ function OpenMenuButton({
             height: rect.height
         };
 
-        // Pass position as a prop to the menu component
         setMenuContent(menuComponent(position));
         
         if (onButtonClick) onButtonClick();

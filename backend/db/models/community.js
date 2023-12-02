@@ -18,11 +18,22 @@ module.exports = (sequelize, DataTypes) => {
         models.User,
         { as: 'Members', through: models.Membership, foreignKey: 'community_id', otherKey: 'user_id' }
       );
-      Community.hasMany(models.Membership, { foreignKey: "community_id", onDelete: 'CASCADE' });
+      Community.hasMany(
+        models.UserCommunityData,
+        { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
+      );
+      Community.hasMany(
+        models.Membership, 
+        { foreignKey: "community_id", onDelete: 'CASCADE' }
+      );
       Community.hasMany(
         models.Room,
         { foreignKey: 'community_id', otherKey: 'id', onDelete: 'CASCADE' }
-      )
+      );
+      Community.hasOne(
+        models.Image,
+        { as: 'CommunityImage', foreignKey: 'imageableId', onDelete: 'CASCADE', hooks: true, constraints: false, scope: { imageableType: 'Community' } }
+      );
     }
   }
   Community.init({
@@ -51,10 +62,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     price: {
       type: DataTypes.DECIMAL(10, 2),
-      allowNull: false,
-      validate: {
-        isNumeric: true
-      }
+      allowNull: true
   }
   }, {
     sequelize,

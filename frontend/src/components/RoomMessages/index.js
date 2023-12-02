@@ -6,18 +6,20 @@ import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
+
+    console.log('room state here: ', room);
 
     useEffect(() => {
         if (!room) return
         roomMessages = roomMessages.filter((el) => el.room_id === room.id)
         setDataLoaded(true)
     }, [roomMessages])
-
+    
     return (
         <div className='room-messages-wrapper'>
             {dataLoaded && (
@@ -25,6 +27,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                     <div>
                         {roomMessages?.length ? (
                             roomMessages.map((message) => {
+                                console.log('message data here! ', message)
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
@@ -35,7 +38,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} roomId={room.id} messageId={message.ws_message_id || message.id} />} />
                                         </>
                                     )
                                 }
@@ -50,24 +53,25 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                            {message?.content_type === 'src' ? <img className='message-image' src={message?.Images?.length ? message?.Images[0].url : message.content_src} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )
                             })
                         ) : (
-                            room.Messages.map((message) => {
+                            room?.Messages?.map((message) => {
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
                                 }
                                 let validatedPermissions = null;
                                 if (sessionUser.id === message.user_id) {
+                                    console.log("TESTING WS MESSAGE ID, ", message)
                                     validatedPermissions = (
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal webSocket={webSocket} roomId={room.id} messageId={message.ws_message_id || message.id} />} />
                                         </>
                                     )
                                 }
@@ -82,7 +86,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         </div>
                                         <div className='message-content'>
                                             {message?.content_message}
-                                            {message?.content_src && <img src={message.content_src} alt="Uploaded Content" />}
+                                            {message?.content_type === 'src' ? <img src={message.Images[0].url} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
                                 )

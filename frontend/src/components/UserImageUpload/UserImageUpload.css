@@ -1,0 +1,21 @@
+.image-modal {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.image-upload label {
+    text-align: center;
+}
+
+.image-preview {
+    height: 5rem;
+    width: auto;
+    border-radius: 1000px;
+}

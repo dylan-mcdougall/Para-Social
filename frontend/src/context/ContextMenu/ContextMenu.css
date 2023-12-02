@@ -22,9 +22,55 @@
 
 #menu-content {
     position: absolute;
-    top: 16%;
-    left: 13%;
-    background-color: white;
+    top: 5%;
+    left: 6%;
+    background-color: rgb(18, 18, 18);
     z-index: 2;
     border-radius: 4px;
+}
+
+.modal-shell {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    width: 10rem;
+    background-color: rgb(18, 18, 18);
+    top: inherit;
+}
+
+.menu-shell {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: .15rem 0;
+    border-radius: 8px;
+    background-color: rgb(18, 18, 18);
+}
+
+.menu-item {
+    width: 90%;
+}
+
+.menu-item.delete-community button {
+    color: red;
+}
+
+.menu-item.delete-community button:hover {
+    color: white;
+    background-color: red;
+}
+
+.menu-item button {
+    color: #c1c7d3;
+    background-color: rgb(18, 18, 18);
+    border: none;
+    width: 100%;
+    padding: .15rem 0;
+    margin: .15rem .1rem;
+}
+
+.menu-item button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #003b4a;
 }

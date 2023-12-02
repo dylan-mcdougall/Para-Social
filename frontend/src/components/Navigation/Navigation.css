@@ -2,19 +2,78 @@
     display: none;
 }
 
-.profile-button button {
-    text-decoration: none;
-    list-style: none;
-    background-color: #00ccff;
-    border: none;
-    border-radius: 2000px;
-    font-size: 1.70rem;
-    padding: .5rem;
+.profile.image-item:hover {
+    cursor: pointer;
+    border-radius: 18px;
 }
 
-.profile-button button:hover {
+.profile-dropdown.hidden {
+    display: none;
+}
+
+.profile-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    list-style: none;
+    position: absolute;
+    bottom: 8%;
+    left: 65%;
+    width: 100%;
+    background-color: rgb(18, 18, 18);
+    color: white;
+}
+
+.profile-dropdown li {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    color: #c1c7d3;
+    background-color: rgb(18, 18, 18);
+    border: none;
+    width: 100%;
+    padding: .15rem 0;
+    margin: .15rem .1rem;
+}
+
+.profile-dropdown li button {
+    border: none;
+    background-color: inherit;
+    align-self: center;
+    color: inherit;
+}
+
+.profile-dropdown li button.logout {
+    color: red;
+}
+
+.profile-dropdown li.logout:hover {
+    background-color: red;
+    color: white;
+}
+
+.profile-dropdown li.logout:hover button.logout {
+    background-color: red;
+    color: white;
+}
+
+.profile-dropdown li:hover {
     cursor: pointer;
-    background-color: #0090b4;
+    color: white;
+    background-color: #003b4a;
+}
+
+.profile-dropdown li.profile-username:hover {
+    cursor: default;
+    background-color: inherit;
+    color: #c1c7d3;
+}
+
+.profile-dropdown li:hover button {
+    cursor: pointer;
+    color: white;
+    background-color: #003b4a;
 }
 
 .nav-wrapper {

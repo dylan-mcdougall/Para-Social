@@ -46,7 +46,6 @@ function HomePage() {
         return <Redirect to='/' />
     }
 
-
     return (
         <div className='page-wrapper'>
             <div className='home-page-wrapper'>

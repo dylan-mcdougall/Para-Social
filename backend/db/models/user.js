@@ -18,12 +18,29 @@ module.exports = (sequelize, DataTypes) => {
         models.Community,
         { through: models.Membership, foreignKey: 'user_id', otherKey: 'community_id' }
       );
-      User.hasMany(models.Membership, { foreignKey: 'user_id', onDelete: 'CASCADE' });
-      User.hasMany(models.RoomMessage, { foreignKey: 'user_id', otherKey: 'id' });
+      User.hasMany(
+        models.UserCommunityData,
+        { foreignKey: 'user_id', otherKey: 'id', onDelete: 'CASCADE' }
+      );
+      User.hasMany(
+        models.Membership, 
+        { foreignKey: 'user_id', onDelete: 'CASCADE' }
+      );
+      User.hasMany(
+        models.RoomMessage, 
+        { foreignKey: 'user_id', otherKey: 'id' }
+      );
+      User.hasOne(
+        models.Image,
+        { 
+          as: 'ProfileImage', foreignKey: 'imageableId', onDelete: 'CASCADE', 
+          hooks: true, constraints: false, scope: { imageableType: 'User' } 
+        }
+      )
     }
   }
   User.init({
-    firstName: {
+    first_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -35,7 +52,7 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
-    lastName: {
+    last_name: {
       type: DataTypes.STRING,
       allowNull: false,
       validate: {
@@ -67,6 +84,22 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [3, 256],
         isEmail: true
+      }
+    },
+    d_o_b: {
+      type: DataTypes.DATE,
+      allowNull: false,
+      validate: {
+        isDate: true,
+        isBefore: "2023-11-19",
+        isAfter: "1900-01-01"
+      }
+    },
+    sex: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        isIn: [['male', 'female', 'non-binary', 'other', 'declined']]
       }
     },
     hashedPassword: {

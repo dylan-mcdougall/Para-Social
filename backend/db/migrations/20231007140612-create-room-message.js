@@ -31,6 +31,10 @@ module.exports = {
         },
         allowNull: false
       },
+      ws_message_id: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       content_type: {
         type: Sequelize.STRING,
         allowNull: false
@@ -38,14 +42,6 @@ module.exports = {
       content_message: {
         type: Sequelize.STRING(300),
         allowNull: true,
-      },
-      content_src: {
-        type: Sequelize.TEXT,
-        allowNull: true
-      },
-      content_src_name: {
-        type: Sequelize.TEXT,
-        allowNull: true
       },
       createdAt: {
         allowNull: false,

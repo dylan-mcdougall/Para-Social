@@ -22,14 +22,14 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
         const formData = new FormData();
         formData.append('image', file, file.name);
         formData.append('content_type', 'src');
-        const response = await csrfFetch(`/api/rooms/${room.id}/image`, {
+        const response = await csrfFetch(`/api/rooms/${room.id}/image-preview`, {
             method: 'POST',
             body: formData
         });
         const data = await response.json()
         setContent_type('src');
-        setContent_src(data.content_src);
-        setContent_src_name(data.content_src_name);
+        setContent_src(data.url);
+        setContent_src_name(data.name);
     }
 
     const handleRemoveImage = async () => {
@@ -50,9 +50,9 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     const handleSendMessage = (e) => {
         e.preventDefault();
         const newMessage = {
-            id: uuidv4(),
             room_id: room?.id,
             user_id: sessionUser?.id,
+            ws_message_id: uuidv4(),
             content_type: content_type,
             content_message: message,
             content_src: content_src ? content_src : null,
@@ -81,7 +81,7 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     }
 
     const onEnterPress = (e) => {
-        if (e.keyCode == 13 && e.shiftKey == false) {
+        if (e.keyCode === 13 && e.shiftKey === false) {
           e.preventDefault();
           formRef.current.requestSubmit();
         }
@@ -104,7 +104,7 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
                         {content_src && (
                             <div style={{ position: 'relative', display: 'inline-block' }}>
                                 <img src={content_src} alt="Thumbnail" style={{ width: '50px', height: '50px' }} />
-                                <button style={{ position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
+                                <button style={{ color: 'red', position: 'absolute', right: 0, top: 0 }} onClick={handleRemoveImage}>X</button>
                             </div>
                         )}
                     </form>

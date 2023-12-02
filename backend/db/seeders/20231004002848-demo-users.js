@@ -1,6 +1,5 @@
 'use strict';
 
-const { User } = require('../models');
 const bcrypt = require("bcryptjs");
 
 let options = {};
@@ -13,24 +12,30 @@ module.exports = {
     options.tableName = 'Users';
     return queryInterface.bulkInsert(options, [
       { 
-        firstName: "Demo",
-        lastName: 'Boi jr.',
+        first_name: "Demo",
+        last_name: 'Boi jr.',
         email: 'demo@user.io',
         username: 'Demo-lition',
+        d_o_b: '1990-05-14',
+        sex: 'male',
         hashedPassword: bcrypt.hashSync('password')
       },
       { 
-        firstName: "Frank",
-        lastName: "Fronk",
+        first_name: "Frank",
+        last_name: "Fronk",
         email: 'user1@user.io',
         username: 'FakeUser1',
+        d_o_b: '2000-01-18',
+        sex: 'non-binary',
         hashedPassword: bcrypt.hashSync('password2')
       },
       {
-        firstName: "Meep",
-        lastName: "Moop",
+        first_name: "Meep",
+        last_name: "Moop",
         email: 'user2@user.io',
         username: 'FakeUser2',
+        d_o_b: '1995-10-12',
+        sex: 'female',
         hashedPassword: bcrypt.hashSync('password3')
       }
     ], { validate: true });

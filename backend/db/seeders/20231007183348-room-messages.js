@@ -37,8 +37,7 @@ module.exports = {
       }, {
         room_id: 6,
         user_id: 2,
-        content_type: 'src',
-        content_src: 'https://static01.nyt.com/images/2021/04/30/multimedia/30xp-meme/29xp-meme-videoSixteenByNineJumbo1600-v6.jpg'
+        content_type: 'src'
       }, {
         room_id: 7,
         user_id: 1,
@@ -52,24 +51,12 @@ module.exports = {
       }, {
         room_id: 7,
         user_id: 2,
-        content_type: 'src',
-        content_src: 'https://media.tenor.com/QXVs4QWLlzkAAAAC/spider-man.gif'
-      }, {
-        room_id: 7,
-        user_id: 1,
-        content_type: 'text',
-        content_message: 'How about a video?'
-      }, {
-        room_id: 7,
-        user_id: 2,
-        content_type: 'src',
-        content_src: 'https://www.youtube.com/watch?v=F-X4SLhorvw'
+        content_type: 'src'
       }, {
         room_id: 7,
         user_id: 1,
         content_type: 'src',
-        content_message: 'Sure would be cool if I could send a message while sharing a clip or image.',
-        content_src: 'https://a.pinatafarm.com/960x960/0c4d64b259/shocked-pikachu.jpg'
+        content_message: 'Sure would be cool if I could send a message while sharing a clip or image.'
       }
     ], { validate: true });
   },
