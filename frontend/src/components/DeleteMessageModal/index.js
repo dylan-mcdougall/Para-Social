@@ -3,13 +3,24 @@ import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal/Modal';
 import { deleteRoomMessage } from '../../store/rooms';
 
-function DeleteRoomMessageModal({ setClearMessages, roomId, messageId }) {
+function DeleteRoomMessageModal({ webSocket, roomMessages, setRoomMessages, roomId, messageId }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleDelete = async () => {
         await dispatch(deleteRoomMessage(roomId, messageId));
-        setClearMessages(true);
+
+        const deleteAction = {
+            action: 'delete',
+            data: {
+                ws_message_id: messageId
+            }
+        };
+
+        webSocket.current.send(JSON.stringify(deleteAction));
+
+        const newMessages = roomMessages.filter((el) => el.ws_message_id !== messageId)
+        setRoomMessages([...newMessages])
         closeModal();
     }
 

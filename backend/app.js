@@ -90,10 +90,11 @@ const imageQueue = [];
 async function processTextQueue() {
     while (messageQueue.length) {
         const message = messageQueue.shift();
-        const { room_id, user_id, content_type, content_message, content_src, content_src_name } = message;
+        const { room_id, user_id, ws_message_id, content_type, content_message, content_src, content_src_name } = message;
         const payload = await RoomMessage.create({
             room_id,
             user_id,
+            ws_message_id,
             content_type,
             content_message,
         });
@@ -140,6 +141,19 @@ wss.on('connection', function connection(ws) {
             }
             rooms[roomId].add(ws);
             ws.roomId = roomId;
+        }
+
+        if (data.action === 'delete' && ws.roomId) {
+            const target = data.data.ws_message_id;
+            console.log("Sending direction to delete WS message: ", data);
+
+            rooms[ws.roomId].forEach(client => {
+                if (client !== ws && client.readyState) {
+                    const parsedData = JSON.stringify(data);
+                    console.log("Sending Client message Id: ", data);
+                    client.send(parsedData)
+                }
+            })
         }
 
         if (data.action === 'message' && ws.roomId) {

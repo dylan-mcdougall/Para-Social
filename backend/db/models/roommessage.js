@@ -36,6 +36,10 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER,
       allowNull: false
     },
+    ws_message_id: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
     content_type: {
       type: DataTypes.STRING,
       allowNull: false,

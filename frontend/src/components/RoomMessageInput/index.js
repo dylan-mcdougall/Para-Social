@@ -50,9 +50,9 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     const handleSendMessage = (e) => {
         e.preventDefault();
         const newMessage = {
-            id: uuidv4(),
             room_id: room?.id,
             user_id: sessionUser?.id,
+            ws_message_id: uuidv4(),
             content_type: content_type,
             content_message: message,
             content_src: content_src ? content_src : null,

@@ -25,6 +25,10 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
             dispatch(loadCommunity(displayCommunity))
         }
         setClearMessages(true)
+
+        return () => {
+            setClearMessages(false)
+        }
     }, [displayCommunity])
 
     useEffect(() => {
@@ -59,7 +63,12 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
 
         ws.onmessage = (e) => {
             const parsedData = JSON.parse(e.data)
-            return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
+            if (parsedData.action === 'delete') {
+                const target = parsedData.data.ws_message_id;
+                setRoomMessages(prevMessages => prevMessages.filter(msg => msg.ws_message_id !== target));
+            } else {
+                return setRoomMessages(roomMessages => [...roomMessages, parsedData]);
+            }
         }
 
         ws.onerror = (e) => {
@@ -77,7 +86,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
                 webSocket.current.close()
             }
         }
-    }, [displayRoom, displayCommunity]);
+    }, [displayRoom, displayCommunity, room]);
 
     useEffect(() => {
         async function fetchRoomData() {

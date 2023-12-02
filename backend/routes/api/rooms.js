@@ -31,7 +31,16 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
-    const targetMessage = await RoomMessage.findByPk(req.params.messageId);
+    const targetMessage = await RoomMessage.findOne({
+        where: {
+            ws_message_id: req.params.messageId
+        },
+        include: [
+            {
+                model: Image,
+            }
+        ]
+    });
     if (!targetMessage) return res.status(404).json({
         "errors": "No message associated with this id exists."
     });
@@ -42,10 +51,10 @@ router.delete('/:id/messages/:messageId', requireAuth, async (req, res) => {
         "errors": "Only the author of a message can delete it."
     });
 
-    if (targetMessage.content_type === 'src' && targetMessage.content_src !== null) {
+    if (targetMessage.content_type === 'src' && targetMessage.Images.length) {
         const params = {
             Bucket: bucketName,
-            Key: targetMessage.content_src_name
+            Key: targetMessage.Images[0].name
         }
         const command = new DeleteObjectCommand(params);
         await s3.send(command);
@@ -67,7 +76,17 @@ router.patch('/:id/messages/:messageId', requireAuth, async (req, res) => {
     if (!room) return res.status(404).json({
         "errors": "No room associated with this id exists."
     });
-    const targetMessage = await RoomMessage.findByPk(req.params.messageId);
+    const targetMessage = await RoomMessage.findOne({
+        where: {
+            ws_message_id: req.params.messageId
+        },
+        include: [
+            {
+                model: Image
+            }
+        ]
+    });
+
     if (!targetMessage) return res.status(404).json({
         "errors": "No message associated with this id exists."
     });
@@ -134,7 +153,7 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
         "errors": "No room associated with this id exists."
     });
 
-    const { content_type, content_message, content_src, content_src_name } = req.body;
+    const { ws_message_id, content_type, content_message, content_src, content_src_name } = req.body;
 
     if (!content_message && !content_src) return res.status(400).json({
         'errors': 'Please include either a message or an image.'
@@ -143,6 +162,7 @@ router.post('/:id/messages', requireAuth, async (req, res) => {
     const payload = await RoomMessage.create({
         room_id: req.params.id,
         user_id: req.user.id,
+        ws_message_id,
         content_type,
         content_message: content_message ? content_message : null,
         content_src: content_src ? content_src : null,

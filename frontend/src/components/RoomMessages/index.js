@@ -6,7 +6,7 @@ import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
+function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
@@ -19,7 +19,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
         roomMessages = roomMessages.filter((el) => el.room_id === room.id)
         setDataLoaded(true)
     }, [roomMessages])
-
+    
     return (
         <div className='room-messages-wrapper'>
             {dataLoaded && (
@@ -38,7 +38,7 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} roomId={room.id} messageId={message.ws_message_id || message.id} />} />
                                         </>
                                     )
                                 }
@@ -46,7 +46,6 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                     <li className='message-item' key={message.id}>
                                         <div className='message-details'>
                                             <div className='message-details-left'>
-                                                {}
                                                 <p className={usernameClass}>{message?.username ? message?.username : message?.User?.username} </p>
                                                 <p className='datetime-sent'> Sent {moment(message?.created ? message?.created : message?.createdAt).format('l LT')}</p>
                                             </div>
@@ -67,11 +66,12 @@ function RoomMessages({ displayRoom, roomMessages, setRoomMessages }) {
                                 }
                                 let validatedPermissions = null;
                                 if (sessionUser.id === message.user_id) {
+                                    console.log("TESTING WS MESSAGE ID, ", message)
                                     validatedPermissions = (
                                         <>
                                             <OpenModalButton
                                                 buttonText={'X'}
-                                                modalComponent={() => <DeleteRoomMessageModal roomId={room.id} messageId={message.id} />} />
+                                                modalComponent={() => <DeleteRoomMessageModal webSocket={webSocket} roomId={room.id} messageId={message.ws_message_id || message.id} />} />
                                         </>
                                     )
                                 }
