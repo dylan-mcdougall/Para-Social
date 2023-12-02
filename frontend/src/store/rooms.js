@@ -28,10 +28,10 @@ export const loadRoom = (id) => async (dispatch) => {
 }
 
 export const newRoom = (room) => async (dispatch) => {
-    const { communityId, name } = room
+    const { communityId, name, classification } = room
     const response = await csrfFetch(`/api/communities/${communityId}/rooms/new`, {
         method: 'POST',
-        body: JSON.stringify({name})
+        body: JSON.stringify({name, classification})
     });
     if (response.ok) {
         const data = await response.json()

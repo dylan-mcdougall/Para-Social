@@ -27,7 +27,8 @@ function LandingPage() {
     return (
         <div className='landing-page-wrapper'>
             <div className='landing-page-left'>
-                <img className='landing-left-image' src='https://aaprojectbucket.s3.us-west-1.amazonaws.com/influencers.jpg' alt='Demographic Image' />
+                <img className='landing-left-logo' src='https://aaprojectbucket.s3.us-west-1.amazonaws.com/Para-Social-Logo.png' alt='Logo' />
+                {/* <img className='landing-left-image' src='https://aaprojectbucket.s3.us-west-1.amazonaws.com/influencers.jpg' alt='Demographic Image' /> */}
             </div>
             <div className='landing-page-right'>
                 <div className='landing-right-flex'>

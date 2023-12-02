@@ -9,7 +9,7 @@ import RoomMessageInput from '../RoomMessageInput';
 function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMessages, webSocket, displayRoom, setDisplayRoom, roomDataLoaded }) {
     const room = useSelector(state => state.room.room);
     const community = useSelector(state => state.community.community);
-    const communityRoomIds = community?.Rooms?.map((el) => el.id)
+    const communityRoomIds = community?.Rooms ? community.Rooms.map((el) => el.id) : [];
 
     useEffect(() => {
         if (community && community?.Rooms && communityRoomIds.includes(displayRoom)) {
@@ -24,7 +24,7 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
 
     useEffect(() => {
         if (!room) return
-        const messages = [...room?.Messages]
+        const messages = room?.Messages ? [...room?.Messages] : [];
         messages.sort((a, b) => {
             if (a.createdAt > b.createdAt) return 1
             if (b.createdAt > a.createdAt) return -1

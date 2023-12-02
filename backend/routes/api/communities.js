@@ -117,12 +117,12 @@ router.post('/:id/rooms/new', requireAuth, async (req, res) => {
             "errors": "Forbidden"
         });
     }
-    const { name } = req.body;
+    const { name, classification } = req.body;
     if (!name) return res.status(400).json({
         "errors": "Please include a valid room name in the request body"
     });
 
-    const payload = await Room.create({ community_id: req.params.id, name });
+    const payload = await Room.create({ community_id: req.params.id, name: name, classification: classification });
     return res.json(payload);
 })
 
@@ -171,12 +171,12 @@ router.patch('/:id/rooms/:roomId', requireAuth, async (req, res) => {
             "errors": "Room associated with this id does not belong to the specified community."
         })
     }
-    const { name } = req.body;
+    const { name, classification } = req.body;
     if (!name) return res.status(400).json({
         "errors": "Please include a valid room name in the request body."
     });
 
-    await targetRoom.update({ name: name });
+    await targetRoom.update({ name: name, classification: classification });
     return res.json(targetRoom);
 })
 

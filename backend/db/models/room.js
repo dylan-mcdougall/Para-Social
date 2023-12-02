@@ -34,10 +34,7 @@ module.exports = (sequelize, DataTypes) => {
     }, 
     classification: {
       type: DataTypes.STRING,
-      allowNull: false,
-      validate: {
-        isIn: ['about', 'text', 'voice', 'announcement']
-      }
+      allowNull: true
     }
   }, {
     sequelize,

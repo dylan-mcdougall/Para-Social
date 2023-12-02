@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal/Modal';
+import { loadCommunity } from '../../store/community';
 
 
 function UpdateRoomModal({ setPromptRoomScroll, communityId, room }) {
@@ -19,7 +20,8 @@ function UpdateRoomModal({ setPromptRoomScroll, communityId, room }) {
             name: name
         }))
         .then(() => {
-            setPromptRoomScroll(true);
+            setPromptRoomScroll(true)
+            dispatch(loadCommunity(communityId))
             closeModal()
         })
         .catch(

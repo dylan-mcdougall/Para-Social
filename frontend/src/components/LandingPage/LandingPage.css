@@ -53,7 +53,7 @@ div#root {
     flex-direction: column;
     height: 100%;
     width: 50%;
-    background-color: lightblue;
+    background-color: black;
 }
 
 .landing-page-right {
@@ -62,6 +62,10 @@ div#root {
     border-inline: 1px lightgrey solid;
     height: 100%;
     width: 50%;
+}
+
+.landing-left-logo {
+    margin: 3rem;
 }
 
 .landing-left-image {
