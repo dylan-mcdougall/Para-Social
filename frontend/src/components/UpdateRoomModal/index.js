@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal/Modal';
+import { loadCommunity } from '../../store/community';
 
 
-function UpdateRoomModal({ setPromptRender, setPromptRoomScroll, communityId, room }) {
+function UpdateRoomModal({ setPromptRoomScroll, communityId, room }) {
     const dispatch = useDispatch();
     const [name, setName] = useState(room.name);
     const [errors, setErrors] = useState(null);
@@ -19,8 +20,8 @@ function UpdateRoomModal({ setPromptRender, setPromptRoomScroll, communityId, ro
             name: name
         }))
         .then(() => {
-            setPromptRoomScroll(true);
-            setPromptRender(true);
+            setPromptRoomScroll(true)
+            dispatch(loadCommunity(communityId))
             closeModal()
         })
         .catch(

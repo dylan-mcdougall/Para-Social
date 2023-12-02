@@ -27,15 +27,15 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
     //     }
     // }, [community])
 
-    // useEffect(() => {
-    //     if (promptRoomScroll) {
-    //         setPromptRender(true)
-    //     }
+    useEffect(() => {
+        if (promptRoomScroll) {
+            setPromptRender(true)
+        }
 
-    //     return () => {
-    //         setPromptRoomScroll(false)
-    //     }
-    // }, [promptRoomScroll])
+        return () => {
+            setPromptRoomScroll(false)
+        }
+    }, [promptRoomScroll])
     
     const handleClick = async (roomId) => {
         if (webSocket.current) {
