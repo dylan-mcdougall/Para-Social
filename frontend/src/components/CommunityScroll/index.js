@@ -49,7 +49,7 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                                     <div className='community-actions'>
                                         <OpenMenuButton
                                             buttonIcon={<FaEllipsisH style={{ color: 'white' }} />}
-                                            menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
+                                            menuComponent={() => <CommunitySettingsMenu displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} community={community} setPromptRender={setPromptRender} />} />
                                     </div>
                                 </li>
                             </div>

@@ -7,7 +7,7 @@ import CommunityImageUpload from '../CommunityImageUpload';
 import OpenModalButton from '../OpenModalButton';
 import { useMenu } from '../../context/ContextMenu/ContextMenu';
 
-function CommunitySettingsMenu({ community, setPromptRender }) {
+function CommunitySettingsMenu({ displayCommunity, setDisplayCommunity, community, setPromptRender }) {
     const sessionUser = useSelector(state => state.session.user);
     const { closeMenu } = useMenu();
 
@@ -34,7 +34,7 @@ function CommunitySettingsMenu({ community, setPromptRender }) {
                         buttonText={'Delete Community'}
                         onButtonClick={closeMenu}
                         propagateClick={true}
-                        modalComponent={() => <DeleteCommunityModal community={community} setPromptRender={setPromptRender} />} />
+                        modalComponent={() => <DeleteCommunityModal user={sessionUser} community={community} setPromptRender={setPromptRender} />} />
                 </div>
             </div>
         )
@@ -46,7 +46,7 @@ function CommunitySettingsMenu({ community, setPromptRender }) {
                         buttonText={'Leave Community'}
                         onButtonClick={closeMenu}
                         propagateClick={true}
-                        modalComponent={() => <LeaveCommunityModal community={community} setPromptRender={setPromptRender} />} />
+                        modalComponent={() => <LeaveCommunityModal displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} community={community} setPromptRender={setPromptRender} />} />
                 </div>
             </div>
         )

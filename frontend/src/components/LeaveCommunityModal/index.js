@@ -1,9 +1,9 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal/Modal';
-import { deleteMembership } from '../../store/community';
+import { deleteMembership, loadCommunity } from '../../store/community';
 
-function LeaveCommunityModal({ setPromptRender, community }) {
+function LeaveCommunityModal({ displayCommunity, setDisplayCommunity, setPromptRender, community }) {
     const sessionUser = useSelector(state => state.session.user);
     const dispatch = useDispatch();
     const { closeModal } = useModal();
@@ -11,7 +11,15 @@ function LeaveCommunityModal({ setPromptRender, community }) {
     const handleDelete = () => {
         setPromptRender(true);
         dispatch(deleteMembership(sessionUser.id, community.id));
-        closeModal();
+        if (displayCommunity === community.id) {
+            setDisplayCommunity(sessionUser.Communities[0].id)
+            dispatch(loadCommunity(sessionUser.Communities[0].id))
+            closeModal();
+        } else {
+            setDisplayCommunity(displayCommunity)
+            dispatch(loadCommunity(displayCommunity))
+            closeModal();
+        }
     }
 
     return (
