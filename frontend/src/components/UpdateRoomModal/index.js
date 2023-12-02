@@ -5,7 +5,7 @@ import { useModal } from '../../context/Modal/Modal';
 import { loadCommunity } from '../../store/community';
 
 
-function UpdateRoomModal({ setPromptRoomScroll, communityId, room }) {
+function UpdateRoomModal({ setDisplayRoom, setPromptRoomScroll, communityId, room }) {
     const dispatch = useDispatch();
     const [name, setName] = useState(room.name);
     const [errors, setErrors] = useState(null);
@@ -19,9 +19,10 @@ function UpdateRoomModal({ setPromptRoomScroll, communityId, room }) {
             roomId: room.id,
             name: name
         }))
-        .then(() => {
+        .then(async () => {
             setPromptRoomScroll(true)
-            dispatch(loadCommunity(communityId))
+            await dispatch(loadCommunity(communityId))
+            await setDisplayRoom(room.id)
             closeModal()
         })
         .catch(

@@ -9,14 +9,14 @@ function DeleteRoomModal({ setPromptRoomScroll, displayRoom, setDisplayRoom, roo
     const community = useSelector(state => state.community.community);
     const { closeModal } = useModal();
 
-    const handleDelete = () => {
-        dispatch(deleteRoom(community.id, roomId));
+    const handleDelete = async () => {
+        await dispatch(deleteRoom(community.id, roomId));
         if (displayRoom === roomId) {
             setDisplayRoom(community?.Rooms[0]?.id);
+            await dispatch(loadRoom(community?.Rooms[0]?.id))
         }
         setPromptRoomScroll(true)
-        dispatch(loadRoom(community?.Rooms[0]?.id))
-        dispatch(loadCommunity(community.id))
+        await dispatch(loadCommunity(community.id))
         closeModal();
     }
 

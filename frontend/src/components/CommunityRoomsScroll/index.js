@@ -59,7 +59,7 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} />} />
+                                        modalComponent={() => <UpdateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} room={room} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
