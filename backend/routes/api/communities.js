@@ -206,7 +206,7 @@ router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
         },
         include: [
             {
-                model: Image
+                model: Image, as: 'CommunityImage'
             }
         ]
     });
@@ -229,7 +229,7 @@ router.delete('/:id/images/:imageName', requireAuth, async (req, res) => {
     try {
         const response = await deleteS3(params);
         if (response.message === 'Success.') {
-            await community.Image[0].destroy();
+            await community.CommunityImage.destroy();
             return res.json({
                 "message": "Image deleted successfully."
             })
@@ -282,7 +282,7 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         },
         include: [
             {
-                model: Image
+                model: Image, as: 'CommunityImage'
             }
         ]
     });
@@ -298,18 +298,20 @@ router.post('/:id/images', requireAuth, async (req, res) => {
         Bucket: bucketName,
     }
 
-    if (community.Images.length) {
+    if (community.CommunityImage.length) {
         try {
-            params.Key = community.Images[0].name;
+            params.Key = community.CommunityImage.name;
             const response = await deleteS3(params);
             if (response.message && response.message === "Image deleted successfully.") {
-                await community.Images[0].destroy();
+                await community.CommunityImage.destroy();
                 console.log("Community image successfully destroyed in database and AWS.")
             } else throw new Error("There was an error when attempting to delete the image from AWS.");
         } catch (error) {
             console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
         }
     }
+
+    console.log('Image confirm body: ', req.body);
     
     const payload = await Image.create({
         url: req.body.url,
@@ -365,8 +367,9 @@ router.get('/:id', requireAuth, async (req, res) => {
         where: { id: req.params.id },
         include: [
             { model: User, as: 'Members' },
-            { model: User, as: "Creator" },
-            { model: Room, as: 'Rooms' }
+            { model: User, as: 'Creator' },
+            { model: Room, as: 'Rooms' },
+            { model: Image, as: 'CommunityImage' }
         ],
     });
     return res.json(community);
@@ -391,7 +394,11 @@ router.post('/', requireAuth, async (req, res) => {
 );
 
 router.get('/', async (req, res) => {
-    const communityList = await Community.findAll()
+    const communityList = await Community.findAll({
+        include: [{
+            model: Image, as: "CommunityImage"
+        }]
+    })
     return res.json({
         communityList
     })

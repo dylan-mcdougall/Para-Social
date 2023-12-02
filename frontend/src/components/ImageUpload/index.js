@@ -1,16 +1,16 @@
 import React, { useState, useRef } from 'react';
 import { csrfFetch } from '../../store/csrf';
-import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal/Modal';
 import { FaPeopleGroup } from "react-icons/fa6";
 import './ImageUpload.css';
 
 function ImageUpload({ setPromptRender, community }) {
-    const dispatch = useDispatch();
     const { closeModal } = useModal();
-    const [imageSrc, setImageSrc] = useState(community?.Images?.length ? community?.Images[0]?.url : null);
-    const [imageName, setImageName] = useState(community?.Images?.length ? community?.Images[0]?.name : null)
+    const [imageSrc, setImageSrc] = useState(community?.CommunityImage ? community?.CommunityImage?.url : null);
+    const [imageName, setImageName] = useState(community?.CommunityImage ? community?.CommunityImage?.name : null)
     const imageRef = useRef(null);
+
+    console.log("Image Source HERE!: ", imageSrc)
 
     const onFileUpload = async (e) => {
         const file = e.target.files[0]
@@ -24,7 +24,7 @@ function ImageUpload({ setPromptRender, community }) {
         setImageSrc(data.url);
         setImageName(data.name);
     };
-
+    
     const handleSubmit = async () => {
         const reqBody = {
             url: imageSrc,
@@ -32,13 +32,18 @@ function ImageUpload({ setPromptRender, community }) {
         }
         const response = await csrfFetch(`/api/communities/${community.id}/images`, {
             method: 'POST',
-            body: reqBody,
+            body: JSON.stringify(reqBody),
         });
         const data = await response.json();
-        closeModal();
-        setImageName(null);
-        setImageSrc(null);
+        if (data && !data.errors) {
+            closeModal();
+            setImageName(null);
+            setImageSrc(null);
+        } else {
+            throw new Error("There was an error committing your image to the database.")
+        }
     };
+
 
     return (
         <div className='image-modal'>

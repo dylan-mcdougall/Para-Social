@@ -3,7 +3,7 @@ const bcrypt = require('bcryptjs');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Community } = require('../../db/models');
+const { User, Community, Image } = require('../../db/models');
 const { S3Client } = require('@aws-sdk/client-s3');
 const { uploadS3, deleteS3 } = require('./S3Commands');
 const randomImageName = require('./helper');
@@ -162,7 +162,12 @@ router.get('/current', async (req, res) => {
       id: user.id
     },
     include: [
-      { model: Community }
+      { 
+        model: Community,
+        include: [
+          { model: Image, as: 'CommunityImage' }
+        ]
+      }
     ]
   });
 

@@ -19,24 +19,13 @@ function CommunityRoomsScroll({ community, webSocket, setRoomMessages, dataLoade
     console.log(community)
 
     // useEffect(() => {
-    //     if (dataLoaded && community) {
-    //         dispatch(loadCommunity(community.id))
-    //         setScrollDataLoaded(true)
+    //     if (community) {
+    //         const { pinnedRooms, rooms } = separatedRooms(community?.Rooms)
     //     }
-        
     //     return () => {
-    //         setPromptRoomScroll(false)
+    //         setScrollDataLoaded(false)
     //     }
-    // }, [promptRoomScroll])
-
-    useEffect(() => {
-        if (community) {
-            const { pinnedRooms, rooms } = separatedRooms(community?.Rooms)
-        }
-        return () => {
-            setScrollDataLoaded(false)
-        }
-    }, [community])
+    // }, [community])
     
     const handleClick = async (roomId) => {
         if (webSocket.current) {
