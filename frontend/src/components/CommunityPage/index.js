@@ -87,7 +87,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
                 webSocket.current.close()
             }
         }
-    }, [displayRoom, displayCommunity]);
+    }, [room]);
 
     useEffect(() => {
         async function fetchRoomData() {
