@@ -87,7 +87,6 @@ export const deleteMembership = (userId, communityId) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        dispatch(removeCommunity())
         return data;
     } else {
         console.log("Errors while deleting membership: ", response)
