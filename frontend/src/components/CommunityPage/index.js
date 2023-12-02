@@ -6,7 +6,7 @@ import { loadCommunity } from '../../store/community';
 import CommunityRoomsScroll from '../CommunityRoomsScroll';
 import RoomDisplay from '../RoomDisplay';
 import CommunityMembersBar from '../CommunityMembersBar';
-import { v4 as uuidv4 } from 'uuid';
+import { keepAlive } from './wsKeepAlive';
 
 const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
 
@@ -56,8 +56,9 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
                 action: 'join',
                 room_id: room.id
             }
-            const parsedData = JSON.stringify(data)
-            ws.send(parsedData)
+            const parsedData = JSON.stringify(data);
+            ws.send(parsedData);
+            keepAlive(ws);
             return console.log(`connected ${e}`);
         }
 
