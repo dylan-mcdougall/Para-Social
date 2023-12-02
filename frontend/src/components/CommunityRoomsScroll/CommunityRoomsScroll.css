@@ -82,6 +82,12 @@
     z-index: 2;
 }
 
+.missing {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+}
+
 .room-item:hover {
     cursor: pointer;
     color: #dde2ed;

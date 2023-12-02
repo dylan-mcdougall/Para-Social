@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import CreateCommunityModal from '../CreateCommunityModal';
 import OpenModalButton from '../OpenModalButton';
@@ -6,19 +6,27 @@ import './CommunityScroll.css'
 import { removeRoom } from '../../store/rooms';
 import OpenMenuButton from '../OpenMenuButton';
 import CommunitySettingsMenu from '../CommunitySettingsMenu';
-import { FiSettings } from 'react-icons/fi';
 import { GoPlus } from 'react-icons/go';
 import ProfileButton from '../Navigation/ProfileButton';
+import { FaPeopleGroup } from "react-icons/fa6";
+import { FaEllipsisH } from "react-icons/fa";
+
 
 function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 
+    const [selected, setSelected] = useState(sessionUser?.Communities[0]?.id);
+
     const handleClick = async (communityId) => {
         if (displayCommunity !== communityId) {
             dispatch(removeRoom())
             setDisplayCommunity(communityId)
-        } else return setDisplayCommunity(communityId)
+            setSelected(communityId)
+        } else {
+            setDisplayCommunity(communityId)
+            return setSelected(communityId)
+        }
     }
     
     return (
@@ -26,14 +34,22 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
             <ul className='community-bar-ul'>
             {dataLoaded && (
                     sessionUser?.Communities?.map((community) => {
+                        let communityClass;
+                        communityClass = 'community-item' + (selected === community.id ? ' selected' : '');
                         return (
-                            <div className='community-item-wrapper'>
-                                <li className='community-item' onClick={() => handleClick(community.id)} key={community.id}>
-                                    <div className='item-content'>
-                                        <p className='community-name'>{community?.name}</p>
+                            <div className='community-item-wrapper' key={community.id}>
+                                <li className={communityClass}>
+                                    <div className='item-content' onClick={() => handleClick(community.id)}>
+                                        {community?.CommunityImage?.url ? (<img className='image-item' src={community.CommunityImage.url} />)
+                                            : <FaPeopleGroup style={{ backgroundColor: "lightblue", color: "black" }} className='image-item' />}
+                                        <span className='community-tooltip'>
+                                            {community.name}
+                                        </span>
+                                    </div>
+                                    <div className='community-actions'>
                                         <OpenMenuButton
-                                        buttonIcon={<FiSettings />}
-                                        menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
+                                            buttonIcon={<FaEllipsisH style={{ color: 'white' }} />}
+                                            menuComponent={() => <CommunitySettingsMenu community={community} setPromptRender={setPromptRender} />} />
                                     </div>
                                 </li>
                             </div>

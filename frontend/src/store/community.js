@@ -81,6 +81,19 @@ export const deleteCommunity = (communityId) => async (dispatch) => {
     }
 }
 
+export const deleteMembership = (userId, communityId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/communities/${communityId}/members/${userId}`, {
+        method: 'DELETE',
+    });
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(removeCommunity())
+        return data;
+    } else {
+        console.log("Errors while deleting membership: ", response)
+    }
+}
+
 const initialState = { community: null };
 
 const communityReducer = (state = initialState, action) => {

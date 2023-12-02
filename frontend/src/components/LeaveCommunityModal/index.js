@@ -1,0 +1,30 @@
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useModal } from '../../context/Modal/Modal';
+import { deleteMembership } from '../../store/community';
+
+function LeaveCommunityModal({ setPromptRender, community }) {
+    const sessionUser = useSelector(state => state.session.user);
+    const dispatch = useDispatch();
+    const { closeModal } = useModal();
+
+    const handleDelete = () => {
+        setPromptRender(true);
+        dispatch(deleteMembership(sessionUser.id, community.id));
+        closeModal();
+    }
+
+    return (
+        <div className='delete-modal'>
+            <h3>
+                Are you sure you want to leave this community?
+            </h3>
+            <div className='delete-buttons'>
+                <button className='yes' onClick={() => handleDelete()}>Leave Community</button>
+                <button className='no' onClick={() => closeModal()}>No</button>
+            </div>
+        </div>
+    )
+}
+
+export default LeaveCommunityModal;
