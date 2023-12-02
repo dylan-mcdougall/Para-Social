@@ -1,6 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
-const { User, Community, Room, Membership, Image } = require('../../db/models');
+const { User, Community, Room, Membership, RoomMessage, Image } = require('../../db/models');
 const { S3Client } = require('@aws-sdk/client-s3');
 const { uploadS3, deleteS3 } = require('./S3Commands');
 const randomImageName = require('./helper');
@@ -162,7 +162,20 @@ router.patch('/:id/rooms/:roomId', requireAuth, async (req, res) => {
             "errors": "Forbidden."
         });
     }
-    const targetRoom = await Room.findByPk(req.params.roomId);
+    const targetRoom = await Room.findOne({
+        where: {
+            id: req.params.roomId
+        },
+        include: [
+            {
+                model: RoomMessage, as: "Messages",
+                include: [
+                    { model: User },
+                    { model: Image }
+                ]
+            }
+        ]
+    });
     if (!targetRoom) return res.status(404).json({
         "errors": "Room associated with this id does not exist."
     })
