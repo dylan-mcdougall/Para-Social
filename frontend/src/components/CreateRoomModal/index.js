@@ -13,14 +13,15 @@ function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, commu
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
+        if (webSocket.current) {
+            webSocket.current.close()
+        }
         try {
             const newRoomData = await dispatch(newRoom({
                 communityId,
-                name
+                name,
+                classification: 'text',
             }))
-            if (webSocket.current) {
-                webSocket.current.close()
-            }
             setDisplayRoom(newRoomData.id)
             setPromptRoomScroll(true)
             dispatch(loadCommunity(communityId))

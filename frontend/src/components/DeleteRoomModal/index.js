@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useModal } from '../../context/Modal/Modal';
 import { deleteRoom } from '../../store/rooms';
 
-function DeleteRoomModal({ setPromptRoomScroll, displayRoom, setDisplayRoom, roomId }) {
+function DeleteRoomModal({ setPromptRender, setPromptRoomScroll, displayRoom, setDisplayRoom, roomId }) {
     const dispatch = useDispatch();
     const community = useSelector(state => state.community.community);
     const { closeModal } = useModal();
@@ -14,6 +14,7 @@ function DeleteRoomModal({ setPromptRoomScroll, displayRoom, setDisplayRoom, roo
             setDisplayRoom(community?.Rooms[0]?.id);
         }
         setPromptRoomScroll(true);
+        setPromptRender(true);
         closeModal();
     }
 
