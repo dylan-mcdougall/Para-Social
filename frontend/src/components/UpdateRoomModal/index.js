@@ -21,9 +21,9 @@ function UpdateRoomModal({ setPromptRoomScroll, communityId, room, setRoomMessag
         }))
         .then(async () => {
             setRoomMessages([]);
-            setPromptRoomScroll(true)
             await dispatch(loadRoom(room.id))
             await dispatch(loadCommunity(communityId))
+            setPromptRoomScroll(true)
             closeModal()
         })
         .catch(

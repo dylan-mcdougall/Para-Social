@@ -1,16 +1,20 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal/Modal';
-import { deleteCommunity, loadCommunity } from '../../store/community';
+import { deleteCommunity } from '../../store/community';
+import { removeRoom } from '../../store/rooms';
 
-function DeleteCommunityModal({ user, setPromptRender, community }) {
+function DeleteCommunityModal({ displayCommunity, setDisplayCommunity, user, setPromptRender, community }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleDelete = async () => {
+        dispatch(deleteCommunity(community.id));
+        dispatch(removeRoom());
+        if (displayCommunity === community.id) {
+            setDisplayCommunity(user.Communities[0].id)
+        }
         setPromptRender(true);
-        await dispatch(deleteCommunity(community.id));
-        await dispatch(loadCommunity(user.Communities[0].id))
         closeModal();
     }
 

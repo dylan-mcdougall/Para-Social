@@ -61,7 +61,6 @@ export const updateCommunity = (community) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json();
-        dispatch(setCommunity(data));
         return data;
     } else {
         console.log('Errors while updating community: ', response);

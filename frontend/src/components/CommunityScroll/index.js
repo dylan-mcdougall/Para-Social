@@ -61,7 +61,7 @@ function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayComm
                 <div className='new-community-button'>
                     <OpenModalButton
                         buttonText={<GoPlus />}
-                        modalComponent={() => <CreateCommunityModal setPromptRender={setPromptRender} />} />
+                        modalComponent={() => <CreateCommunityModal setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} />} />
                 </div>
                 {sessionUser ? (
                     <div className='profile-button'>

@@ -20,11 +20,14 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
     const [displayRoom, setDisplayRoom] = useState(null);
     const [roomDataLoaded, setRoomDataLoaded] = useState(false);
 
+    console.log(community)
+
     useEffect(() => {
         if (displayCommunity) {
             dispatch(loadCommunity(displayCommunity))
         }
         setClearMessages(true)
+
 
         return () => {
             setClearMessages(false)
