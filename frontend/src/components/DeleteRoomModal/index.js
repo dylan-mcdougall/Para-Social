@@ -13,10 +13,9 @@ function DeleteRoomModal({ setPromptRoomScroll, displayRoom, setDisplayRoom, roo
         await dispatch(deleteRoom(community.id, roomId));
         if (displayRoom === roomId) {
             setDisplayRoom(community?.Rooms[0]?.id);
-            await dispatch(loadRoom(community?.Rooms[0]?.id))
         }
-        setPromptRoomScroll(true)
         await dispatch(loadCommunity(community.id))
+        setPromptRoomScroll(true)
         closeModal();
     }
 

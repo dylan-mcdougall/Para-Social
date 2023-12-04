@@ -20,7 +20,7 @@ function DeleteRoomMessageModal({ webSocket, roomMessages, setRoomMessages, room
         webSocket.current.send(JSON.stringify(deleteAction));
 
         const newMessages = roomMessages.filter((el) => el.ws_message_id !== messageId)
-        setRoomMessages([...newMessages])
+        await setRoomMessages([...newMessages])
         closeModal();
     }
 

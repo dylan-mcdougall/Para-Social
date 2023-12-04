@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { updateRoom } from '../../store/rooms';
+import { loadRoom, updateRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal/Modal';
 import { loadCommunity } from '../../store/community';
 
 
-function UpdateRoomModal({ setDisplayRoom, setPromptRoomScroll, communityId, room }) {
+function UpdateRoomModal({ setPromptRoomScroll, communityId, room, setRoomMessages }) {
     const dispatch = useDispatch();
     const [name, setName] = useState(room.name);
     const [errors, setErrors] = useState(null);
@@ -20,9 +20,10 @@ function UpdateRoomModal({ setDisplayRoom, setPromptRoomScroll, communityId, roo
             name: name
         }))
         .then(async () => {
+            setRoomMessages([]);
             setPromptRoomScroll(true)
+            await dispatch(loadRoom(room.id))
             await dispatch(loadCommunity(communityId))
-            await setDisplayRoom(room.id)
             closeModal()
         })
         .catch(
@@ -43,7 +44,7 @@ function UpdateRoomModal({ setDisplayRoom, setPromptRoomScroll, communityId, roo
                     <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
                 {errors && (<div className='errors'>
-                    <p>Room name must exist and be unique.</p>
+                    <p>{errors.name}</p>
                 </div>)}
                 <button type='submit'>Submit</button>
             </form>

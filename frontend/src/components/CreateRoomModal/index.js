@@ -23,8 +23,8 @@ function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, commu
                 classification: 'text',
             }))
             setDisplayRoom(newRoomData.id)
-            setPromptRoomScroll(true)
             dispatch(loadCommunity(communityId))
+            setPromptRoomScroll(true)
             closeModal()
         } catch (error) {
             console.log('Error creating room: ', error)
@@ -42,7 +42,7 @@ function CreateRoomModal({ setPromptRoomScroll, setDisplayRoom, webSocket, commu
                     <input type='text' placeholder='Room Name' value={name} onChange={(e) => setName(e.target.value)} />
                 </label>
                 {errors && (<div className='errors'>
-                    {errors ? <p>Room name must exist and be unique.</p> : null}
+                    {errors ? <p>{errors.message}</p> : null}
                 </div>)}
                 <button type='submit'>Submit</button>
             </form>
