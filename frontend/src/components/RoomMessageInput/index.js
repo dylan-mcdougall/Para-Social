@@ -53,6 +53,13 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
 
     const handleSendMessage = (e) => {
         e.preventDefault();
+        setErrors({});
+        console.log(message)
+        if ((!message && !content_src) || (!message.split(' ').join('').length && !content_src)) {
+            return setErrors({
+                errors: "A message cannot be empty."
+            })
+        }
         const newMessage = {
             room_id: room?.id,
             user_id: sessionUser?.id,
@@ -101,8 +108,9 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
                 <label>
                     <textarea type='text' onKeyDown={e => onEnterPress(e)} rows={2} placeholder={`Message ${room.name}`} value={message} onChange={e => setMessage(e.target.value)} />
                 </label>
-                    <button className='submit-message' type='submit'><FaPaperPlane /></button>
+                    <button className='submit-message' disabled={errors.length} type='submit'><FaPaperPlane /></button>
             </form>
+            {errors && <p className='errors'>{errors.errors}</p>}
                     <form className='file-upload' onSubmit={onFileUpload}>
                         <input type='file' ref={fileRef} formEncType='multipart/form-data' name='image' accept='image/*' onChange={(e) => onFileUpload(e)} />
                         {content_src && (
