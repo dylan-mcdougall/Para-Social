@@ -1,7 +1,9 @@
 # Para-Social
 Para-Social is a community focused, social media app centered around providing ways for creators to interact with their audience and build their brand.
 
-This is currently a placeholder cause I don't wanna focus on this yet :)
+## Technologies Used
+
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)![Sequelize](https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white)![Postgres](https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white)![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)!(https://img.shields.io/badge/WebSockets-by_ws-blue)![AWS](https://img.shields.io/badge/AWS-%23FF9900.svg?style=for-the-badge&logo=amazon-aws&logoColor=white)![Render](https://img.shields.io/badge/Render-%46E3B7.svg?style=for-the-badge&logo=render&logoColor=white)
 
 Feature List:
   * Create a free community or monetize it
@@ -12,6 +14,5 @@ Feature List:
 Current db schema
 
 ![image](https://github.com/dylan-mcdougall/Para-Social/assets/107007986/8f9ebd95-5689-41be-bff0-631157b5ea0b)
-
 
 
