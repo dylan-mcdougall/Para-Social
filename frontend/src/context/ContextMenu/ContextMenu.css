@@ -22,8 +22,6 @@
 
 #menu-content {
     position: absolute;
-    top: 5%;
-    left: 6%;
     background-color: rgb(18, 18, 18);
     z-index: 2;
     border-radius: 4px;

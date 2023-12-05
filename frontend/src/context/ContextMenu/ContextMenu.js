@@ -8,6 +8,7 @@ export function MenuProvider({ children }) {
     const menuRef = useRef();
     const [menuContent, setMenuContent] = useState(null);
     const [onMenuClose, setOnMenuClose] = useState(null);
+    const [menuPosition, setMenuPosition] = useState({ top: 0, left: 0 });
 
     const closeMenu = () => {
         setMenuContent(null);
@@ -20,8 +21,10 @@ export function MenuProvider({ children }) {
     const contextValue = {
         menuRef,
         menuContent,
+        menuPosition,
         setMenuContent,
         setOnMenuClose,
+        setMenuPosition,
         closeMenu
     };
 
@@ -36,14 +39,19 @@ export function MenuProvider({ children }) {
 }
 
 export function Menu() {
-    const { menuRef, menuContent, closeMenu } = useContext(MenuContext);
+    const { menuRef, menuContent, menuPosition, closeMenu } = useContext(MenuContext);
 
     if (!menuRef || !menuRef.current || !menuContent) return null;
+
+    const menuStyle = {
+        top: `${menuPosition.top - 5}px`,
+        left: `${menuPosition.left + 8}px`,
+    }
 
     return ReactDOM.createPortal(
         <div id='menu'>
             <div id='menu-background' onClick={closeMenu} />
-            <div id='menu-content'>
+            <div id='menu-content' style={menuStyle}>
                 {menuContent}
             </div>
         </div>,

@@ -7,7 +7,7 @@ function OpenMenuButton({
     onButtonClick,
     onMenuClose
 }) {
-    const { setMenuContent, setOnMenuClose } = useMenu();
+    const { setMenuContent, setOnMenuClose, setMenuPosition } = useMenu();
     const buttonRef = useRef()
 
     const onClick = () => {
@@ -17,11 +17,12 @@ function OpenMenuButton({
         const position = {
             top: rect.top,
             left: rect.left,
-            width: rect.width,
-            height: rect.height
         };
 
-        setMenuContent(menuComponent(position));
+        console.log('Button position here!', position)
+
+        setMenuPosition(position);
+        setMenuContent(menuComponent);
         
         if (onButtonClick) onButtonClick();
     };
