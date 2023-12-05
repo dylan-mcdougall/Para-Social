@@ -1,4 +1,12 @@
-# Para-Social
+<a href="https://para-social.onrender.com/">
+ <img src="https://aaprojectbucket.s3.us-west-1.amazonaws.com/FullLogo_Transparent_NoBuffer_resized.png" alt="Para-Social Logo" height="60" align="right" />
+</a>
+
+
+
+
+# Para-Social 
+
 Para-Social is a community focused, social media app centered around providing ways for creators to interact with their audience and build their brand.
 
 ## Technologies Used
@@ -9,14 +17,26 @@ Click here to learn more about the WebSocket package I used:
 
 https://www.npmjs.com/package/ws
 
-Feature List:
-  * Create a free community or monetize it
-  * Message and interact with people who share a similar interest
-  * Livestream with an entire room as your audience
-  * Secret other thing you can maybe do if I'm cracked and can finish it in time
+## Index
+ - [Features](#features)
+ - [Database Schema](#database-schema)
+ - [Installing Locally](#installing-locally)
 
-Current db schema
+## Features:
+  - Create or join a community
+  - Create rooms for users to interact together in
+  - Send messages and images within those rooms
+
+## Database Schema
 
 ![image](https://github.com/dylan-mcdougall/Para-Social/assets/107007986/8f9ebd95-5689-41be-bff0-631157b5ea0b)
 
-
+## Installing Locally
+1. Clone this repository:
+`https://github.com/dylan-mcdougall/Para-Social.git`
+2. Install dependencies using this command in the root directory: `npm install`
+3. Create 2 .env files in the root and the backend directories following the respective .env.example provided.
+4. Create the database using the following commands in the backend directory: `npx dotenv sequelize db:migrate` `npx dotenv sequelize db:seed:all`
+5. Start the backend server by using this command in the backend directory: `npm start`
+6. Start the frontend server by using this command in the frontend directory: `npm start`
+7. Enjoy!
