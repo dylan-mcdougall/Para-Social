@@ -62,9 +62,18 @@
 
 .message-content {
     display: flex;
+    width: inherit;
     flex-direction: column;
     margin: .5rem 0;
     align-items: flex-start;
+    flex-wrap: wrap;
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+.message-text {
+    display: flex;
+    max-width: 100%;
 }
 
 .message-image {
