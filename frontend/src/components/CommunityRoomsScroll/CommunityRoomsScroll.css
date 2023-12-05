@@ -68,6 +68,21 @@
     }
 }
 
+.room-item-wrapper:hover .room-actions button {
+    color: #00ccff;
+    animation: spin 12s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
 .room-item {
     position: absolute; 
     display: flex;
@@ -121,6 +136,7 @@
 .room-actions button {
     margin-right: .25rem;
     background-color: inherit;
+    color: transparent;
     border: none;
     font-size: 16px;
 }

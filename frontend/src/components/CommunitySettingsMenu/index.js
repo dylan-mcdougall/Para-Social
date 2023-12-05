@@ -29,7 +29,7 @@ function CommunitySettingsMenu({ displayCommunity, setDisplayCommunity, communit
                         propagateClick={true}
                         modalComponent={() => <CommunityImageUpload community={community} setPromptRender={setPromptRender} /> } />
                 </div>
-                <div className='menu-item delete-community'>
+                <div className='menu-item delete'>
                     <OpenModalButton
                         buttonText={'Delete Community'}
                         onButtonClick={closeMenu}

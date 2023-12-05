@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import './RoomMessages.css';
-import { loadRoom } from '../../store/rooms';
 import moment from 'moment';
 import OpenModalButton from '../OpenModalButton';
 import DeleteRoomMessageModal from '../DeleteMessageModal';
 
-function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages }) {
-    const dispatch = useDispatch();
+function RoomMessages({ webSocket, roomMessages, setRoomMessages }) {
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
@@ -52,7 +50,7 @@ function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages })
                                             {validatedPermissions}
                                         </div>
                                         <div className='message-content'>
-                                            {message?.content_message}
+                                            <p className='message-text'>{message?.content_message}</p>
                                             {message?.content_type === 'src' ? <img className='message-image' src={message?.Images?.length ? message?.Images[0].url : message.content_src} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>
@@ -85,7 +83,7 @@ function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages })
                                             {validatedPermissions}
                                         </div>
                                         <div className='message-content'>
-                                            {message?.content_message}
+                                            <p className='message-text'>{message?.content_message}</p>
                                             {message?.content_type === 'src' ? <img src={message.Images[0].url} alt="Uploaded Content" /> : null}
                                         </div>
                                     </li>

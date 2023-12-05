@@ -5,23 +5,26 @@ function OpenMenuButton({
     menuComponent,
     buttonIcon,
     onButtonClick,
-    onMenuClose
+    onMenuClose,
 }) {
-    const { setMenuContent, setOnMenuClose } = useMenu();
+    const { setMenuContent, setOnMenuClose, setMenuPosition } = useMenu();
     const buttonRef = useRef()
 
-    const onClick = () => {
+    const onClick = (e) => {
+        e.stopPropagation();
+
         if (onMenuClose) setOnMenuClose(onMenuClose);
 
         const rect = buttonRef.current.getBoundingClientRect();
         const position = {
             top: rect.top,
             left: rect.left,
-            width: rect.width,
-            height: rect.height
         };
 
-        setMenuContent(menuComponent(position));
+        console.log('Button position here!', position)
+
+        setMenuPosition(position);
+        setMenuContent(menuComponent);
         
         if (onButtonClick) onButtonClick();
     };

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { FaPenSquare } from 'react-icons/fa'
+import { IoSettingsOutline } from "react-icons/io5";
 import CreateRoomModal from '../CreateRoomModal';
 import DeleteRoomModal from '../DeleteRoomModal';
 import OpenModalButton from '../OpenModalButton';
@@ -8,6 +8,8 @@ import './CommunityRoomsScroll.css'
 import UpdateRoomModal from '../UpdateRoomModal';
 import { loadCommunity } from '../../store/community';
 import { separatedRooms } from './roomManagement';
+import OpenMenuButton from '../OpenMenuButton';
+import RoomSettingsMenu from '../RoomSettingsMenu';
 
 function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMessages, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
@@ -34,6 +36,7 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
         }
         await setDisplayRoom(roomId)
     }
+    let validatedAdd = null;
 
     return (
         <div className='community-rooms-scroll-wrapper'>
@@ -47,12 +50,16 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
                         if (sessionUser.id === community?.creator_id) {
                             validatedOwner = (
                                 <div className='room-actions'>
+                                    <OpenMenuButton
+                                        buttonIcon={<IoSettingsOutline />}
+                                        menuComponent={() => <RoomSettingsMenu community={community} room={room} setPromptRoomScroll={setPromptRoomScroll} setRoomMessages={setRoomMessages} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} setPromptRender={setPromptRender} /> } />
+                                </div>
+                            )
+                            validatedAdd = (
+                                <div className='new-room-button'>
                                     <OpenModalButton
-                                        buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} setRoomMessages={setRoomMessages} />} />
-                                    <OpenModalButton
-                                        buttonText={'X'}
-                                        modalComponent={() => <DeleteRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />
+                                        buttonText={'+ Add a Room'}
+                                        modalComponent={() => <CreateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} setDisplayRoom={setDisplayRoom} webSocket={webSocket} communityId={community.id} />} />
                                 </div>
                             )
                         }
@@ -75,11 +82,7 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
                     )
                 )}
             </ul>
-            <div className='new-room-button'>
-                <OpenModalButton
-                    buttonText={'+ Add a Room'}
-                    modalComponent={() => <CreateRoomModal setPromptRender={setPromptRender}  setPromptRoomScroll={setPromptRoomScroll} setDisplayRoom={setDisplayRoom} webSocket={webSocket} communityId={community.id} />} />
-            </div>
+            {validatedAdd}
         </div>
     )
 }
