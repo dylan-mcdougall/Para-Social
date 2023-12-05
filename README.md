@@ -7,7 +7,7 @@ Para-Social is a community focused, social media app centered around providing w
 
 To learn more about the WebSocket package I used click here:
 
-![Static Badge](https://img.shields.io/badge/WebSockets_by_ws-red?style=for-the-badge&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fws)
+![Static Badge](https://img.shields.io/badge/WebSockets_by_ws-red?style=for-the-badge&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fws&link=https%3A%2F%2Fwww.npmjs.com%2Fpackage%2Fws)
 
 Feature List:
   * Create a free community or monetize it
