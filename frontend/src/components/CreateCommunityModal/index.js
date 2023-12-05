@@ -4,7 +4,7 @@ import { newCommunity } from '../../store/community';
 import { useModal } from '../../context/Modal/Modal';
 import { removeRoom } from '../../store/rooms';
 
-function CreateCommunityModal() {
+function CreateCommunityModal({ setDisplayCommunity, setPromptRender }) {
     const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
@@ -16,15 +16,17 @@ function CreateCommunityModal() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setErrors({});
+        dispatch(removeRoom())
         return dispatch(newCommunity({
             name,
             description,
             privacy,
             price
         }))
-        .then(() => {
-            dispatch(removeRoom())
-            closeModal()
+        .then((data) => {
+            setDisplayCommunity(data.id);
+            setPromptRender(true);
+            closeModal();
         })
         .catch(
             async (response) => {

@@ -12,20 +12,9 @@ import { separatedRooms } from './roomManagement';
 function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMessages, dataLoaded, displayRoom, setDisplayRoom }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
-    // const community = useSelector(state => state.community.community);
+    const room = useSelector(state => state.room.room);
     const [promptRoomScroll, setPromptRoomScroll] = useState(false);
     const [scrollDataLoaded, setScrollDataLoaded] = useState(false);
-
-    console.log(community)
-
-    // useEffect(() => {
-    //     if (community) {
-    //         const { pinnedRooms, rooms } = separatedRooms(community?.Rooms)
-    //     }
-    //     return () => {
-    //         setScrollDataLoaded(false)
-    //     }
-    // }, [community])
 
     useEffect(() => {
         if (promptRoomScroll) {
@@ -38,6 +27,7 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
     }, [promptRoomScroll])
     
     const handleClick = async (roomId) => {
+        if (room.id === roomId) return
         if (webSocket.current) {
             webSocket.current.close()
             setRoomMessages([])
@@ -59,7 +49,7 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
                                 <div className='room-actions'>
                                     <OpenModalButton
                                         buttonText={<FaPenSquare />}
-                                        modalComponent={() => <UpdateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} room={room} />} />
+                                        modalComponent={() => <UpdateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} communityId={community.id} room={room} setRoomMessages={setRoomMessages} />} />
                                     <OpenModalButton
                                         buttonText={'X'}
                                         modalComponent={() => <DeleteRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} roomId={room.id} />} />

@@ -25,7 +25,7 @@ function RoomMessages({ displayRoom, webSocket, roomMessages, setRoomMessages })
             {dataLoaded && (
                 <ul className='room-messages-ul'>
                     <div>
-                        {roomMessages?.length ? (
+                        {roomMessages ? (
                             roomMessages.map((message) => {
                                 console.log('message data here! ', message)
                                 let usernameClass = 'message-username';

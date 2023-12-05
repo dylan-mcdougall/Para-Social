@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loadCommunity, updateCommunity } from '../../store/community';
+import { loadRoom, removeRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal/Modal';
 
-function UpdateCommunityModal({ community, setPromptRender }) {
+function UpdateCommunityModal({ displayCommunity, setDisplayCommunity, community, setPromptRender }) {
     const dispatch = useDispatch();
+    const room = useSelector(state => state.room.room);
     const [name, setName] = useState(community.name);
     const [description, setDescription] = useState(community.description);
     const [privacy, setPrivacy] = useState(community.private);
@@ -23,9 +25,13 @@ function UpdateCommunityModal({ community, setPromptRender }) {
             price
         }))
         .then(() => {
-            setPromptRender(true)
-            dispatch(loadCommunity(community.id))
-            closeModal()
+            if (displayCommunity === community.id) {
+                dispatch(loadCommunity(community.id));
+                dispatch(removeRoom());
+                dispatch(loadRoom(room.id));
+            }
+            setPromptRender(true);
+            closeModal();
         })
         .catch(
             async (response) => {

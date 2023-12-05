@@ -35,7 +35,6 @@ export const newRoom = (room) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json()
-        dispatch(setRoom(data));
         return data;
     } else {
         console.log('Errors while creating room: ', response)
@@ -50,7 +49,6 @@ export const updateRoom = (room) => async (dispatch) => {
     });
     if (response.ok) {
         const data = await response.json()
-        dispatch(setRoom(data));
         return data;
     } else {
         console.log("Errors while updating room: ", response)

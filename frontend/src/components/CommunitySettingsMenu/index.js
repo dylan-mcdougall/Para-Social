@@ -20,7 +20,7 @@ function CommunitySettingsMenu({ displayCommunity, setDisplayCommunity, communit
                         buttonText={'Update Community'}
                         onButtonClick={closeMenu}
                         propagateClick={true}
-                        modalComponent={() => <UpdateCommunityModal community={community} setPromptRender={setPromptRender} />} />
+                        modalComponent={() => <UpdateCommunityModal community={community} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} />} />
                 </div>
                 <div className='menu-item'>
                     <OpenModalButton
@@ -34,7 +34,7 @@ function CommunitySettingsMenu({ displayCommunity, setDisplayCommunity, communit
                         buttonText={'Delete Community'}
                         onButtonClick={closeMenu}
                         propagateClick={true}
-                        modalComponent={() => <DeleteCommunityModal user={sessionUser} community={community} setPromptRender={setPromptRender} />} />
+                        modalComponent={() => <DeleteCommunityModal user={sessionUser} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} community={community} setPromptRender={setPromptRender} />} />
                 </div>
             </div>
         )
