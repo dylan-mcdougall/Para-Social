@@ -49,11 +49,11 @@
     width: 90%;
 }
 
-.menu-item.delete-community button {
+.menu-item.delete button {
     color: red;
 }
 
-.menu-item.delete-community button:hover {
+.menu-item.delete button:hover {
     color: white;
     background-color: red;
 }

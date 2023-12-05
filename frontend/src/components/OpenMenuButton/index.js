@@ -5,12 +5,14 @@ function OpenMenuButton({
     menuComponent,
     buttonIcon,
     onButtonClick,
-    onMenuClose
+    onMenuClose,
 }) {
     const { setMenuContent, setOnMenuClose, setMenuPosition } = useMenu();
     const buttonRef = useRef()
 
-    const onClick = () => {
+    const onClick = (e) => {
+        e.stopPropagation();
+
         if (onMenuClose) setOnMenuClose(onMenuClose);
 
         const rect = buttonRef.current.getBoundingClientRect();
