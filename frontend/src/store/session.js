@@ -35,7 +35,6 @@ export const login = (user) => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
-  console.log("Login successful");
   return response;
 };
 
@@ -50,7 +49,6 @@ export const demoUser = () => async (dispatch) => {
   });
   const data = await response.json();
   dispatch(setUser(data.user));
-  console.log("Login successful");
   return response;
 }
 

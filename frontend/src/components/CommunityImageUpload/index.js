@@ -10,8 +10,6 @@ function CommunityImageUpload({ setPromptRender, community }) {
     const [imageName, setImageName] = useState(community?.CommunityImage ? community?.CommunityImage?.name : null)
     const imageRef = useRef(null);
 
-    console.log("Image Source HERE!: ", imageSrc)
-
     const onFileUpload = async (e) => {
         const file = e.target.files[0]
         const formData = new FormData();

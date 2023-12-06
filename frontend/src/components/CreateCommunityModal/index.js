@@ -30,9 +30,7 @@ function CreateCommunityModal({ setDisplayCommunity, setPromptRender }) {
         })
         .catch(
             async (response) => {
-                console.log('this is your target ', response)
                 const data = await response.json();
-                console.log('this is your target data ', data)
                 console.log(data.errors)
                 if (data && data.errors) setErrors(data.errors);
             }

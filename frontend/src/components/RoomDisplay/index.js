@@ -4,8 +4,6 @@ import RoomMessages from '../RoomMessages';
 import './RoomDisplay.css';
 import RoomMessageInput from '../RoomMessageInput';
 
-
-
 function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMessages, webSocket, displayRoom, setDisplayRoom, roomDataLoaded }) {
     const room = useSelector(state => state.room.room);
     const community = useSelector(state => state.community.community);

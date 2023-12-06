@@ -4,7 +4,7 @@ import { loadCommunity, updateCommunity } from '../../store/community';
 import { loadRoom, removeRoom } from '../../store/rooms';
 import { useModal } from '../../context/Modal/Modal';
 
-function UpdateCommunityModal({ displayCommunity, setDisplayCommunity, community, setPromptRender }) {
+function UpdateCommunityModal({ displayCommunity, community, setPromptRender }) {
     const dispatch = useDispatch();
     const room = useSelector(state => state.room.room);
     const [name, setName] = useState(community.name);
