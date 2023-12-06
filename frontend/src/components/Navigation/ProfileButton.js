@@ -4,6 +4,7 @@ import * as sessionActions from '../../store/session';
 import { FaUser } from 'react-icons/fa6';
 import OpenModalButton from "../OpenModalButton";
 import UserImageUpload from "../UserImageUpload";
+import './Navigation.css';
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
