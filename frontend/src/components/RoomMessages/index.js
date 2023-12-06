@@ -10,8 +10,6 @@ function RoomMessages({ webSocket, roomMessages, setRoomMessages }) {
     const room = useSelector(state => state.room.room);
     const [dataLoaded, setDataLoaded] = useState(false);
 
-    console.log('room state here: ', room);
-
     useEffect(() => {
         if (!room) return
         roomMessages = roomMessages.filter((el) => el.room_id === room.id)
@@ -25,7 +23,6 @@ function RoomMessages({ webSocket, roomMessages, setRoomMessages }) {
                     <div>
                         {roomMessages ? (
                             roomMessages.map((message) => {
-                                console.log('message data here! ', message)
                                 let usernameClass = 'message-username';
                                 if (sessionUser.id === message.user_id) {
                                     usernameClass = usernameClass + ' current'
@@ -64,7 +61,6 @@ function RoomMessages({ webSocket, roomMessages, setRoomMessages }) {
                                 }
                                 let validatedPermissions = null;
                                 if (sessionUser.id === message.user_id) {
-                                    console.log("TESTING WS MESSAGE ID, ", message)
                                     validatedPermissions = (
                                         <>
                                             <OpenModalButton

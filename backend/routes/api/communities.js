@@ -1,7 +1,6 @@
 const express = require('express');
 const { requireAuth } = require('../../utils/auth');
 const { User, Community, Room, Membership, RoomMessage, Image } = require('../../db/models');
-const { S3Client } = require('@aws-sdk/client-s3');
 const { uploadS3, deleteS3 } = require('./S3Commands');
 const randomImageName = require('./helper');
 const dotenv = require('dotenv');
@@ -9,17 +8,6 @@ const sharp = require('sharp');
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
-const bucketRegion = process.env.BUCKET_REGION;
-const accessKey = process.env.ACCESS_KEY;
-const secretAccessKey = process.env.SECRET_ACCESS_KEY;
-
-const s3 = new S3Client({
-    credentials: {
-        accessKeyId: accessKey,
-        secretAccessKey: secretAccessKey,
-    },
-    region: bucketRegion
-})
 
 const router = express.Router();
 
@@ -311,14 +299,11 @@ router.post('/:id/images', requireAuth, async (req, res) => {
             const response = await deleteS3(params);
             if (response.message && response.message === "Success.") {
                 await community.CommunityImage.destroy();
-                console.log("Community image successfully destroyed in database and AWS.")
             } else throw new Error("There was an error when attempting to delete the image from AWS.");
         } catch (error) {
             console.log("There was an issue trying to remove the existing image from the database and AWS: ", error);
         }
     }
-
-    console.log('Image confirm body: ', req.body);
     
     const payload = await Image.create({
         url: req.body.url,

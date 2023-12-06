@@ -5,8 +5,6 @@ import { csrfFetch } from '../../store/csrf';
 import { FaPaperPlane } from 'react-icons/fa';
 import './RoomMessageInput.css';
 
-const wsUrl = process.env.NODE_ENV === 'production' ? 'wss://para-social.onrender.com' : 'ws://localhost:8000';
-
 function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
@@ -54,7 +52,6 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
     const handleSendMessage = (e) => {
         e.preventDefault();
         setErrors({});
-        console.log(message)
         if ((!message && !content_src) || (!message.split(' ').join('').length && !content_src)) {
             return setErrors({
                 errors: "A message cannot be empty."
@@ -78,9 +75,6 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
             data: newMessage
         });
 
-        console.log(`Sending data: ${jsonMessage}`);
-
-
         webSocket.current.send(jsonMessage);
         setMessage('');
         setContent_type('text');
@@ -97,8 +91,6 @@ function RoomMessageInput({ webSocket, roomMessages, setRoomMessages }) {
           formRef.current.requestSubmit();
         }
     }
-
-    console.log('roomMessages, ', roomMessages)
 
     if (!room) return null;
 

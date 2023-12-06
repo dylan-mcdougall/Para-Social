@@ -10,8 +10,6 @@ function UserImageUpload({ setPromptRender, user }) {
     const [imageName, setImageName] = useState(user?.ProfileImage ? user?.ProfileImage?.name : null)
     const imageRef = useRef(null);
 
-    console.log("Image Source HERE!: ", imageSrc)
-
     const onFileUpload = async (e) => {
         const file = e.target.files[0]
         const formData = new FormData();

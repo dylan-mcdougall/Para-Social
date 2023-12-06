@@ -27,7 +27,7 @@ export const loadRoom = (id) => async (dispatch) => {
     }
 }
 
-export const newRoom = (room) => async (dispatch) => {
+export const newRoom = (room) => async () => {
     const { communityId, name, classification } = room
     const response = await csrfFetch(`/api/communities/${communityId}/rooms/new`, {
         method: 'POST',
@@ -41,7 +41,7 @@ export const newRoom = (room) => async (dispatch) => {
     }
 }
 
-export const updateRoom = (room) => async (dispatch) => {
+export const updateRoom = (room) => async () => {
     const { communityId, roomId, name } = room;
     const response = await csrfFetch(`/api/communities/${communityId}/rooms/${roomId}`, {
         method: 'PATCH',
@@ -68,7 +68,7 @@ export const deleteRoom = (communityId, roomId) => async (dispatch) => {
     }
 }
 
-export const deleteRoomMessage = (roomId, messageId) => async (dispatch) => {
+export const deleteRoomMessage = (roomId, messageId) => async () => {
     const response = await csrfFetch(`/api/rooms/${roomId}/messages/${messageId}`, {
         method: 'DELETE'
     })

@@ -5,7 +5,6 @@ import * as sessionActions from '../../store/session';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
-import Navigation from '../Navigation';
 
 function HomePage() {
     const dispatch = useDispatch();

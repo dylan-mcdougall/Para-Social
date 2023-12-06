@@ -20,8 +20,6 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
     const [displayRoom, setDisplayRoom] = useState(null);
     const [roomDataLoaded, setRoomDataLoaded] = useState(false);
 
-    console.log(community)
-
     useEffect(() => {
         if (displayCommunity) {
             dispatch(loadCommunity(displayCommunity))
@@ -62,7 +60,7 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
             const parsedData = JSON.stringify(data);
             ws.send(parsedData);
             keepAlive(ws);
-            return console.log(`connected ${e}`);
+            return
         }
 
         ws.onmessage = (e) => {
@@ -76,12 +74,11 @@ function CommunityPage({ promptRender, setPromptRender, isLoaded, dataLoaded, di
         }
 
         ws.onerror = (e) => {
-            console.log('closing websocket connection ', e);
+            console.log('An error occurred, closing websocket connection ', e);
             return webSocket.current = null
         }
 
         ws.onclose = (e) => {
-            console.log(`connection closed ${e}`);
             return webSocket.current = null;
         }
 

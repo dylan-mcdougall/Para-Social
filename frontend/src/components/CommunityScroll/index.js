@@ -12,7 +12,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 
 
-function CommunityScrollBar({ isLoaded, dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
+function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
 

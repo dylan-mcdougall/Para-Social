@@ -10,8 +10,6 @@ function ProfileButton({ user }) {
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
 
-  console.log("USER OBJECT HERE!!!: ", user);
-
   const openMenu = () => {
     if (showMenu) return;
     setShowMenu(true);
@@ -40,13 +38,13 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      {user.ProfileImage ? <img className="profile image-item" src={user?.ProfileImage?.url} alt="Thumbnail" onClick={openMenu} /> : <FaUser onClick={openMenu} className="profile image-item" style={{backgroundColor : "#00ccff", color : "black"}} />}
+      {user.ProfileImage ? <img className="profile image-item" src={user?.ProfileImage?.url} alt="Thumbnail" onClick={openMenu} /> : <FaUser onClick={openMenu} className="profile image-item" style={{ backgroundColor: "#00ccff", color: "black" }} />}
       <ul className={ulClassName} ref={ulRef}>
         <li className="profile-username">{user.username}</li>
         <li className="user-image-upload">
-        <OpenModalButton
-                        buttonText={'Upload Image'}
-                        modalComponent={() => <UserImageUpload user={user} /> } />
+          <OpenModalButton
+            buttonText={'Upload Image'}
+            modalComponent={() => <UserImageUpload user={user} />} />
         </li>
         <li className="logout">
           <button className="logout" onClick={logout}>Log Out</button>

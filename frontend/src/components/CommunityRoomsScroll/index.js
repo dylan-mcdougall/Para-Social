@@ -2,21 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IoSettingsOutline } from "react-icons/io5";
 import CreateRoomModal from '../CreateRoomModal';
-import DeleteRoomModal from '../DeleteRoomModal';
 import OpenModalButton from '../OpenModalButton';
 import './CommunityRoomsScroll.css'
-import UpdateRoomModal from '../UpdateRoomModal';
-import { loadCommunity } from '../../store/community';
-import { separatedRooms } from './roomManagement';
 import OpenMenuButton from '../OpenMenuButton';
 import RoomSettingsMenu from '../RoomSettingsMenu';
 
 function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMessages, dataLoaded, displayRoom, setDisplayRoom }) {
-    const dispatch = useDispatch();
     const sessionUser = useSelector(state => state.session.user);
     const room = useSelector(state => state.room.room);
     const [promptRoomScroll, setPromptRoomScroll] = useState(false);
-    const [scrollDataLoaded, setScrollDataLoaded] = useState(false);
 
     useEffect(() => {
         if (promptRoomScroll) {

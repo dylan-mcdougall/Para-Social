@@ -106,11 +106,9 @@ async function processTextQueue() {
                 messageId
             });
             processImageQueue();
-            console.log('Image sent to queue.')
         }
-        console.log('message created successfully', payload);
     }
-    return console.log('Processing completed.');
+    return
 }
 
 async function processImageQueue() {
@@ -123,16 +121,15 @@ async function processImageQueue() {
             imageableId: messageId,
             imageableType: 'RoomMessage'
         });
-        console.log('Image created successfully ', payload);
+        if (!payload) throw new Error("There was an error when committing your image to the database.")
     }
-    return console.log('Processing completed.');
+    return
 }
 
 const rooms = {};
 
 wss.on('connection', function connection(ws) { 
     ws.on('message', (message) => {
-        console.log('Receiving message: ', message)
         const data = JSON.parse(message);
         if (data.action === 'join') {
             const roomId = data.room_id;
@@ -144,13 +141,9 @@ wss.on('connection', function connection(ws) {
         }
 
         if (data.action === 'delete' && ws.roomId) {
-            const target = data.data.ws_message_id;
-            console.log("Sending direction to delete WS message: ", data);
-
             rooms[ws.roomId].forEach(client => {
                 if (client !== ws && client.readyState) {
                     const parsedData = JSON.stringify(data);
-                    console.log("Sending Client message Id: ", data);
                     client.send(parsedData)
                 }
             })
@@ -158,13 +151,11 @@ wss.on('connection', function connection(ws) {
 
         if (data.action === 'message' && ws.roomId) {
             messageQueue.push(data.data);
-            console.log('Sending message to database: ', data);
             processTextQueue()
 
             rooms[ws.roomId].forEach(client => {
                 if (client !== ws && client.readyState) {
                     const parsedData = JSON.stringify(data.data)
-                    console.log('Sending Clients message: ', data)
                     client.send(parsedData);
                 }
             });
