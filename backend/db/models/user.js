@@ -88,7 +88,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     d_o_b: {
       type: DataTypes.DATE,
-      allowNull: false,
+      allowNull: true,
       validate: {
         isDate: true,
         isBefore: "2023-11-19",
@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     sex: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       validate: {
         isIn: [['male', 'female', 'non-binary', 'other', 'declined']]
       }
