@@ -24,8 +24,8 @@ function SignupFormPage({ login, setLogin }) {
         sessionActions.signup({
           email,
           username,
-          firstName,
-          lastName,
+          first_name: firstName,
+          last_name: lastName,
           password,
         })
       ).catch(async (res) => {
