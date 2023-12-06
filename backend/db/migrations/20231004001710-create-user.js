@@ -34,11 +34,11 @@ module.exports = {
       },
       d_o_b: {
         type: Sequelize.DATE,
-        allowNull: false
+        allowNull: true
       },
       sex: {
         type: Sequelize.STRING,
-        allowNull: false
+        allowNull: true
       },
       hashedPassword: {
         type: Sequelize.STRING.BINARY,
