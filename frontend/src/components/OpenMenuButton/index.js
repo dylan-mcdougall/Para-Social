@@ -21,8 +21,6 @@ function OpenMenuButton({
             left: rect.left,
         };
 
-        console.log('Button position here!', position)
-
         setMenuPosition(position);
         setMenuContent(menuComponent);
         
