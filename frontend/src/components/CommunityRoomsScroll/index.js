@@ -31,6 +31,15 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
         await setDisplayRoom(roomId)
     }
     let validatedAdd = null;
+    if (sessionUser.id === community?.creator_id) {
+        validatedAdd = (
+            <div className='new-room-button'>
+                <OpenModalButton
+                    buttonText={'+ Add a Room'}
+                    modalComponent={() => <CreateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} setDisplayRoom={setDisplayRoom} webSocket={webSocket} communityId={community.id} />} />
+            </div>
+        )
+    }
 
     return (
         <div className='community-rooms-scroll-wrapper'>
@@ -47,13 +56,6 @@ function CommunityRoomsScroll({ community, setPromptRender, webSocket, setRoomMe
                                     <OpenMenuButton
                                         buttonIcon={<IoSettingsOutline />}
                                         menuComponent={() => <RoomSettingsMenu community={community} room={room} setPromptRoomScroll={setPromptRoomScroll} setRoomMessages={setRoomMessages} displayRoom={displayRoom} setDisplayRoom={setDisplayRoom} setPromptRender={setPromptRender} /> } />
-                                </div>
-                            )
-                            validatedAdd = (
-                                <div className='new-room-button'>
-                                    <OpenModalButton
-                                        buttonText={'+ Add a Room'}
-                                        modalComponent={() => <CreateRoomModal setPromptRender={setPromptRender} setPromptRoomScroll={setPromptRoomScroll} setDisplayRoom={setDisplayRoom} webSocket={webSocket} communityId={community.id} />} />
                                 </div>
                             )
                         }

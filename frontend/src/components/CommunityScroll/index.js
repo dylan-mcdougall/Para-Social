@@ -28,33 +28,36 @@ function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, set
             return setSelected(communityId)
         }
     }
-    
+
     return (
         <div className='community-bar-wrapper'>
             <ul className='community-bar-ul'>
-            {dataLoaded && (
-                    sessionUser?.Communities?.map((community) => {
-                        let communityClass;
-                        communityClass = 'community-item' + (selected === community.id ? ' selected' : '');
-                        return (
-                            <div className='community-item-wrapper' key={community.id}>
-                                <li className={communityClass}>
-                                    <div className='item-content' onClick={() => handleClick(community.id)}>
-                                        {community?.CommunityImage?.url ? (<img className='image-item' src={community.CommunityImage.url} />)
-                                            : <FaPeopleGroup style={{ backgroundColor: "lightblue", color: "black" }} className='image-item' />}
-                                        <span className='community-tooltip'>
-                                            {community.name}
-                                        </span>
-                                    </div>
-                                    <div className='community-actions'>
-                                        <OpenMenuButton
-                                            buttonIcon={<FaEllipsisH style={{ color: 'white' }} />}
-                                            menuComponent={() => <CommunitySettingsMenu displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} community={community} setPromptRender={setPromptRender} />} />
-                                    </div>
-                                </li>
-                            </div>
+                {dataLoaded && (
+                    sessionUser?.Communities?.length ?
+                        (sessionUser?.Communities?.map((community) => {
+                            let communityClass;
+                            communityClass = 'community-item' + (selected === community.id ? ' selected' : '');
+                            return (
+                                <div className='community-item-wrapper' key={community.id}>
+                                    <li className={communityClass}>
+                                        <div className='item-content' onClick={() => handleClick(community.id)}>
+                                            {community?.CommunityImage?.url ? (<img className='image-item' src={community.CommunityImage.url} />)
+                                                : <FaPeopleGroup style={{ backgroundColor: "lightblue", color: "black" }} className='image-item' />}
+                                            <span className='community-tooltip'>
+                                                {community.name}
+                                            </span>
+                                        </div>
+                                        <div className='community-actions'>
+                                            <OpenMenuButton
+                                                buttonIcon={<FaEllipsisH style={{ color: 'white' }} />}
+                                                menuComponent={() => <CommunitySettingsMenu displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} community={community} setPromptRender={setPromptRender} />} />
+                                        </div>
+                                    </li>
+                                </div>
+                            )
+                        })) : (
+                            <p style={{marginTop : "8rem", lineHeightStep : "1rem",textAlign : "center"}}>Please Create or join a community to get started</p>
                         )
-                    })
                 )}
             </ul>
             <div className='navigation'>
