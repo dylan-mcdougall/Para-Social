@@ -37,6 +37,13 @@ function CreateCommunityModal({ setDisplayCommunity, setPromptRender }) {
         )
     }
 
+    const handleCheck = () => {
+        if (privacy) {
+            return setPrivacy(false)
+        }
+        return setPrivacy(true)
+    }
+
     return (
         <div className='modal-form'>
         <h3>
@@ -51,7 +58,7 @@ function CreateCommunityModal({ setDisplayCommunity, setPromptRender }) {
             </label>
             <label className='private-radio'>
                 Private?
-                <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
+                <input type='checkbox' value={privacy} onChange={handleCheck} />
                 </label>
                 <label className='price-input'>
                     Price:

@@ -5,6 +5,9 @@ import { FaUser } from 'react-icons/fa6';
 import OpenModalButton from "../OpenModalButton";
 import UserImageUpload from "../UserImageUpload";
 import './Navigation.css';
+import { removeRoom } from "../../store/rooms";
+import { removeCommunity } from "../../store/community";
+import { Redirect } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -33,6 +36,9 @@ function ProfileButton({ user }) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
+    dispatch(removeCommunity())
+    dispatch(removeRoom())
+    return <Redirect to='/' />
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");

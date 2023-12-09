@@ -385,15 +385,33 @@ router.post('/', requireAuth, async (req, res) => {
     }
 );
 
-router.get('/', async (req, res) => {
+router.get('/', requireAuth, async (req, res) => {
     const communityList = await Community.findAll({
-        include: [{
-            model: Image, as: "CommunityImage"
-        }]
+        where: {
+            private: false
+        },
+        include: [
+            { model: Image, as: "CommunityImage" },
+            { model: User, as: "Members" }
+        ]
+    });
+
+    const checkMembers = (target, array) => {
+        const arrayIds = [];
+        array.forEach((el) => {
+            arrayIds.push(el.dataValues.id)
+        });
+        if (arrayIds.includes(target)) {
+            return false
+        }
+        return true
+    }
+
+    const filteredList = communityList.filter((el) => {
+        return checkMembers(req.user.id, el.Members)
     })
-    return res.json({
-        communityList
-    })
+
+    return res.json(filteredList)
 }
 );
 

@@ -10,7 +10,7 @@ const setCommunity = (community) => {
     }
 };
 
-const removeCommunity = () => {
+export const removeCommunity = () => {
     return {
         type: REMOVE_COMMUNITY,
     }
@@ -29,6 +29,7 @@ export const loadCommunity = (id) => async (dispatch) => {
 
 export const newCommunity = (community) => async (dispatch) => {
     const { creator_id, name, description, privacy, price } = community;
+    console.log(privacy);
     const response = await csrfFetch('/api/communities', {
         method: "POST",
         body: JSON.stringify({
@@ -48,7 +49,7 @@ export const newCommunity = (community) => async (dispatch) => {
     }
 }
 
-export const updateCommunity = (community) => async (dispatch) => {
+export const updateCommunity = (community) => async () => {
     const { communityId, name, description, privacy, price } = community;
     const response = await csrfFetch(`/api/communities/${communityId}`, {
         method: 'PATCH',
@@ -80,7 +81,20 @@ export const deleteCommunity = (communityId) => async (dispatch) => {
     }
 }
 
-export const deleteMembership = (userId, communityId) => async (dispatch) => {
+export const joinCommunity = (userId, communityId) => async (dispatch) => {
+    const response = await csrfFetch(`api/communities/${communityId}/members/${userId}`, {
+        method: 'POST'
+    });
+    if (response.ok) {
+        const data = await response.json();
+        await dispatch(loadCommunity(communityId));
+        return data
+    } else {
+        console.error("There was an error joining this community.", response)
+    }
+}
+
+export const deleteMembership = (userId, communityId) => async () => {
     const response = await csrfFetch(`/api/communities/${communityId}/members/${userId}`, {
         method: 'DELETE',
     });
@@ -91,6 +105,7 @@ export const deleteMembership = (userId, communityId) => async (dispatch) => {
         console.log("Errors while deleting membership: ", response)
     }
 }
+
 
 const initialState = { community: null };
 

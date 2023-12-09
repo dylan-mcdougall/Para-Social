@@ -23,9 +23,11 @@ function HomePage() {
             } catch (error) {
                 console.log(error);
             }
-        }   
-        fetchData();
-        setDataLoaded(true)
+        }
+        if (sessionUser && sessionUser.id) {
+            fetchData();
+            setDataLoaded(true)
+        }
 
         return () => {
             setPromptRender(false)

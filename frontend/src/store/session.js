@@ -59,7 +59,7 @@ export const userData = () => async (dispatch) => {
     dispatch(setDetailedUser(data));
     return data;
   } else {
-    console.log(response.errors);
+    console.error(response.errors);
   }
 }
 

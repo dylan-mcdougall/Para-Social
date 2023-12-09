@@ -10,6 +10,8 @@ import { GoPlus } from 'react-icons/go';
 import ProfileButton from '../Navigation/ProfileButton';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
+import { FaRegCompass } from "react-icons/fa";
+import ExploreCommunitiesModal from '../ExploreCommunitiesModal';
 
 
 function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
@@ -61,6 +63,11 @@ function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, set
                 )}
             </ul>
             <div className='navigation'>
+                <div className='explore-communities-button'>
+                    <OpenModalButton
+                        buttonText={<FaRegCompass />}
+                        modalComponent={() => <ExploreCommunitiesModal />} />
+                </div>
                 <div className='new-community-button'>
                     <OpenModalButton
                         buttonText={<GoPlus />}
