@@ -7,6 +7,7 @@
     color: #c1c7d3;
     background-color: #1b1e20;
     position: relative;
+    overflow-y: auto;
 }
 
 .community-bar-ul {
