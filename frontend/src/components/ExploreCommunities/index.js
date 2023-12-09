@@ -2,11 +2,25 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { FaPeopleGroup } from "react-icons/fa6";
 import { csrfFetch } from '../../store/csrf';
+import { joinCommunity } from '../../store/community';
+import { useModal } from '../../context/Modal/Modal';
 import "./ExploreCommunities.css";
 
 function ExploreCommunities() {
     const dispatch = useDispatch();
+    const { closeModal } = useModal();
+    const sessionUser = useSelector(state => state.session.user);
     const [communityList, setCommunityList] = useState(null);
+
+    const handleClick = async (e, id) => {
+        e.stopPropagation();
+        try {
+            await dispatch(joinCommunity(sessionUser.id, id))
+            closeModal();
+        } catch (error) {
+            console.error(error)
+        }
+    }
 
     useEffect(() => {
         const fetchCommunities = async () => {
@@ -21,8 +35,6 @@ function ExploreCommunities() {
 
         fetchCommunities();
     }, []);
-
-    console.log(communityList);
 
     return (
         <div className='explore-wrapper'>
@@ -42,7 +54,7 @@ function ExploreCommunities() {
                                         </div>
                                         <div className='explore-community-bottom'>
                                             Community Members: {community?.Members?.length}
-                                            <button className='join-community'>
+                                            <button onClick={(e) => handleClick(e, community.id)} className='join-community'>
                                                 Join
                                             </button>
                                         </div>

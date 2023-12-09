@@ -132,6 +132,26 @@
     margin-bottom: 1.5rem;
 }
 
+.explore-communities-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.explore-communities-button button {
+    margin: 1.5rem 1.5rem 0;
+    font-size: 1.7rem;
+    padding: .5rem;
+    border: 1px solid lightgray;
+    border-radius: 2000px;
+}
+
+.explore-communities-button button:hover {
+    cursor: pointer;
+    background-color: lightgrey;
+    border-radius: 18px;
+}
+
 .new-community-button {
     display: flex;
     align-items: center;
@@ -149,6 +169,7 @@
 .new-community-button button:hover {
     cursor: pointer;
     background-color: lightgrey;
+    border-radius: 18px;
 }
 
 .community-actions button {

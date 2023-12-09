@@ -81,9 +81,18 @@ export const deleteCommunity = (communityId) => async (dispatch) => {
     }
 }
 
-// export const joinCommunity = (userId, communityId) => async (dispatch) => {
-//     const response = await 
-// }
+export const joinCommunity = (userId, communityId) => async (dispatch) => {
+    const response = await csrfFetch(`api/communities/${communityId}/members/${userId}`, {
+        method: 'POST'
+    });
+    if (response.ok) {
+        const data = await response.json();
+        await dispatch(loadCommunity(communityId));
+        return data
+    } else {
+        console.error("There was an error joining this community.", response)
+    }
+}
 
 export const deleteMembership = (userId, communityId) => async () => {
     const response = await csrfFetch(`/api/communities/${communityId}/members/${userId}`, {
