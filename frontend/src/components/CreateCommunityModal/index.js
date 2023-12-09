@@ -51,7 +51,7 @@ function CreateCommunityModal({ setDisplayCommunity, setPromptRender }) {
             </label>
             <label className='private-radio'>
                 Private?
-                <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(e.target.value)} />
+                <input type='checkbox' value={privacy} onChange={(e) => setPrivacy(true)} />
                 </label>
                 <label className='price-input'>
                     Price:

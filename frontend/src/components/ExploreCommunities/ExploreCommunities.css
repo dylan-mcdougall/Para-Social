@@ -1,0 +1,57 @@
+.explore-wrapper {
+    width: 30rem;
+    height: 29rem;
+    background-color: #3e4245;
+    color: #c1c7d3;
+    overflow-y: auto;
+}
+
+.community-list-item {
+    list-style: none;
+    padding: 1rem;
+    border-top: 1px solid #c1c7d3;
+}
+
+.community-list-item:first-child {
+    border-top: none;
+}
+
+.explore-community-item {
+    margin: .5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.explore-community-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: .25rem;
+    padding-bottom: .25rem;
+    font-size: 18px;
+}
+
+.explore-community-details {
+    margin-top: 1rem;
+}
+
+.explore-community-bottom {
+    margin-top: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+}
+
+.join-community {
+    width: 3rem;
+    padding: .25rem;
+    background-color: #015a70;
+    color: #c1c7d3;
+    border: none;
+    align-self: flex-end;
+}
+
+.join-community:hover {
+    cursor: pointer;
+    background-color: #0682a1;
+    color: #c1c7d3;
+}
