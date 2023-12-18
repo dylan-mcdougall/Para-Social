@@ -7,7 +7,7 @@
     color: #c1c7d3;
     background-color: #1b1e20;
     position: relative;
-    z-index: 20;
+    z-index: 1;
 }
 
 .community-bar-ul {
@@ -15,7 +15,7 @@
     flex-direction: column;
     align-items: center;
     position: relative;
-    z-index: 20;
+    z-index: 1;
     height: 100%;
     overflow-y: auto;
 }
@@ -137,7 +137,7 @@
     margin-bottom: 1.5rem;
     max-height: 30%;
     width: 100%;
-    z-index: 20;
+    z-index: 1;
 }
 
 .explore-communities-button {

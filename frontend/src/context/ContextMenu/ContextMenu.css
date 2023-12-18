@@ -23,7 +23,7 @@
 #menu-content {
     position: absolute;
     background-color: rgb(18, 18, 18);
-    z-index: 2;
+    z-index: 100;
     border-radius: 4px;
 }
 
@@ -33,7 +33,6 @@
     border-radius: 8px;
     width: 10rem;
     background-color: rgb(18, 18, 18);
-    top: inherit;
 }
 
 .menu-shell {
