@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState } from 'react';
 import { csrfFetch } from '../../store/csrf';
 import { FaSearch } from 'react-icons/fa';
 import "./SearchCommunities.css";
 
-function SearchCommunities({ setResults, setSearchState }) {
+function SearchCommunities({ setResults, setFetchComplete, results, setSearchState }) {
     const [query, setQuery] = useState('');
 
     const fetchData = async (value) => {
@@ -22,6 +21,7 @@ function SearchCommunities({ setResults, setSearchState }) {
         });
         if (response.ok) {
             const communities = await response.json()
+            setFetchComplete(true)
             return communities
         } else {
             console.error(response)
@@ -31,12 +31,15 @@ function SearchCommunities({ setResults, setSearchState }) {
 
     const handleChange = (value) => {
         if (value) {
-            setSearchState('pending');
+            if (!results || !results.length) {
+                setSearchState('pending');
+            }
             setQuery(value)
             return fetchData(value)
         } else {
             setSearchState('inactive');
             setQuery(value)
+            setFetchComplete(false)
             setResults([])
             return Promise.resolve()
         }
@@ -45,13 +48,13 @@ function SearchCommunities({ setResults, setSearchState }) {
     return (
         <div className='search-wrapper'>
             <div className='input-wrapper'>
-                <FaSearch id="search-icon" />
-                <input type='search' value={query} placeholder='Explore communities...'
+                <input id='search-input' type='search' value={query} placeholder='Explore communities...'
                     onChange={(e) => handleChange(e.target.value)
                         .then((data) => {
                             console.log(data)
                             setResults(data)
                         })} />
+                <FaSearch id="search-icon" />
             </div>
         </div>
     )

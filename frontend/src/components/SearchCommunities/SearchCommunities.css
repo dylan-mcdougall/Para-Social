@@ -1,0 +1,26 @@
+.search-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #3e4245;
+}
+
+.input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: white;
+    width: 80%;
+    height: 2.5rem;
+    border-radius: 14px;
+    margin: .5rem;
+    padding: .5rem;
+}
+
+.input-wrapper #search-input {
+    border: none;
+    width: 100%;
+    background-color: white;
+    outline: none;
+    padding: .5rem;
+}
