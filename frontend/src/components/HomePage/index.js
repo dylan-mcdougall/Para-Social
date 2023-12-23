@@ -32,7 +32,7 @@ function HomePage() {
         return () => {
             setPromptRender(false)
         }
-    }, [community, promptRender]);
+    }, [promptRender]);
 
 
     useEffect(() => {

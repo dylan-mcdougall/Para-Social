@@ -38,7 +38,6 @@ function ProfileButton({ user }) {
     dispatch(sessionActions.logout());
     dispatch(removeCommunity())
     dispatch(removeRoom())
-    return <Redirect to='/' />
   };
 
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
