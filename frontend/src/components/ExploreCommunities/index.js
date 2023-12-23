@@ -5,6 +5,7 @@ import { csrfFetch } from '../../store/csrf';
 import { joinCommunity } from '../../store/community';
 import { useModal } from '../../context/Modal/Modal';
 import "./ExploreCommunities.css";
+import ExploreCommunitiesSkeleton from '../Skeletons/ExploreCommunitiesSkeleton';
 
 function ExploreCommunities({ results }) {
     const dispatch = useDispatch();
@@ -50,7 +51,7 @@ function ExploreCommunities({ results }) {
                     })
                 ) : (
                     <>
-                        <p>Loading Communities...</p>
+                        
                     </>
                 )}
             </ul>

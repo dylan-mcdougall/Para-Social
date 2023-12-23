@@ -3,6 +3,8 @@ import { useModal } from '../../context/Modal/Modal';
 import { csrfFetch } from '../../store/csrf';
 import ExploreCommunities from '../ExploreCommunities';
 import SearchCommunities from '../SearchCommunities';
+import ExploreCommunitiesSkeleton from '../Skeletons/ExploreCommunitiesSkeleton';
+import ExploreNotFound from '../404NotFounds/ExploreCommunities404';
 
 function ExploreCommunitiesModal() {
     const { closeModal } = useModal();
@@ -45,9 +47,9 @@ function ExploreCommunitiesModal() {
             case 'active':
                 return <ExploreCommunities searchState={searchState} results={results} />
             case 'failed':
-                return <div>No communities matching this query...</div>
+                return <ExploreNotFound />
             case 'pending':
-                return <div>Loading search results</div>
+                return <ExploreCommunitiesSkeleton />
             default:
                 return <ExploreCommunities searchState={searchState} results={defaultResults} />
         }

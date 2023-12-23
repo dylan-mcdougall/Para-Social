@@ -24,7 +24,7 @@
   position: absolute;
   background-color: white;
   z-index: 2;
-  border-radius: 4px;
+  border-radius: 8px;
 }
 
 #modal-content form {

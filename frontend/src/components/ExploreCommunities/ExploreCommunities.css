@@ -4,6 +4,7 @@
     background-color: #3e4245;
     color: #c1c7d3;
     overflow-y: auto;
+    border-radius: 0 0 4px 4px;
 }
 
 .community-list-item {
