@@ -1,0 +1,47 @@
+.not-found-wrapper.explore {
+    display: flex;
+    flex-direction: column;
+    width: 30rem;
+    height: 29rem;
+    background-color: #3e4245;
+    border-radius: 0 0 4px 4px;
+}
+
+.not-found-level-1 {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.not-found-image {
+    background-color: inherit;
+    height: auto;
+    width: 12rem;
+    margin-top: 10%;
+}
+
+.not-found-level-1 > .attribution {
+    color: white;
+}
+
+.attribution {
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+.not-found-level-2 {
+    width: 30rem;
+    display: flex;
+    margin: 3rem 0;
+    align-items: center;
+    justify-content: center;
+}
+
+.not-found-message {
+    text-align: center;
+    width: 80%;
+    font-size: 18px;
+    font-weight: 400;
+    color: #c1c7d3;
+}

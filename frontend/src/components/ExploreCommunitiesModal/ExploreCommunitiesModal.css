@@ -1,1 +1,6 @@
-
+.modal-wrapper.search {
+    background-color: #3e4245;
+    border-radius: 4px;
+    height: 100%;
+    width: 100%;
+}

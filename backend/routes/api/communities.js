@@ -5,6 +5,7 @@ const { uploadS3, deleteS3 } = require('./S3Commands');
 const randomImageName = require('./helper');
 const dotenv = require('dotenv');
 const sharp = require('sharp');
+const { Op, Sequelize } = require('sequelize');
 
 dotenv.config();
 const bucketName = process.env.BUCKET_NAME;
@@ -313,6 +314,47 @@ router.post('/:id/images', requireAuth, async (req, res) => {
     });
 
     if (payload) return res.json(payload);
+});
+
+router.post('/search', requireAuth, async (req, res) => {
+    const { query, page, size } = req.body;
+    const communityList = await Community.findAll({
+        where: {
+            name: {
+                [Op.like]: `%${query}%`
+            },
+            private: false
+        },
+        limit: size,
+        offset: size * (page - 1),
+        include: [
+            { model: Image, as: "CommunityImage" },
+            { model: User, as: "Members" }
+        ]
+    });
+
+    const checkMembers = (target, array) => {
+        const arrayIds = [];
+        array.forEach((el) => {
+            arrayIds.push(el.dataValues.id)
+        });
+        if (arrayIds.includes(target)) {
+            return false
+        }
+        return true
+    }
+
+    const filteredList = communityList.filter((el) => {
+        return checkMembers(req.user.id, el.Members)
+    })
+
+    if (!filteredList) {
+        return res.status(404).json({
+            "errors": "No communities found in this search."
+        });
+    }
+
+    return res.json(filteredList)
 });
 
 router.patch('/:id', requireAuth, async (req, res) => {

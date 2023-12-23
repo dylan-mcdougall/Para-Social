@@ -5,12 +5,12 @@ import { csrfFetch } from '../../store/csrf';
 import { joinCommunity } from '../../store/community';
 import { useModal } from '../../context/Modal/Modal';
 import "./ExploreCommunities.css";
+import ExploreCommunitiesSkeleton from '../Skeletons/ExploreCommunitiesSkeleton';
 
-function ExploreCommunities() {
+function ExploreCommunities({ results }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
     const sessionUser = useSelector(state => state.session.user);
-    const [communityList, setCommunityList] = useState(null);
 
     const handleClick = async (e, id) => {
         e.stopPropagation();
@@ -22,25 +22,11 @@ function ExploreCommunities() {
         }
     }
 
-    useEffect(() => {
-        const fetchCommunities = async () => {
-            const response = await csrfFetch(`/api/communities`);
-            if (response.ok) {
-                const data = await response.json();
-                return setCommunityList(data)
-            } else {
-                console.error("Error while fetching all community data: ", response)
-            }
-        }
-
-        fetchCommunities();
-    }, []);
-
     return (
         <div className='explore-wrapper'>
             <ul className='community-list-ul'>
-                {communityList ? (
-                    communityList?.map((community) => {
+                {results && results.length ? (
+                    results?.map((community) => {
                         return (
                             <li key={community.id} className='community-list-item'>
                                 <div className='explore-community-item'>
@@ -65,7 +51,7 @@ function ExploreCommunities() {
                     })
                 ) : (
                     <>
-                        <p>Loading Communities...</p>
+                        
                     </>
                 )}
             </ul>
