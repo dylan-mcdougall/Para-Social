@@ -68,11 +68,13 @@ function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, set
                     <OpenModalButton
                         buttonText={<FaRegCompass />}
                         modalComponent={() => <ExploreCommunitiesModal />} />
+                    <span className='explore tooltip'>Explore new Communities!</span>
                 </div>
                 <div className='new-community-button'>
                     <OpenModalButton
                         buttonText={<GoPlus />}
                         modalComponent={() => <CreateCommunityModal setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} />} />
+                    <span className='explore tooltip'>Create a new Community!</span>
                 </div>
                 {sessionUser ? (
                     <div className='profile-button'>
