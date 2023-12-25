@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
+import Footer from '../Footer';
 
 function HomePage() {
     const dispatch = useDispatch();
@@ -63,6 +64,7 @@ function HomePage() {
                     )}
                 </div>
             </div>
+            <Footer />
         </div>
     );
 }

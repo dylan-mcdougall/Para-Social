@@ -1,19 +1,19 @@
 .page-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100%;
-    width: 100%;
+    height: auto;
+    width: 100vw;
 }
 
 .home-page-wrapper {
     position: relative;
     display: flex;
     flex-direction: row;
-    height: 100%;
-    width: 100%;
+    height: 100vh;
+    width: 100vw;
 }
 
 .home-page-flex {
     display: flex;
-    width: 100%;
+    width: 100vw;
 }
