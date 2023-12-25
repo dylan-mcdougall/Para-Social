@@ -1,0 +1,23 @@
+.footer-wrapper {
+    height: 4rem;
+    width: 100vw;
+    background-color: #9dbfd2;
+}
+
+.footer-details {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100vw;
+}
+
+p.footer-text {
+    display: flex;
+}
+
+a.footer-link {
+    display: inherit;
+    align-self: inherit;
+    margin-left: 2px;
+}
