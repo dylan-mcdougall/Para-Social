@@ -12,6 +12,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import { FaRegCompass } from "react-icons/fa";
 import ExploreCommunitiesModal from '../ExploreCommunitiesModal';
+import CommunityScrollSkeleton from '../Skeletons/CommunityScrollSkeleton';
 
 
 function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
@@ -67,11 +68,13 @@ function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, set
                     <OpenModalButton
                         buttonText={<FaRegCompass />}
                         modalComponent={() => <ExploreCommunitiesModal />} />
+                    <span className='explore tooltip'>Explore new Communities!</span>
                 </div>
                 <div className='new-community-button'>
                     <OpenModalButton
                         buttonText={<GoPlus />}
                         modalComponent={() => <CreateCommunityModal setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} />} />
+                    <span className='explore tooltip'>Create a new Community!</span>
                 </div>
                 {sessionUser ? (
                     <div className='profile-button'>
