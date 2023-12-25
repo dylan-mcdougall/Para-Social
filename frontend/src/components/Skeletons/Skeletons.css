@@ -8,12 +8,41 @@
     border-radius: 0 0 4px 4px;
 }
 
+.skeleton-wrapper.comm-scroll {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    background-color: #1b1e20;
+}
+
 .skeleton-content {
     display: flex;
     flex-direction: column;
     padding: 1rem;
     margin: .5rem;
     border-top: 1px solid #c1c7d3;
+}
+
+.skeleton-content.comm-item {
+    position: relative;
+    background-color: #1b1e20;
+    margin: .5rem 0 .5rem;
+    height: 3.5rem;
+    border-radius: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.skeleton-orb {
+    display: flex;
+    align-items: center;
+    height: 100%;
+    width: auto;
+    animation: 1s linear infinite alternate skeleton-loading;
 }
 
 .skeleton-content:first-child {

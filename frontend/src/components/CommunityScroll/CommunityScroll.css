@@ -20,14 +20,6 @@
     overflow-y: auto;
 }
 
-.community-bar-ul h3 {
-    padding: 1rem 0;
-    text-align: center;
-    align-self: center;
-    border-bottom: 1px solid grey;
-    width: 90%;
-}
-
 .community-item-wrapper {
     position: relative;
     background-color: #1b1e20;

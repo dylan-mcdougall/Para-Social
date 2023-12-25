@@ -12,6 +12,7 @@ import { FaPeopleGroup } from "react-icons/fa6";
 import { FaEllipsisH } from "react-icons/fa";
 import { FaRegCompass } from "react-icons/fa";
 import ExploreCommunitiesModal from '../ExploreCommunitiesModal';
+import CommunityScrollSkeleton from '../Skeletons/CommunityScrollSkeleton';
 
 
 function CommunityScrollBar({ dataLoaded, setPromptRender, displayCommunity, setDisplayCommunity }) {
