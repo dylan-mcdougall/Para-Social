@@ -35,6 +35,11 @@
     background-color: rgb(18, 18, 18);
 }
 
+.modal-shell.hamburger {
+    width: 7rem;
+    padding: .25rem;
+}
+
 .menu-shell {
     display: flex;
     flex-direction: column;
@@ -42,6 +47,27 @@
     padding: .15rem 0;
     border-radius: 8px;
     background-color: rgb(18, 18, 18);
+}
+
+.menu-item.hamburger {
+    padding: .15rem;
+    
+}
+
+.menu-item.hamburger > a {
+    text-decoration: none;
+    padding: .15rem;
+    color: #c1c7d3;
+}
+
+.menu-item.hamburger:first-child {
+    border-bottom: 1px solid #c1c7d3;
+}
+
+.menu-item.hamburger:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #003b4a;
 }
 
 .menu-item {

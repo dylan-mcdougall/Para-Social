@@ -69,12 +69,77 @@ div#root {
     width: 50%;
 }
 
-.landing-left-logo {
-    margin: 3rem;
+.landing-left-header.desktop {
+    display: flex;
+    align-items: center;
+    margin: 1rem 0 2rem;
+    padding-bottom: 1rem;
+    border-bottom: .25px solid gray;
 }
 
-.landing-left-image {
-    margin: 3rem;
+.landing-left-logo.desktop {
+    width: 2.5rem;
+    height: auto;
+    margin-left: 1rem;
+}
+
+.landing-left-title.desktop {
+    width: 18rem;
+    height: 1.5rem;
+    margin-top: .25rem;
+    margin-left: 3rem;
+}
+
+.landing-left-flavor.desktop {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+}
+
+.landing-left-image.desktop {
+    animation: 4s iterate 2s ease-in-out infinite
+}
+
+@keyframes iterate {
+    20% {
+        opacity: 100%;
+    }
+    50% {
+        opacity: 0%;
+    }
+    80% {
+        opacity: 100%;
+    }
+}
+
+.landing-left-flavor-text.desktop {
+    margin-bottom: 1.5rem;
+    color: #00ccff;
+}
+
+.upper {
+    display: flex;
+}
+
+.lower {
+    display: flex;
+}
+
+.landing-left-flavor-text.desktop h2.emphasis.desktop {
+    margin-left: .5rem;
+    color: #e800a6;
+    animation: 4s iterate 2s ease-in-out infinite
+}
+
+.landing-left-flavor-text > .upper {
+    margin-bottom: 1rem;
+    margin-left: 2.5rem;
+}
+
+.landing-left-flavor-text > .lower {
+    margin-left: 3.5rem;
 }
 
 .landing-right-flex {

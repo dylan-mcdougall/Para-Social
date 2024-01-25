@@ -6,14 +6,14 @@ function HamburgerMenu() {
     const closeMenu = useMenu();
 
     return (
-        <div className='modal-shell'>
-            <div className='menu-shell'>
-                <div className='menu-item'>
+        <div className='modal-shell hamburger'>
+            <div className='menu-shell hamburger'>
+                <div className='menu-item hamburger' onClick={closeMenu}>
                     <NavLink to='/login-mobile'>
                         Login
                     </NavLink>
                 </div>
-                <div className='menu-item'>
+                <div className='menu-item hamburger' onClick={closeMenu}>
                     <NavLink to='/signup-mobile'>
                         Sign Up
                     </NavLink>
