@@ -4,6 +4,7 @@ import { useMenu } from '../../context/ContextMenu/ContextMenu';
 function OpenMenuButton({
     menuComponent,
     buttonIcon,
+    flipDirection,
     onButtonClick,
     onMenuClose,
 }) {
@@ -16,10 +17,19 @@ function OpenMenuButton({
         if (onMenuClose) setOnMenuClose(onMenuClose);
 
         const rect = buttonRef.current.getBoundingClientRect();
-        const position = {
-            top: rect.top,
-            left: rect.left,
-        };
+        let position;
+
+        if (flipDirection) {
+            position = {
+                top: rect.top + 20,
+                left: rect.left - 115
+            }
+        } else {
+            position = {
+                top: rect.top,
+                left: rect.left,
+            };
+        }
 
         setMenuPosition(position);
         setMenuContent(menuComponent);

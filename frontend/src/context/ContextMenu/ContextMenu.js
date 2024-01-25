@@ -45,7 +45,7 @@ export function Menu() {
 
     const menuStyle = {
         top: `${menuPosition.top - 5}px`,
-        left: `${menuPosition.left + 8}px`,
+        left: `${menuPosition.left + 8}px`
     }
 
     return ReactDOM.createPortal(
