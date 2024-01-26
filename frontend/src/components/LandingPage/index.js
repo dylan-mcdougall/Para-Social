@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { landingArray, landingText1, landingText2 } from './data';
 import './LandingPage.css';
 import LoginFormPage from '../LoginFormPage';
 import SignupFormPage from '../SignupFormPage';
@@ -8,27 +9,6 @@ import Footer from '../Footer';
 import OpenMenuButton from '../OpenMenuButton';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import HamburgerMenu from './HamburgerMenu';
-
-const landingArray = [
-    'https://aaprojectbucket.s3.us-west-1.amazonaws.com/influencers.jpg',
-    'https://aaprojectbucket.s3.us-west-1.amazonaws.com/musicians.jpg',
-    'https://aaprojectbucket.s3.us-west-1.amazonaws.com/gamers.jpg',
-    'https://aaprojectbucket.s3.us-west-1.amazonaws.com/educational.jpg'
-]
-
-const landingText1 = [
-    'Community',
-    'Brand',
-    'Relationships',
-    'Business'
-]
-
-const landingText2 = [
-    'Creators',
-    'Fans',
-    'Friends',
-    'Viewers'
-]
 
 function LandingPage() {
     const sessionUser = useSelector(state => state.session.user);
@@ -99,7 +79,22 @@ function LandingPage() {
                         flipDirection={true}
                         menuComponent={() => <HamburgerMenu />} />
                 </div>
-                
+                <div className='landing-content mobile'>
+                    <img className='landing-image mobile' src={url} alt='Demographic Image' />
+                    <div className='landing-flavor-text mobile'>
+                        <div className='upper mobile'>
+                            <h2 className='landing-text mobile'>Build your</h2>
+                            <h2 className='emphasis mobile'> {emphasis1},</h2>
+                        </div>
+                        <div className='lower mobile'>
+                            <h2 className='landing-text mobile'>Interact with your favorite </h2>
+                            <h2 className='emphasis mobile'> {emphasis2}.</h2>
+                        </div>
+                    </div>
+                </div>
+                <div className='signup-button mobile'>
+                    <button className='signup mobile'>Sign Up</button>
+                </div>
             </div>
             <Footer />
         </>
