@@ -99,24 +99,24 @@ div#root {
 }
 
 .landing-left-image.desktop {
-    animation: 4s iterate 2s ease-in-out infinite
+    animation: 5s iterate 2.5s ease-in-out infinite
 }
 
 @keyframes iterate {
-    20% {
-        opacity: 100%;
+    0% {
+        opacity: 1;
     }
     50% {
-        opacity: 0%;
+        opacity: 0;
     }
-    80% {
-        opacity: 100%;
+    100% {
+        opacity: 1;
     }
 }
 
 .landing-left-flavor-text.desktop {
     margin-bottom: 1.5rem;
-    color: #00ccff;
+    color: #8CD6D9;
 }
 
 .upper {
@@ -130,7 +130,7 @@ div#root {
 .landing-left-flavor-text.desktop h2.emphasis.desktop {
     margin-left: .5rem;
     color: #e800a6;
-    animation: 4s iterate 2s ease-in-out infinite
+    animation: 5s iterate 2.5s ease-in-out infinite
 }
 
 .landing-left-flavor-text > .upper {

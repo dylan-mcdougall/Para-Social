@@ -41,7 +41,7 @@ function LandingPage() {
                 const newIndex = (prev.index + 1) % landingArray.length;
                 return { index: newIndex, url: landingArray[newIndex], emphasis1: landingText1[newIndex], emphasis2: landingText2[newIndex] };
             });
-        }, 4000);
+        }, 5000);
 
         return () => clearInterval(intervalId);
     }, []);
