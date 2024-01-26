@@ -218,91 +218,6 @@ div#root {
     color: red;
 }
 
-.landing-page-wrapper.mobile {
-    display: flex;
-    flex-direction: column;
-    background-color: black;
-}
-
-.landing-content.mobile {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    height: 100%;
-    background-color: black;
-}
-
-.landing-page-heading.mobile {
-    display: flex;
-    align-items: flex-end;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: .25px solid gray;
-}
-
-.landing-flavor-text.mobile {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    width: 100%;
-}
-
-.landing-image.mobile {
-    max-height: 18rem;
-    width: auto;
-    animation: 5s iterate 2.5s ease-in-out infinite
-}
-
-.landing-flavor-text.mobile {
-    margin-top: 4rem;
-    color: #8CD6D9;
-}
-
-.landing-flavor-text.mobile h2.emphasis.mobile {
-    margin-left: .5rem;
-    color: #e800a6;
-    animation: 5s iterate 2.5s ease-in-out infinite
-}
-
-.landing-flavor-text > .upper {
-    display: flex;
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-}
-
-.landing-flavor-text > .lower {
-    display: flex;
-    margin-left: 1rem;
-}
-
-.mobile h2 {
-    font-size: 1rem;
-}
-
-.signup-button.mobile {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    margin: 3rem 0;
-}
-
-.signup.mobile {
-    padding: .4rem;
-    border-radius: 24px;
-    font-size: 16px;
-    font-weight: 600;
-    color: #8CD6D9;
-    background-color: black;
-    border: #8CD6D9 solid;
-}
-
-.signup.mobile:hover {
-    color: black;
-    background-color: #8CD6D9;
-    border: #8CD6D9 solid;
-}
-
 @media screen and (max-width: 600px) {
     .mobile {
         display: block;
@@ -351,8 +266,90 @@ div#root {
         width: auto;
     }
 
-    .landing-page-right {
+    .landing-page-wrapper.mobile {
+        display: flex;
+        flex-direction: column;
+        background-color: black;
+    }
+    
+    .landing-content.mobile {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        height: 100%;
         width: 100%;
-        height: 50%;
+        background-color: black;
+    }
+    
+    .landing-page-heading.mobile {
+        display: flex;
+        align-items: flex-end;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: .25px solid gray;
+    }
+    
+    .landing-flavor-text.mobile {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        width: 100%;
+    }
+    
+    .landing-image.mobile {
+        max-height: 18rem;
+        width: auto;
+        animation: 5s iterate 2.5s ease-in-out infinite
+    }
+    
+    .landing-flavor-text.mobile {
+        margin-top: 4rem;
+        color: #8CD6D9;
+    }
+    
+    .landing-flavor-text.mobile h2.emphasis.mobile {
+        margin-left: .5rem;
+        color: #e800a6;
+        animation: 5s iterate 2.5s ease-in-out infinite
+    }
+    
+    .landing-flavor-text > .upper {
+        display: flex;
+        margin-bottom: 1rem;
+        margin-left: 1rem;
+    }
+    
+    .landing-flavor-text > .lower {
+        display: flex;
+        margin-left: 1rem;
+    }
+    
+    .mobile h2 {
+        font-size: 1rem;
+    }
+    
+    .signup-button.mobile {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin: 3rem 0;
+    }
+    
+    .signup.mobile {
+        padding: .4rem;
+        border-radius: 24px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #8CD6D9;
+        background-color: black;
+        border: #8CD6D9 solid;
+    }
+    
+    .signup.mobile:hover {
+        color: black;
+        background-color: #8CD6D9;
+        border: #8CD6D9 solid;
     }
 }
