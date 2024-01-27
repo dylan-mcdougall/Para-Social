@@ -10,6 +10,7 @@ import HomePage from './components/HomePage';
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [login, setLogin] = useState(true);
   useEffect(() => {
     dispatch(sessionActions.restoreUser()).then(() => setIsLoaded(true));
   }, [dispatch]);
@@ -19,16 +20,16 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route path="/login-mobile">
-            <LoginFormPage />
+            <LoginFormPage login={login} isMobile={true} />
           </Route>
           <Route path="/signup-mobile">
-            <SignupFormPage />
+            <SignupFormPage login={false} isMobile={true} />
           </Route>
           <Route path='/home'>
             <HomePage />
           </Route>
           <Route exact path='/'>
-            <LandingPage />
+            <LandingPage login={login} setLogin={setLogin} />
           </Route>
         </Switch>
       )}

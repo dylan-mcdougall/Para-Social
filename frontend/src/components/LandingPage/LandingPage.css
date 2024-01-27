@@ -57,13 +57,15 @@ div#root {
     background-color: black;
 }
 
-.mobile {
+div.mobile {
     display: none;
 }
 
 .landing-page-right {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-inline: 1px lightgrey solid;
     height: 100%;
     width: 50%;
@@ -149,10 +151,43 @@ div#root {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 70%;
     padding: .5rem;
+    border: .5px solid lightgray;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px grey, -1px 1px 2px grey;
+}
+
+.form-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.initial-form {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    padding: .5rem;
+    border: .5px solid lightgray;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px grey, -1px 1px 2px grey;
 }
 
 .landing-right-flex h1 {
+    padding-top: .5rem;
     font-size: 24px;
 }
 
@@ -160,8 +195,8 @@ div#root {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: .5rem 1rem 1rem;
-    width: 50%;
+    margin: .5rem 1rem 0;
+    width: 80%;
 }
 
 .landing-right-flex label {
@@ -170,7 +205,7 @@ div#root {
 
 .landing-right-flex form input {
     font-size: 16px;
-    padding: 1rem;
+    padding: .75rem;
     border: 1px solid lightgrey;
     border-radius: 6px;
     width: 100%;
@@ -184,9 +219,11 @@ div#root {
 }
 
 .landing-right-flex form a {
-    width: 100%;
+    width: 40%;
+    color: lightgray;
+    background-color: black;
     border: 1px solid lightgrey;
-    border-radius: 12px;
+    border-radius: 18px;
     padding: .5rem 1rem;
     margin: .5rem;
 }
@@ -197,19 +234,38 @@ div#root {
     background-color: grey;
 }
 
-.landing-right-flex form > button {
-    width: 100%;
+.landing-right-flex form button {
+    width: 40%;
     font-size: 14px;
-    border-radius: 12px;
+    border-radius: 18px;
+    color: black;
+    background-color: #8CD6D9;
     border: 1px solid lightgray;
     padding: .5rem 1rem;
     margin: .5rem;
 }
 
-.landing-right-flex form > button:hover {
+.landing-right-flex form button:hover {
     cursor: pointer;
     color: white;
-    background-color: grey;
+    background-color: #508385;
+}
+
+.new-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-top: .5px solid grey;
+    margin-top: .75rem;
+    margin-bottom: .5rem;
+    padding-top: .5rem;
+}
+
+.new-user p {
+    font-size: 12px;
+    margin: .5rem 0 0;
 }
 
 .errors {
@@ -218,9 +274,74 @@ div#root {
     color: red;
 }
 
+.initial-form h1 {
+    padding-top: .5rem;
+    font-size: 24px;
+}
+
+.initial-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: .5rem 1rem 0;
+    width: 80%;
+}
+
+.initial-form label {
+    width: 100%;
+}
+
+.initial-form form input {
+    font-size: 16px;
+    padding: .75rem;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    width: 100%;
+    margin: .75rem;
+}
+
+.initial-form form label, a, button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.initial-form form a {
+    width: 40%;
+    color: lightgray;
+    background-color: black;
+    border: 1px solid lightgrey;
+    border-radius: 18px;
+    padding: .5rem 1rem;
+    margin: .5rem;
+}
+
+.initial-form form a:hover {
+    cursor: pointer;
+    color: white;
+    background-color: grey;
+}
+
+.initial-form form button {
+    width: 40%;
+    font-size: 14px;
+    border-radius: 18px;
+    color: black;
+    background-color: #8CD6D9;
+    border: 1px solid lightgray;
+    padding: .5rem 1rem;
+    margin: .5rem;
+}
+
+.initial-form form button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #508385;
+}
+
 @media screen and (max-width: 600px) {
-    .mobile {
-        display: block;
+    div.mobile {
+        display: flex;
     }
 
     .desktop {
