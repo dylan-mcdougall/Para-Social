@@ -57,7 +57,7 @@ div#root {
     background-color: black;
 }
 
-.mobile {
+div.mobile {
     display: none;
 }
 
@@ -158,7 +158,36 @@ div#root {
     box-shadow: 2px 2px 4px grey, -1px 1px 2px grey;
 }
 
+.form-parent {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.form-flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.initial-form {
+    margin: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
+    padding: .5rem;
+    border: .5px solid lightgray;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px grey, -1px 1px 2px grey;
+}
+
 .landing-right-flex h1 {
+    padding-top: .5rem;
     font-size: 24px;
 }
 
@@ -166,7 +195,7 @@ div#root {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: .5rem 1rem 1rem;
+    margin: .5rem 1rem 0;
     width: 80%;
 }
 
@@ -245,9 +274,74 @@ div#root {
     color: red;
 }
 
+.initial-form h1 {
+    padding-top: .5rem;
+    font-size: 24px;
+}
+
+.initial-form form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: .5rem 1rem 0;
+    width: 80%;
+}
+
+.initial-form label {
+    width: 100%;
+}
+
+.initial-form form input {
+    font-size: 16px;
+    padding: .75rem;
+    border: 1px solid lightgrey;
+    border-radius: 6px;
+    width: 100%;
+    margin: .75rem;
+}
+
+.initial-form form label, a, button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.initial-form form a {
+    width: 40%;
+    color: lightgray;
+    background-color: black;
+    border: 1px solid lightgrey;
+    border-radius: 18px;
+    padding: .5rem 1rem;
+    margin: .5rem;
+}
+
+.initial-form form a:hover {
+    cursor: pointer;
+    color: white;
+    background-color: grey;
+}
+
+.initial-form form button {
+    width: 40%;
+    font-size: 14px;
+    border-radius: 18px;
+    color: black;
+    background-color: #8CD6D9;
+    border: 1px solid lightgray;
+    padding: .5rem 1rem;
+    margin: .5rem;
+}
+
+.initial-form form button:hover {
+    cursor: pointer;
+    color: white;
+    background-color: #508385;
+}
+
 @media screen and (max-width: 600px) {
-    .mobile {
-        display: block;
+    div.mobile {
+        display: flex;
     }
 
     .desktop {

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 import { landingArray, landingText1, landingText2 } from './data';
 import './LandingPage.css';
 import LoginFormPage from '../LoginFormPage';
@@ -10,9 +10,9 @@ import OpenMenuButton from '../OpenMenuButton';
 import { RxHamburgerMenu } from 'react-icons/rx';
 import HamburgerMenu from './HamburgerMenu';
 
-function LandingPage() {
+function LandingPage({ login, setLogin }) {
+    const history = useHistory();
     const sessionUser = useSelector(state => state.session.user);
-    const [login, setLogin] = useState(true);
     const [indexAndUrl, setIndexAndUrl] = useState({ index: 0, url: landingArray[0], emphasis1: landingText1[0], emphasis2: landingText2[0] });
 
     useEffect(() => {
@@ -38,6 +38,14 @@ function LandingPage() {
 
     if (sessionUser) {
         return <Redirect to='/home' />
+    }
+
+    const redirect = () => {
+        history.push('/signup-mobile')
+    }
+
+    const handleRedirection = () => {
+        redirect()
     }
     
     return (
@@ -93,7 +101,7 @@ function LandingPage() {
                     </div>
                 </div>
                 <div className='signup-button mobile'>
-                    <button className='signup mobile'>Sign Up</button>
+                    <button className='signup mobile' onClick={handleRedirection} >Sign Up</button>
                 </div>
             </div>
             <Footer />
