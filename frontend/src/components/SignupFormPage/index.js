@@ -115,8 +115,12 @@ function SignupFormPage({ login, setLogin }) {
         </label>
         {errors.confirmPassword && <p className='errors'>{errors.confirmPassword}</p>}
         <button type="submit">Sign Up</button>
-        <button onClick={() => setLogin(true)}>Login</button>
-        <a className="demo-user" onClick={handleClick}>Demo Login</a>
+        <div className="new-user">
+          <p>Already have an account?</p>
+          <button className="catalyst" onClick={() => setLogin(true)}>Login</button>
+          <p>Or, use our demo account</p>
+          <a className="demo-user" onClick={handleClick}>Demo Login</a>
+        </div>
       </form>
     </>
   );

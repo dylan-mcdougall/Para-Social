@@ -58,9 +58,13 @@ function LoginFormPage({ login, setLogin }) {
           />
         </label>
         {errors.credential && <p className='errors'>{errors.credential}</p>}
-        <button type="submit">Log In</button>
-        <button onClick={() => setLogin(false)}>Sign Up</button>
-        <a className="demo-user" onClick={handleClick}>Demo Login</a>
+        <button className="submit" type="submit">Log In</button>
+        <div className="new-user">
+          <p>Don't have an account?</p>
+          <button className="catalyst" onClick={() => setLogin(false)}>Sign Up</button>
+          <p>Or, use our demo account</p>
+          <a className="demo-user" onClick={handleClick}>Demo Login</a>
+        </div>
       </form>
     </>
   );

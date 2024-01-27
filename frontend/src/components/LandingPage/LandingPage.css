@@ -64,6 +64,8 @@ div#root {
 .landing-page-right {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
     border-inline: 1px lightgrey solid;
     height: 100%;
     width: 50%;
@@ -149,7 +151,11 @@ div#root {
     display: flex;
     flex-direction: column;
     align-items: center;
+    width: 70%;
     padding: .5rem;
+    border: .5px solid lightgray;
+    border-radius: 8px;
+    box-shadow: 2px 2px 4px grey, -1px 1px 2px grey;
 }
 
 .landing-right-flex h1 {
@@ -161,7 +167,7 @@ div#root {
     flex-direction: column;
     align-items: center;
     margin: .5rem 1rem 1rem;
-    width: 50%;
+    width: 80%;
 }
 
 .landing-right-flex label {
@@ -170,7 +176,7 @@ div#root {
 
 .landing-right-flex form input {
     font-size: 16px;
-    padding: 1rem;
+    padding: .75rem;
     border: 1px solid lightgrey;
     border-radius: 6px;
     width: 100%;
@@ -184,9 +190,11 @@ div#root {
 }
 
 .landing-right-flex form a {
-    width: 100%;
+    width: 40%;
+    color: lightgray;
+    background-color: black;
     border: 1px solid lightgrey;
-    border-radius: 12px;
+    border-radius: 18px;
     padding: .5rem 1rem;
     margin: .5rem;
 }
@@ -197,19 +205,38 @@ div#root {
     background-color: grey;
 }
 
-.landing-right-flex form > button {
-    width: 100%;
+.landing-right-flex form button {
+    width: 40%;
     font-size: 14px;
-    border-radius: 12px;
+    border-radius: 18px;
+    color: black;
+    background-color: #8CD6D9;
     border: 1px solid lightgray;
     padding: .5rem 1rem;
     margin: .5rem;
 }
 
-.landing-right-flex form > button:hover {
+.landing-right-flex form button:hover {
     cursor: pointer;
     color: white;
-    background-color: grey;
+    background-color: #508385;
+}
+
+.new-user {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border-top: .5px solid grey;
+    margin-top: .75rem;
+    margin-bottom: .5rem;
+    padding-top: .5rem;
+}
+
+.new-user p {
+    font-size: 12px;
+    margin: .5rem 0 0;
 }
 
 .errors {
