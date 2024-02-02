@@ -13,3 +13,9 @@
     height: 2.5rem;
     border-bottom: .5px solid black;
 }
+
+@media screen and (max-width: 600px) {
+    .room-display-wrapper {
+        width: 80%;
+    }
+}

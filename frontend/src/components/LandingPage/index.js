@@ -61,11 +61,11 @@ function LandingPage({ login, setLogin }) {
                         <div className='landing-left-flavor-text desktop'>
                             <div className='upper desktop'>
                                 <h2 className='landing-text desktop'>Build your</h2>
-                                <h2 className='emphasis desktop'> {emphasis1},</h2>
+                                <h2 className='landing-text emphasis desktop'> {emphasis1},</h2>
                             </div>
                             <div className='lower desktop'>
                                 <h2 className='landing-text desktop'>Interact with your favorite </h2>
-                                <h2 className='emphasis desktop'> {emphasis2}.</h2>
+                                <h2 className='landing-text emphasis desktop'> {emphasis2}.</h2>
                             </div>
                         </div>
                     </div>
@@ -92,11 +92,11 @@ function LandingPage({ login, setLogin }) {
                     <div className='landing-flavor-text mobile'>
                         <div className='upper mobile'>
                             <h2 className='landing-text mobile'>Build your</h2>
-                            <h2 className='emphasis mobile'> {emphasis1},</h2>
+                            <h2 className='landing-text emphasis mobile'> {emphasis1},</h2>
                         </div>
                         <div className='lower mobile'>
                             <h2 className='landing-text mobile'>Interact with your favorite </h2>
-                            <h2 className='emphasis mobile'> {emphasis2}.</h2>
+                            <h2 className='landing-text emphasis mobile'> {emphasis2}.</h2>
                         </div>
                     </div>
                 </div>

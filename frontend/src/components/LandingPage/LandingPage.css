@@ -101,7 +101,7 @@ div.mobile {
 }
 
 .landing-left-image.desktop {
-    max-height: 30rem;
+    max-height: auto;
     width: auto;
     animation: 5s iterate 2.5s ease-in-out infinite
 }
@@ -121,6 +121,8 @@ div.mobile {
 .landing-left-flavor-text.desktop {
     margin: 2rem 0;
     color: #8CD6D9;
+    opacity: 0;
+    animation: .5s fly-in .25s linear forwards
 }
 
 .upper {
@@ -144,6 +146,22 @@ div.mobile {
 
 .landing-left-flavor-text > .lower {
     margin-left: 4rem;
+}
+
+.landing-flavor-text.mobile {
+    opacity: 0;
+    animation: .5s fly-in .25s linear forwards
+}
+
+@keyframes fly-in {
+    0% {
+        opacity: 0;
+        transform: translateX(-2.5%);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
 
 .landing-right-flex {

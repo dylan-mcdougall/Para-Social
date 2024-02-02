@@ -144,3 +144,21 @@
 .room-actions button:hover {
     cursor: pointer;
 }
+
+@media screen and (max-width: 600px) {
+    .community-rooms-scroll-wrapper {
+        width: 20%;
+    }
+
+    .community-rooms-ul h3 {
+        font-size: 1rem;
+    }
+
+    .room-item {
+        font-size: .75rem;
+    }
+
+    .item-content {
+        margin-left: .5rem;
+    }
+}
