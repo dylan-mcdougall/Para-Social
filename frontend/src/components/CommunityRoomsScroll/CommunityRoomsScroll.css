@@ -146,8 +146,8 @@
 }
 
 @media screen and (max-width: 600px) {
-    .community-rooms-scroll-wrapper {
-        width: 20%;
+    .community-rooms-scroll-wrapper.active {
+        width: 50%;
     }
 
     .community-rooms-ul h3 {

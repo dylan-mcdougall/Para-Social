@@ -55,13 +55,16 @@ function HomePage() {
                     {isLoaded ? (
                         <>
                             <CommunityScrollBar displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} setPromptRender={setPromptRender} dataLoaded={dataLoaded} isLoaded={isLoaded} />
-                            <CommunityPage promptRender={promptRender} setPromptRender={setPromptRender} dataLoaded={dataLoaded} displayCommunity={displayCommunity} setDisplayCommunity={setDisplayCommunity} isLoaded={isLoaded} />
+                            <CommunityPage promptRender={promptRender} setPromptRender={setPromptRender} dataLoaded={dataLoaded} displayCommunity={displayCommunity} isLoaded={isLoaded} />
                         </>
                     ) : (
                         <div>
                             <h1>Loading...</h1>
                         </div>
                     )}
+                </div>
+                <div className='home-page-navigation mobile'>
+
                 </div>
             </div>
             <Footer />

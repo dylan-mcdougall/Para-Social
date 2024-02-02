@@ -15,7 +15,7 @@
 }
 
 @media screen and (max-width: 600px) {
-    .room-display-wrapper {
-        width: 80%;
+    .room-display-wrapper.active {
+        width: 95%;
     }
 }

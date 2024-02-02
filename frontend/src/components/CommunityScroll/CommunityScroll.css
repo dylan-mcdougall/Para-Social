@@ -226,5 +226,7 @@
 @media screen and (max-width: 600px) {
     .community-bar-wrapper {
         display: none;
+        width: 45%;
     }
+
 }
