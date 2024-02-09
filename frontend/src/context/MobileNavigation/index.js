@@ -13,18 +13,23 @@ export function useNavUpdate() {
 }
 
 export function NavProvider({ children }) {
-    const [navTarget, setNavTarget] = useState('room-display');
+    const [navTarget, setNavTarget] = useState('room-display active');
 
     function Navigate({ target }) {
         if (target.split(' ')[target.length - 1] !== 'active') {
-            target = target + ' active'
+            setNavTarget(`${target} active`)
         }
-        
+    }
+
+    const navValue = {
+        navTarget,
+        setNavTarget,
+        Navigate
     }
 
     return (
         <>
-        <NavContext.Provider value={navTarget}>
+        <NavContext.Provider value={navValue}>
             {children}
         </NavContext.Provider>
         </>
