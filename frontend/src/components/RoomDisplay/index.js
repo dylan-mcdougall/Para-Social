@@ -32,7 +32,8 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
     }, [room])
 
     return (
-        <div className='room-display-wrapper'>
+        <>
+        <div className='room-display-wrapper desktop'>
             {roomDataLoaded ? (
                 <>
                     {room ?
@@ -52,6 +53,27 @@ function RoomDisplay({ roomMessages, setRoomMessages, clearMessages, setClearMes
                 </>
             )}
         </div>
+        <div className='room-display-wrapper mobile'>
+        {roomDataLoaded ? (
+            <>
+                {room ?
+                    <h4 className='room-heading'>
+                        {room?.name || <p>Create a room to get started.</p>}
+                    </h4> : (
+                        <p>Please create a room first.</p>
+                    )}
+                <>
+                    <RoomMessages displayRoom={displayRoom} webSocket={webSocket} roomMessages={roomMessages} setRoomMessages={setRoomMessages} />
+                    <RoomMessageInput roomMessages={roomMessages} setRoomMessages={setRoomMessages} clearMessages={clearMessages} setClearMessages={setClearMessages} webSocket={webSocket} />
+                </>
+            </>
+        ) : (
+            <>
+                <p>Please create a room to get started</p>
+            </>
+        )}
+    </div>
+    </>
     )
 }
 

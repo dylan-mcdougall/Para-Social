@@ -7,7 +7,7 @@ import './index.css';
 import App from './App';
 import { store } from './store';
 import * as sessionActions from "./store/session";
-
+import Navigation, { NavProvider } from './context/MobileNavigation';
 import { ModalProvider, Modal } from './context/Modal/Modal';
 import { MenuProvider, Menu } from './context/ContextMenu/ContextMenu';
 
@@ -25,11 +25,13 @@ function Root() {
     <MenuProvider>
       <ModalProvider>
         <ReduxProvider store={store}>
-          <BrowserRouter>
-            <App />
-            <Menu />
-            <Modal />
-          </BrowserRouter>
+          <NavProvider>
+            <BrowserRouter>
+              <App />
+              <Menu />
+              <Modal />
+            </BrowserRouter>
+          </NavProvider>
         </ReduxProvider>
       </ModalProvider>
     </MenuProvider>

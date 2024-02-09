@@ -35,3 +35,14 @@ export function NavProvider({ children }) {
         </>
     )
 }
+
+export default function Navigation() {
+    
+    return (
+        <div className='navigation-wrapper mobile'>
+            <button>Communities</button>
+            <button>Room Selection</button>
+            <button>Chat</button>
+        </div>
+    )
+}

@@ -5,6 +5,7 @@ import * as sessionActions from '../../store/session';
 import CommunityScrollBar from '../CommunityScroll';
 import './HomePage.css';
 import CommunityPage from '../CommunityPage';
+import Navigation from '../../context/MobileNavigation';
 import Footer from '../Footer';
 
 function HomePage() {
@@ -64,7 +65,7 @@ function HomePage() {
                     )}
                 </div>
                 <div className='home-page-navigation mobile'>
-
+                    <Navigation />
                 </div>
             </div>
             <Footer />

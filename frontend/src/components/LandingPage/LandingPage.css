@@ -362,7 +362,7 @@ div.mobile {
         display: flex;
     }
 
-    .desktop {
+    div.desktop {
         display: none;
     }
 
