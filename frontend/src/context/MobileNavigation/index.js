@@ -1,4 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
+import { FaPeopleGroup, FaDoorClosed } from "react-icons/fa6";
+import { BsChatDotsFill } from "react-icons/bs";
 import './MobileNavigation.css';
 
 const NavContext = React.createContext();
@@ -40,9 +42,9 @@ export default function Navigation() {
     
     return (
         <div className='navigation-wrapper mobile'>
-            <button>Communities</button>
-            <button>Room Selection</button>
-            <button>Chat</button>
+            <button><FaPeopleGroup /></button>
+            <button><FaDoorClosed /></button>
+            <button><BsChatDotsFill /></button>
         </div>
     )
 }
