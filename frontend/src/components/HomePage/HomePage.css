@@ -1,7 +1,6 @@
 .page-wrapper {
     display: flex;
     flex-direction: column;
-    height: 100vh;
     width: 100vw;
 }
 
@@ -16,5 +15,16 @@
 .home-page-flex {
     display: flex;
     height: 100%;
-    width: 100vw;
+    width: 100%;
+}
+
+.home-page-navigation.mobile {
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .home-page-flex {
+        height: 93%;
+    }   
 }
