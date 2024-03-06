@@ -326,7 +326,7 @@ router.post('/search', requireAuth, async (req, res) => {
             private: false
         },
         limit: size,
-        offset: size * (page - 1),
+        offset: Math.max(0, size * (page - 1)),
         include: [
             { model: Image, as: "CommunityImage" },
             { model: User, as: "Members" }
