@@ -7,7 +7,7 @@
 
 # Para-Social 
 
-Para-Social is a community focused, social media app centered around providing ways for creators to interact with their audience and build their brand.
+Simple Chat Room based application that I had made when I was first learning to code. Dead now, but keeping codebase just for the sake of it.
 
 ## Technologies Used
 
